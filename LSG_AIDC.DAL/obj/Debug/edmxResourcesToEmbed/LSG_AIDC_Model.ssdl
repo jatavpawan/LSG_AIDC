@@ -1,0 +1,696 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="LSG_AIDCModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'LSG_AIDC.dbo.Books' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="Books">
+    <Key>
+      <PropertyRef Name="BookID" />
+      <PropertyRef Name="BookTitle" />
+    </Key>
+    <Property Name="BookID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BookTitle" Type="nvarchar" MaxLength="300" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="300" />
+  </EntityType>
+  <EntityType Name="DeliveryStatus">
+    <Key>
+      <PropertyRef Name="DeliveryStatusCode" />
+    </Key>
+    <Property Name="DeliveryStatusCode" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="DisplayStatusCode" Type="varchar" MaxLength="30" />
+    <Property Name="Description" Type="varchar" MaxLength="300" />
+  </EntityType>
+  <EntityType Name="ExceptionType">
+    <Key>
+      <PropertyRef Name="ExceptionCode" />
+    </Key>
+    <Property Name="ExceptionCode" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="DisplayCode" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="300" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ExceptionWorkQueue">
+    <Key>
+      <PropertyRef Name="ExceptionWorkQueue_ID" />
+    </Key>
+    <Property Name="ExceptionWorkQueue_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MaterialReceiptEvent_ID" Type="int" Nullable="false" />
+    <Property Name="ExceptionCode" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="Operator_ID" Type="varchar" MaxLength="12" />
+    <Property Name="AddiitonalInfo" Type="varchar" MaxLength="500" />
+  </EntityType>
+  <EntityType Name="ExpirationDateType">
+    <Key>
+      <PropertyRef Name="ExpirationDateCode" />
+    </Key>
+    <Property Name="ExpirationDateCode" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="DisplayCode" Type="varchar" MaxLength="30" />
+    <Property Name="Description" Type="varchar" MaxLength="300" />
+    <Property Name="RejectionCutoff" Type="int" Nullable="false" />
+    <Property Name="RejectionTimeUnit" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="ComparisonOperator" Type="varchar" MaxLength="2" Nullable="false" />
+    <Property Name="NumofDays" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MaterialReceiptEvent">
+    <Key>
+      <PropertyRef Name="MaterialReceiptEvent_ID" />
+    </Key>
+    <Property Name="MaterialReceiptEvent_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="VendorDeliveryMaterial_ID" Type="int" Nullable="false" />
+    <Property Name="Operator_ID" Type="varchar" MaxLength="12" />
+    <Property Name="Temperature" Type="decimal" Precision="13" Scale="3" />
+    <Property Name="Expiration" Type="datetime" />
+    <Property Name="Batch" Type="varchar" MaxLength="20" />
+    <Property Name="Lot" Type="varchar" MaxLength="20" />
+    <Property Name="QtyEntered" Type="decimal" Precision="13" Scale="3" />
+    <Property Name="UOM_Entered" Type="varchar" MaxLength="3" />
+    <Property Name="QtyReceived" Type="decimal" Precision="13" Scale="3" />
+    <Property Name="WeightReceived" Type="decimal" Precision="13" Scale="3" />
+    <Property Name="TimeStamp" Type="datetime" />
+    <Property Name="ProblemCode" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="ProductConditionCode" Type="varchar" MaxLength="30" Nullable="false" />
+  </EntityType>
+  <EntityType Name="NLINK_ActivityProgress">
+    <Key>
+      <PropertyRef Name="NLINK_ActivityProgress_ID" />
+    </Key>
+    <Property Name="NLINK_ActivityProgress_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProcessPhaseCode" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="ActivityCode" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="ActivityStatus" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="ProgressPercentage" Type="int" />
+    <Property Name="StartTime" Type="datetime" />
+    <Property Name="EndTime" Type="datetime" />
+    <Property Name="SystemMessage" Type="varchar" MaxLength="500" />
+    <Property Name="ApplicationMessage" Type="varchar" MaxLength="500" />
+  </EntityType>
+  <EntityType Name="NLINK_ActivityStatus">
+    <Key>
+      <PropertyRef Name="ActivityStatusCode" />
+    </Key>
+    <Property Name="ActivityStatusCode" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="DisplayCode" Type="varchar" MaxLength="30" />
+    <Property Name="Description" Type="varchar" MaxLength="300" />
+  </EntityType>
+  <EntityType Name="NLINK_PostReceipt">
+    <Key>
+      <PropertyRef Name="SAP_PO_ID" />
+    </Key>
+    <Property Name="SAP_PO_ID" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="NLINK_ActivityProgress_ID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="NLINK_ProcessActivityType">
+    <Key>
+      <PropertyRef Name="ActivityCode" />
+    </Key>
+    <Property Name="ActivityCode" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="DisplayCode" Type="varchar" MaxLength="30" />
+    <Property Name="Description" Type="varchar" MaxLength="300" />
+  </EntityType>
+  <EntityType Name="NLINK_ProgressPhaseType">
+    <Key>
+      <PropertyRef Name="ProcessPhaseCode" />
+    </Key>
+    <Property Name="ProcessPhaseCode" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="DisplayCode" Type="varchar" MaxLength="30" />
+    <Property Name="Description" Type="varchar" MaxLength="300" />
+  </EntityType>
+  <EntityType Name="PHF_CodeMap">
+    <Key>
+      <PropertyRef Name="SAP_PHF_Code" />
+    </Key>
+    <Property Name="SAP_PHF_Code" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="TempValidationCode" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="ExpirationDateCode" Type="varchar" MaxLength="30" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PO_PhaseStatus">
+    <Key>
+      <PropertyRef Name="PO_PhaseStatusCode" />
+    </Key>
+    <Property Name="PO_PhaseStatusCode" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="DisplayStatusCode" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="300" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PO_Worklist">
+    <Key>
+      <PropertyRef Name="PO_WorkList_ID" />
+    </Key>
+    <Property Name="PO_WorkList_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="VendorDelivery_ID" Type="int" Nullable="false" />
+    <Property Name="PO_PhaseStatus" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="Operator_ID" Type="varchar" MaxLength="12" />
+    <Property Name="Entered_PO_Number" Type="varchar" MaxLength="30" />
+    <Property Name="IsUnexpected" Type="tinyint" />
+    <Property Name="SAP_ExpectedDeliveryDate" Type="date" />
+    <Property Name="SAP_PO_ID" Type="varchar" MaxLength="10" />
+    <Property Name="SAP_Vendor_ID" Type="varchar" MaxLength="10" />
+    <Property Name="SAP_VendorName" Type="varchar" MaxLength="300" />
+  </EntityType>
+  <EntityType Name="PO_WorkListItem">
+    <Key>
+      <PropertyRef Name="PO_WorklistItem_ID" />
+    </Key>
+    <Property Name="PO_WorklistItem_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PO_WorkList_ID" Type="int" Nullable="false" />
+    <Property Name="VendorDeliveryMaterial_ID" Type="int" Nullable="false" />
+    <Property Name="IsItemComplete" Type="tinyint" Nullable="false" />
+    <Property Name="IsKLine" Type="tinyint" Nullable="false" />
+    <Property Name="QtyExpected" Type="decimal" Precision="13" Scale="3" />
+    <Property Name="WeightExpected" Type="decimal" Precision="13" Scale="3" />
+    <Property Name="QtyNormalDist" Type="decimal" Precision="13" Scale="3" />
+    <Property Name="WeightNormalDist" Type="decimal" Precision="13" Scale="3" />
+    <Property Name="QtyDamageDist" Type="decimal" Precision="13" Scale="3" />
+    <Property Name="QtyOffTempDist" Type="decimal" Precision="13" Scale="3" />
+    <Property Name="WeightOffTempDist" Type="decimal" Precision="13" Scale="3" />
+    <Property Name="SAP_LineItem_ID" Type="varchar" MaxLength="10" />
+    <Property Name="SAP_Plant" Type="varchar" MaxLength="4" />
+    <Property Name="SAP_Location" Type="varchar" MaxLength="4" />
+    <Property Name="ReturnQty" Type="decimal" Precision="13" Scale="3" />
+    <Property Name="GoodsMovementDoc" Type="varchar" MaxLength="10" />
+    <Property Name="GoodsMovementYear" Type="varchar" MaxLength="4" />
+    <Property Name="GoodsMovementLine" Type="varchar" MaxLength="4" />
+    <Property Name="IsItemPosted" Type="tinyint" />
+  </EntityType>
+  <EntityType Name="ProbeMaster">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProbeSlave">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="120" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProblemType">
+    <Key>
+      <PropertyRef Name="ProblemCode" />
+    </Key>
+    <Property Name="ProblemCode" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="DisplayCode" Type="varchar" MaxLength="30" />
+    <Property Name="Description" Type="varchar" MaxLength="300" />
+  </EntityType>
+  <EntityType Name="TempValidationType">
+    <Key>
+      <PropertyRef Name="TempValidationCode" />
+    </Key>
+    <Property Name="TempValidationCode" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="DisplayCode" Type="varchar" MaxLength="30" />
+    <Property Name="Description" Type="varchar" MaxLength="300" />
+    <Property Name="MinTemp" Type="decimal" Precision="13" Scale="3" />
+    <Property Name="MaxTemp" Type="decimal" Precision="13" Scale="3" />
+    <Property Name="ComparisonOperator" Type="varchar" MaxLength="2" />
+  </EntityType>
+  <EntityType Name="TruckCondition">
+    <Key>
+      <PropertyRef Name="ConditionCode" />
+    </Key>
+    <Property Name="ConditionCode" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="DisplayCode" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="300" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TruckInspection">
+    <Key>
+      <PropertyRef Name="VendorDelivery_ID" />
+    </Key>
+    <Property Name="VendorDelivery_ID" Type="int" Nullable="false" />
+    <Property Name="Comments" Type="varchar" MaxLength="300" />
+    <Property Name="ConditionCode" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="TruckCode" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="InspectionPass" Type="tinyint" Nullable="false" />
+    <Property Name="Operator_ID" Type="varchar" MaxLength="12" />
+    <Property Name="Temperature" Type="decimal" Precision="13" Scale="3" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TruckType">
+    <Key>
+      <PropertyRef Name="TruckCode" />
+    </Key>
+    <Property Name="TruckCode" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="DisplayCode" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="300" Nullable="false" />
+  </EntityType>
+  <EntityType Name="VendorDelivery">
+    <Key>
+      <PropertyRef Name="VendorDelivery_ID" />
+    </Key>
+    <Property Name="VendorDelivery_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DeliveryArrivalDate" Type="datetime" />
+    <Property Name="DeliveryCompletionDate" Type="datetime" />
+    <Property Name="FirstExpectedDeliveryDate" Type="datetime" />
+    <Property Name="IsInspectionRequired" Type="tinyint" />
+    <Property Name="DeliveryStatus" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="SAP_VendorName" Type="varchar" MaxLength="300" />
+    <Property Name="SAP_Vendor_ID" Type="varchar" MaxLength="10" Nullable="false" />
+  </EntityType>
+  <EntityType Name="VendorDeliveryMaterial">
+    <Key>
+      <PropertyRef Name="VendorDeliveryMaterial_ID" />
+    </Key>
+    <Property Name="VendorDeliveryMaterial_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="VendorDelivery_ID" Type="int" Nullable="false" />
+    <Property Name="QtyExpected" Type="decimal" Precision="13" Scale="3" />
+    <Property Name="QtyReceived" Type="decimal" Precision="13" Scale="3" />
+    <Property Name="WeightExpected" Type="decimal" Precision="13" Scale="3" />
+    <Property Name="WeightReceived" Type="decimal" Precision="13" Scale="3" />
+    <Property Name="IsUnexpectedMaterial" Type="tinyint" />
+    <Property Name="EnteredMaterial_ID" Type="varchar" MaxLength="30" />
+    <Property Name="EnteredMaterial_Description" Type="varchar" MaxLength="300" />
+    <Property Name="EnteredMaterialUOM" Type="varchar" MaxLength="100" />
+    <Property Name="TempValidationCode" Type="varchar" MaxLength="30" />
+    <Property Name="ExpirationDateCode" Type="varchar" MaxLength="30" />
+    <Property Name="SAP_VendorMaterial_ID" Type="varchar" MaxLength="18" />
+    <Property Name="SAP_VendorMaterialDesc" Type="varchar" MaxLength="40" />
+    <Property Name="SAP_Material_ID" Type="varchar" MaxLength="18" />
+    <Property Name="SAP_Description" Type="varchar" MaxLength="40" />
+    <Property Name="SAP_BaseUOM" Type="varchar" MaxLength="3" />
+    <Property Name="SAP_OrderUOM" Type="varchar" MaxLength="3" />
+    <Property Name="SAP_PHF_Code" Type="varchar" MaxLength="30" />
+    <Property Name="SAP_ReligiousDietCode" Type="varchar" MaxLength="30" />
+    <Property Name="SAP_AllergenCode" Type="varchar" MaxLength="30" />
+  </EntityType>
+  <Association Name="Fk">
+    <End Role="ProbeMaster" Type="Self.ProbeMaster" Multiplicity="1" />
+    <End Role="ProbeSlave" Type="Self.ProbeSlave" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="ProbeMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ProbeSlave">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_ExceptionWorkQueue">
+    <End Role="MaterialReceiptEvent" Type="Self.MaterialReceiptEvent" Multiplicity="1" />
+    <End Role="ExceptionWorkQueue" Type="Self.ExceptionWorkQueue" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MaterialReceiptEvent">
+        <PropertyRef Name="MaterialReceiptEvent_ID" />
+      </Principal>
+      <Dependent Role="ExceptionWorkQueue">
+        <PropertyRef Name="MaterialReceiptEvent_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_ExceptionWorkQueue_1">
+    <End Role="ExceptionType" Type="Self.ExceptionType" Multiplicity="1" />
+    <End Role="ExceptionWorkQueue" Type="Self.ExceptionWorkQueue" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ExceptionType">
+        <PropertyRef Name="ExceptionCode" />
+      </Principal>
+      <Dependent Role="ExceptionWorkQueue">
+        <PropertyRef Name="ExceptionCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_MaterialReceiptEvent_1">
+    <End Role="VendorDeliveryMaterial" Type="Self.VendorDeliveryMaterial" Multiplicity="1" />
+    <End Role="MaterialReceiptEvent" Type="Self.MaterialReceiptEvent" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="VendorDeliveryMaterial">
+        <PropertyRef Name="VendorDeliveryMaterial_ID" />
+      </Principal>
+      <Dependent Role="MaterialReceiptEvent">
+        <PropertyRef Name="VendorDeliveryMaterial_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_MaterialReceiptEvent_2">
+    <End Role="ProblemType" Type="Self.ProblemType" Multiplicity="1" />
+    <End Role="MaterialReceiptEvent" Type="Self.MaterialReceiptEvent" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProblemType">
+        <PropertyRef Name="ProblemCode" />
+      </Principal>
+      <Dependent Role="MaterialReceiptEvent">
+        <PropertyRef Name="ProblemCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_NLINK_ActivityProgress">
+    <End Role="NLINK_ProcessActivityType" Type="Self.NLINK_ProcessActivityType" Multiplicity="1" />
+    <End Role="NLINK_ActivityProgress" Type="Self.NLINK_ActivityProgress" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NLINK_ProcessActivityType">
+        <PropertyRef Name="ActivityCode" />
+      </Principal>
+      <Dependent Role="NLINK_ActivityProgress">
+        <PropertyRef Name="ActivityCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_NLINK_ActivityProgress_0">
+    <End Role="NLINK_ProgressPhaseType" Type="Self.NLINK_ProgressPhaseType" Multiplicity="1" />
+    <End Role="NLINK_ActivityProgress" Type="Self.NLINK_ActivityProgress" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NLINK_ProgressPhaseType">
+        <PropertyRef Name="ProcessPhaseCode" />
+      </Principal>
+      <Dependent Role="NLINK_ActivityProgress">
+        <PropertyRef Name="ProcessPhaseCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_NLINK_ActivityProgress_1">
+    <End Role="NLINK_ActivityStatus" Type="Self.NLINK_ActivityStatus" Multiplicity="1" />
+    <End Role="NLINK_ActivityProgress" Type="Self.NLINK_ActivityProgress" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NLINK_ActivityStatus">
+        <PropertyRef Name="ActivityStatusCode" />
+      </Principal>
+      <Dependent Role="NLINK_ActivityProgress">
+        <PropertyRef Name="ActivityStatus" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_NLINK_PostReceipt">
+    <End Role="NLINK_ActivityProgress" Type="Self.NLINK_ActivityProgress" Multiplicity="1" />
+    <End Role="NLINK_PostReceipt" Type="Self.NLINK_PostReceipt" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NLINK_ActivityProgress">
+        <PropertyRef Name="NLINK_ActivityProgress_ID" />
+      </Principal>
+      <Dependent Role="NLINK_PostReceipt">
+        <PropertyRef Name="NLINK_ActivityProgress_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_PHF_CodeMap">
+    <End Role="TempValidationType" Type="Self.TempValidationType" Multiplicity="1" />
+    <End Role="PHF_CodeMap" Type="Self.PHF_CodeMap" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TempValidationType">
+        <PropertyRef Name="TempValidationCode" />
+      </Principal>
+      <Dependent Role="PHF_CodeMap">
+        <PropertyRef Name="TempValidationCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_PHF_CodeMap_0">
+    <End Role="ExpirationDateType" Type="Self.ExpirationDateType" Multiplicity="1" />
+    <End Role="PHF_CodeMap" Type="Self.PHF_CodeMap" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ExpirationDateType">
+        <PropertyRef Name="ExpirationDateCode" />
+      </Principal>
+      <Dependent Role="PHF_CodeMap">
+        <PropertyRef Name="ExpirationDateCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_PO_Worklist_0">
+    <End Role="VendorDelivery" Type="Self.VendorDelivery" Multiplicity="1" />
+    <End Role="PO_Worklist" Type="Self.PO_Worklist" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="VendorDelivery">
+        <PropertyRef Name="VendorDelivery_ID" />
+      </Principal>
+      <Dependent Role="PO_Worklist">
+        <PropertyRef Name="VendorDelivery_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_PO_Worklist_1">
+    <End Role="PO_PhaseStatus" Type="Self.PO_PhaseStatus" Multiplicity="1" />
+    <End Role="PO_Worklist" Type="Self.PO_Worklist" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PO_PhaseStatus">
+        <PropertyRef Name="PO_PhaseStatusCode" />
+      </Principal>
+      <Dependent Role="PO_Worklist">
+        <PropertyRef Name="PO_PhaseStatus" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_PO_WorkListItem">
+    <End Role="VendorDeliveryMaterial" Type="Self.VendorDeliveryMaterial" Multiplicity="1" />
+    <End Role="PO_WorkListItem" Type="Self.PO_WorkListItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="VendorDeliveryMaterial">
+        <PropertyRef Name="VendorDeliveryMaterial_ID" />
+      </Principal>
+      <Dependent Role="PO_WorkListItem">
+        <PropertyRef Name="VendorDeliveryMaterial_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_PO_WorkListItems">
+    <End Role="PO_Worklist" Type="Self.PO_Worklist" Multiplicity="1" />
+    <End Role="PO_WorkListItem" Type="Self.PO_WorkListItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PO_Worklist">
+        <PropertyRef Name="PO_WorkList_ID" />
+      </Principal>
+      <Dependent Role="PO_WorkListItem">
+        <PropertyRef Name="PO_WorkList_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_TruckInspection_0">
+    <End Role="TruckCondition" Type="Self.TruckCondition" Multiplicity="1" />
+    <End Role="TruckInspection" Type="Self.TruckInspection" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TruckCondition">
+        <PropertyRef Name="ConditionCode" />
+      </Principal>
+      <Dependent Role="TruckInspection">
+        <PropertyRef Name="ConditionCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_TruckInspection_1">
+    <End Role="TruckType" Type="Self.TruckType" Multiplicity="1" />
+    <End Role="TruckInspection" Type="Self.TruckInspection" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TruckType">
+        <PropertyRef Name="TruckCode" />
+      </Principal>
+      <Dependent Role="TruckInspection">
+        <PropertyRef Name="TruckCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_TruckInspection_2">
+    <End Role="VendorDelivery" Type="Self.VendorDelivery" Multiplicity="1" />
+    <End Role="TruckInspection" Type="Self.TruckInspection" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="VendorDelivery">
+        <PropertyRef Name="VendorDelivery_ID" />
+      </Principal>
+      <Dependent Role="TruckInspection">
+        <PropertyRef Name="VendorDelivery_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_VendorDelivery_1">
+    <End Role="DeliveryStatus" Type="Self.DeliveryStatus" Multiplicity="1" />
+    <End Role="VendorDelivery" Type="Self.VendorDelivery" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DeliveryStatus">
+        <PropertyRef Name="DeliveryStatusCode" />
+      </Principal>
+      <Dependent Role="VendorDelivery">
+        <PropertyRef Name="DeliveryStatus" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_VendorDeliveryMaterial">
+    <End Role="VendorDelivery" Type="Self.VendorDelivery" Multiplicity="1" />
+    <End Role="VendorDeliveryMaterial" Type="Self.VendorDeliveryMaterial" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="VendorDelivery">
+        <PropertyRef Name="VendorDelivery_ID" />
+      </Principal>
+      <Dependent Role="VendorDeliveryMaterial">
+        <PropertyRef Name="VendorDelivery_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_VendorDeliveryMaterial_0">
+    <End Role="ExpirationDateType" Type="Self.ExpirationDateType" Multiplicity="0..1" />
+    <End Role="VendorDeliveryMaterial" Type="Self.VendorDeliveryMaterial" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ExpirationDateType">
+        <PropertyRef Name="ExpirationDateCode" />
+      </Principal>
+      <Dependent Role="VendorDeliveryMaterial">
+        <PropertyRef Name="ExpirationDateCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_VendorDeliveryMaterial_1">
+    <End Role="TempValidationType" Type="Self.TempValidationType" Multiplicity="0..1" />
+    <End Role="VendorDeliveryMaterial" Type="Self.VendorDeliveryMaterial" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TempValidationType">
+        <PropertyRef Name="TempValidationCode" />
+      </Principal>
+      <Dependent Role="VendorDeliveryMaterial">
+        <PropertyRef Name="TempValidationCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="GetReceiveReceiptInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="VendorDeliveryId" Type="int" Mode="In" />
+    <Parameter Name="POWorkListId" Type="int" Mode="In" />
+    <Parameter Name="VendorDeliveryCode" Type="nvarchar" Mode="In" />
+    <Parameter Name="IsException" Type="bit" Mode="In" />
+  </Function>
+  <Function Name="NLINKCreateActivityProgress" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="in_ProcessPhaseCode" Type="varchar" Mode="In" />
+    <Parameter Name="in_ActivityCode" Type="varchar" Mode="In" />
+    <Parameter Name="in_ActivityStatus" Type="varchar" Mode="In" />
+    <Parameter Name="new_identity" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="NLINKCreateMaterialReceiptEvent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="in_VendorDeliveryMaterial_ID" Type="int" Mode="In" />
+    <Parameter Name="in_ProblemCode" Type="varchar" Mode="In" />
+    <Parameter Name="in_ProductConditionCode" Type="varchar" Mode="In" />
+    <Parameter Name="new_identity" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="NLINKCreatePO_Worklist" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="in_VendorDelivery_ID" Type="int" Mode="In" />
+    <Parameter Name="in_PO_PhaseStatus" Type="varchar" Mode="In" />
+    <Parameter Name="new_identity" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="NLINKCreatePO_WorklistItem" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="in_PO_WorkList_ID" Type="int" Mode="In" />
+    <Parameter Name="in_VendorDeliveryMaterial_ID" Type="int" Mode="In" />
+    <Parameter Name="new_identity" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="NLINKCreateVendorDelivery" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="in_DeliveryStatus" Type="varchar" Mode="In" />
+    <Parameter Name="in_SAP_Vendor_ID" Type="varchar" Mode="In" />
+    <Parameter Name="new_identity" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="NLINKCreateVendorDeliveryMaterial" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="in_VendorDelivery_ID" Type="int" Mode="In" />
+    <Parameter Name="new_identity" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="RCV_REVIEW_RECEIPT_GRID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="VendorDelivery_ID" Type="varchar" Mode="In" />
+  </Function>
+  <EntityContainer Name="LSG_AIDCModelStoreContainer">
+    <EntitySet Name="DeliveryStatus" EntityType="Self.DeliveryStatus" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ExceptionType" EntityType="Self.ExceptionType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ExceptionWorkQueue" EntityType="Self.ExceptionWorkQueue" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ExpirationDateType" EntityType="Self.ExpirationDateType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MaterialReceiptEvent" EntityType="Self.MaterialReceiptEvent" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="NLINK_ActivityProgress" EntityType="Self.NLINK_ActivityProgress" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="NLINK_ActivityStatus" EntityType="Self.NLINK_ActivityStatus" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="NLINK_PostReceipt" EntityType="Self.NLINK_PostReceipt" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="NLINK_ProcessActivityType" EntityType="Self.NLINK_ProcessActivityType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="NLINK_ProgressPhaseType" EntityType="Self.NLINK_ProgressPhaseType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PHF_CodeMap" EntityType="Self.PHF_CodeMap" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PO_PhaseStatus" EntityType="Self.PO_PhaseStatus" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PO_Worklist" EntityType="Self.PO_Worklist" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PO_WorkListItem" EntityType="Self.PO_WorkListItem" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProbeMaster" EntityType="Self.ProbeMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProbeSlave" EntityType="Self.ProbeSlave" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProblemType" EntityType="Self.ProblemType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TempValidationType" EntityType="Self.TempValidationType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TruckCondition" EntityType="Self.TruckCondition" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TruckInspection" EntityType="Self.TruckInspection" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TruckType" EntityType="Self.TruckType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="VendorDelivery" EntityType="Self.VendorDelivery" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="VendorDeliveryMaterial" EntityType="Self.VendorDeliveryMaterial" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Books" EntityType="Self.Books" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [Books].[BookID] AS [BookID], 
+    [Books].[BookTitle] AS [BookTitle], 
+    [Books].[Description] AS [Description]
+    FROM [dbo].[Books] AS [Books]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="Fk" Association="Self.Fk">
+      <End Role="ProbeMaster" EntitySet="ProbeMaster" />
+      <End Role="ProbeSlave" EntitySet="ProbeSlave" />
+    </AssociationSet>
+    <AssociationSet Name="fk_ExceptionWorkQueue" Association="Self.fk_ExceptionWorkQueue">
+      <End Role="MaterialReceiptEvent" EntitySet="MaterialReceiptEvent" />
+      <End Role="ExceptionWorkQueue" EntitySet="ExceptionWorkQueue" />
+    </AssociationSet>
+    <AssociationSet Name="fk_ExceptionWorkQueue_1" Association="Self.fk_ExceptionWorkQueue_1">
+      <End Role="ExceptionType" EntitySet="ExceptionType" />
+      <End Role="ExceptionWorkQueue" EntitySet="ExceptionWorkQueue" />
+    </AssociationSet>
+    <AssociationSet Name="fk_MaterialReceiptEvent_1" Association="Self.fk_MaterialReceiptEvent_1">
+      <End Role="VendorDeliveryMaterial" EntitySet="VendorDeliveryMaterial" />
+      <End Role="MaterialReceiptEvent" EntitySet="MaterialReceiptEvent" />
+    </AssociationSet>
+    <AssociationSet Name="fk_MaterialReceiptEvent_2" Association="Self.fk_MaterialReceiptEvent_2">
+      <End Role="ProblemType" EntitySet="ProblemType" />
+      <End Role="MaterialReceiptEvent" EntitySet="MaterialReceiptEvent" />
+    </AssociationSet>
+    <AssociationSet Name="fk_NLINK_ActivityProgress" Association="Self.fk_NLINK_ActivityProgress">
+      <End Role="NLINK_ProcessActivityType" EntitySet="NLINK_ProcessActivityType" />
+      <End Role="NLINK_ActivityProgress" EntitySet="NLINK_ActivityProgress" />
+    </AssociationSet>
+    <AssociationSet Name="fk_NLINK_ActivityProgress_0" Association="Self.fk_NLINK_ActivityProgress_0">
+      <End Role="NLINK_ProgressPhaseType" EntitySet="NLINK_ProgressPhaseType" />
+      <End Role="NLINK_ActivityProgress" EntitySet="NLINK_ActivityProgress" />
+    </AssociationSet>
+    <AssociationSet Name="fk_NLINK_ActivityProgress_1" Association="Self.fk_NLINK_ActivityProgress_1">
+      <End Role="NLINK_ActivityStatus" EntitySet="NLINK_ActivityStatus" />
+      <End Role="NLINK_ActivityProgress" EntitySet="NLINK_ActivityProgress" />
+    </AssociationSet>
+    <AssociationSet Name="fk_NLINK_PostReceipt" Association="Self.fk_NLINK_PostReceipt">
+      <End Role="NLINK_ActivityProgress" EntitySet="NLINK_ActivityProgress" />
+      <End Role="NLINK_PostReceipt" EntitySet="NLINK_PostReceipt" />
+    </AssociationSet>
+    <AssociationSet Name="fk_PHF_CodeMap" Association="Self.fk_PHF_CodeMap">
+      <End Role="TempValidationType" EntitySet="TempValidationType" />
+      <End Role="PHF_CodeMap" EntitySet="PHF_CodeMap" />
+    </AssociationSet>
+    <AssociationSet Name="fk_PHF_CodeMap_0" Association="Self.fk_PHF_CodeMap_0">
+      <End Role="ExpirationDateType" EntitySet="ExpirationDateType" />
+      <End Role="PHF_CodeMap" EntitySet="PHF_CodeMap" />
+    </AssociationSet>
+    <AssociationSet Name="fk_PO_Worklist_0" Association="Self.fk_PO_Worklist_0">
+      <End Role="VendorDelivery" EntitySet="VendorDelivery" />
+      <End Role="PO_Worklist" EntitySet="PO_Worklist" />
+    </AssociationSet>
+    <AssociationSet Name="fk_PO_Worklist_1" Association="Self.fk_PO_Worklist_1">
+      <End Role="PO_PhaseStatus" EntitySet="PO_PhaseStatus" />
+      <End Role="PO_Worklist" EntitySet="PO_Worklist" />
+    </AssociationSet>
+    <AssociationSet Name="fk_PO_WorkListItem" Association="Self.fk_PO_WorkListItem">
+      <End Role="VendorDeliveryMaterial" EntitySet="VendorDeliveryMaterial" />
+      <End Role="PO_WorkListItem" EntitySet="PO_WorkListItem" />
+    </AssociationSet>
+    <AssociationSet Name="fk_PO_WorkListItems" Association="Self.fk_PO_WorkListItems">
+      <End Role="PO_Worklist" EntitySet="PO_Worklist" />
+      <End Role="PO_WorkListItem" EntitySet="PO_WorkListItem" />
+    </AssociationSet>
+    <AssociationSet Name="fk_TruckInspection_0" Association="Self.fk_TruckInspection_0">
+      <End Role="TruckCondition" EntitySet="TruckCondition" />
+      <End Role="TruckInspection" EntitySet="TruckInspection" />
+    </AssociationSet>
+    <AssociationSet Name="fk_TruckInspection_1" Association="Self.fk_TruckInspection_1">
+      <End Role="TruckType" EntitySet="TruckType" />
+      <End Role="TruckInspection" EntitySet="TruckInspection" />
+    </AssociationSet>
+    <AssociationSet Name="fk_TruckInspection_2" Association="Self.fk_TruckInspection_2">
+      <End Role="VendorDelivery" EntitySet="VendorDelivery" />
+      <End Role="TruckInspection" EntitySet="TruckInspection" />
+    </AssociationSet>
+    <AssociationSet Name="fk_VendorDelivery_1" Association="Self.fk_VendorDelivery_1">
+      <End Role="DeliveryStatus" EntitySet="DeliveryStatus" />
+      <End Role="VendorDelivery" EntitySet="VendorDelivery" />
+    </AssociationSet>
+    <AssociationSet Name="fk_VendorDeliveryMaterial" Association="Self.fk_VendorDeliveryMaterial">
+      <End Role="VendorDelivery" EntitySet="VendorDelivery" />
+      <End Role="VendorDeliveryMaterial" EntitySet="VendorDeliveryMaterial" />
+    </AssociationSet>
+    <AssociationSet Name="fk_VendorDeliveryMaterial_0" Association="Self.fk_VendorDeliveryMaterial_0">
+      <End Role="ExpirationDateType" EntitySet="ExpirationDateType" />
+      <End Role="VendorDeliveryMaterial" EntitySet="VendorDeliveryMaterial" />
+    </AssociationSet>
+    <AssociationSet Name="fk_VendorDeliveryMaterial_1" Association="Self.fk_VendorDeliveryMaterial_1">
+      <End Role="TempValidationType" EntitySet="TempValidationType" />
+      <End Role="VendorDeliveryMaterial" EntitySet="VendorDeliveryMaterial" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

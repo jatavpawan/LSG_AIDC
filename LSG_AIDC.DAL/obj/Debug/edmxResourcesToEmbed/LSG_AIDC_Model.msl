@@ -1,0 +1,380 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="LSG_AIDCModelStoreContainer" CdmEntityContainer="LSG_AIDCEntities">
+    <FunctionImportMapping FunctionImportName="NLINKCreateActivityProgress" FunctionName="LSG_AIDCModel.Store.NLINKCreateActivityProgress" />
+    <FunctionImportMapping FunctionImportName="NLINKCreateMaterialReceiptEvent" FunctionName="LSG_AIDCModel.Store.NLINKCreateMaterialReceiptEvent" />
+    <FunctionImportMapping FunctionImportName="NLINKCreatePO_Worklist" FunctionName="LSG_AIDCModel.Store.NLINKCreatePO_Worklist" />
+    <FunctionImportMapping FunctionImportName="NLINKCreatePO_WorklistItem" FunctionName="LSG_AIDCModel.Store.NLINKCreatePO_WorklistItem" />
+    <FunctionImportMapping FunctionImportName="NLINKCreateVendorDelivery" FunctionName="LSG_AIDCModel.Store.NLINKCreateVendorDelivery" />
+    <FunctionImportMapping FunctionImportName="NLINKCreateVendorDeliveryMaterial" FunctionName="LSG_AIDCModel.Store.NLINKCreateVendorDeliveryMaterial" />
+    <FunctionImportMapping FunctionImportName="RCV_REVIEW_RECEIPT_GRID" FunctionName="LSG_AIDCModel.Store.RCV_REVIEW_RECEIPT_GRID">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="LSG_AIDCModel.RCV_REVIEW_RECEIPT_GRID_Result">
+          <ScalarProperty Name="VendorDelivery_ID" ColumnName="VendorDelivery_ID" />
+          <ScalarProperty Name="DeliveryArrivalDate" ColumnName="DeliveryArrivalDate" />
+          <ScalarProperty Name="DeliveryCompletionDate" ColumnName="DeliveryCompletionDate" />
+          <ScalarProperty Name="FirstExpectedDeliveryDate" ColumnName="FirstExpectedDeliveryDate" />
+          <ScalarProperty Name="IsInspectionRequired" ColumnName="IsInspectionRequired" />
+          <ScalarProperty Name="DeliveryStatus" ColumnName="DeliveryStatus" />
+          <ScalarProperty Name="SAP_VendorName" ColumnName="SAP_VendorName" />
+          <ScalarProperty Name="SAP_Vendor_ID" ColumnName="SAP_Vendor_ID" />
+          <ScalarProperty Name="VendorDeliveryMaterial_ID" ColumnName="VendorDeliveryMaterial_ID" />
+          <ScalarProperty Name="VendorDelivery_ID1" ColumnName="VendorDelivery_ID1" />
+          <ScalarProperty Name="QtyExpected" ColumnName="QtyExpected" />
+          <ScalarProperty Name="QtyReceived" ColumnName="QtyReceived" />
+          <ScalarProperty Name="WeightExpected" ColumnName="WeightExpected" />
+          <ScalarProperty Name="WeightReceived" ColumnName="WeightReceived" />
+          <ScalarProperty Name="IsUnexpectedMaterial" ColumnName="IsUnexpectedMaterial" />
+          <ScalarProperty Name="EnteredMaterial_ID" ColumnName="EnteredMaterial_ID" />
+          <ScalarProperty Name="EnteredMaterial_Description" ColumnName="EnteredMaterial_Description" />
+          <ScalarProperty Name="EnteredMaterialUOM" ColumnName="EnteredMaterialUOM" />
+          <ScalarProperty Name="TempValidationCode" ColumnName="TempValidationCode" />
+          <ScalarProperty Name="ExpirationDateCode" ColumnName="ExpirationDateCode" />
+          <ScalarProperty Name="SAP_VendorMaterial_ID" ColumnName="SAP_VendorMaterial_ID" />
+          <ScalarProperty Name="SAP_VendorMaterialDesc" ColumnName="SAP_VendorMaterialDesc" />
+          <ScalarProperty Name="SAP_Material_ID" ColumnName="SAP_Material_ID" />
+          <ScalarProperty Name="SAP_Description" ColumnName="SAP_Description" />
+          <ScalarProperty Name="SAP_BaseUOM" ColumnName="SAP_BaseUOM" />
+          <ScalarProperty Name="SAP_OrderUOM" ColumnName="SAP_OrderUOM" />
+          <ScalarProperty Name="SAP_PHF_Code" ColumnName="SAP_PHF_Code" />
+          <ScalarProperty Name="SAP_ReligiousDietCode" ColumnName="SAP_ReligiousDietCode" />
+          <ScalarProperty Name="SAP_AllergenCode" ColumnName="SAP_AllergenCode" />
+          <ScalarProperty Name="PO_WorklistItem_ID" ColumnName="PO_WorklistItem_ID" />
+          <ScalarProperty Name="PO_WorkList_ID" ColumnName="PO_WorkList_ID" />
+          <ScalarProperty Name="VendorDeliveryMaterial_ID1" ColumnName="VendorDeliveryMaterial_ID1" />
+          <ScalarProperty Name="IsItemComplete" ColumnName="IsItemComplete" />
+          <ScalarProperty Name="IsKLine" ColumnName="IsKLine" />
+          <ScalarProperty Name="QtyExpected1" ColumnName="QtyExpected1" />
+          <ScalarProperty Name="WeightExpected1" ColumnName="WeightExpected1" />
+          <ScalarProperty Name="QtyNormalDist" ColumnName="QtyNormalDist" />
+          <ScalarProperty Name="WeightNormalDist" ColumnName="WeightNormalDist" />
+          <ScalarProperty Name="QtyDamageDist" ColumnName="QtyDamageDist" />
+          <ScalarProperty Name="QtyOffTempDist" ColumnName="QtyOffTempDist" />
+          <ScalarProperty Name="WeightOffTempDist" ColumnName="WeightOffTempDist" />
+          <ScalarProperty Name="SAP_LineItem_ID" ColumnName="SAP_LineItem_ID" />
+          <ScalarProperty Name="SAP_Plant" ColumnName="SAP_Plant" />
+          <ScalarProperty Name="SAP_Location" ColumnName="SAP_Location" />
+          <ScalarProperty Name="ReturnQty" ColumnName="ReturnQty" />
+          <ScalarProperty Name="GoodsMovementDoc" ColumnName="GoodsMovementDoc" />
+          <ScalarProperty Name="GoodsMovementYear" ColumnName="GoodsMovementYear" />
+          <ScalarProperty Name="GoodsMovementLine" ColumnName="GoodsMovementLine" />
+          <ScalarProperty Name="IsItemPosted" ColumnName="IsItemPosted" />
+          <ScalarProperty Name="PO_WorkList_ID1" ColumnName="PO_WorkList_ID1" />
+          <ScalarProperty Name="VendorDelivery_ID2" ColumnName="VendorDelivery_ID2" />
+          <ScalarProperty Name="PO_PhaseStatus" ColumnName="PO_PhaseStatus" />
+          <ScalarProperty Name="Operator_ID" ColumnName="Operator_ID" />
+          <ScalarProperty Name="Entered_PO_Number" ColumnName="Entered_PO_Number" />
+          <ScalarProperty Name="IsUnexpected" ColumnName="IsUnexpected" />
+          <ScalarProperty Name="SAP_ExpectedDeliveryDate" ColumnName="SAP_ExpectedDeliveryDate" />
+          <ScalarProperty Name="SAP_PO_ID" ColumnName="SAP_PO_ID" />
+          <ScalarProperty Name="SAP_Vendor_ID1" ColumnName="SAP_Vendor_ID1" />
+          <ScalarProperty Name="SAP_VendorName1" ColumnName="SAP_VendorName1" />
+          <ScalarProperty Name="StatusValue" ColumnName="StatusValue" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="DeliveryStatus">
+      <EntityTypeMapping TypeName="LSG_AIDCModel.DeliveryStatus">
+        <MappingFragment StoreEntitySet="DeliveryStatus">
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="DisplayStatusCode" ColumnName="DisplayStatusCode" />
+          <ScalarProperty Name="DeliveryStatusCode" ColumnName="DeliveryStatusCode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ExceptionType">
+      <EntityTypeMapping TypeName="LSG_AIDCModel.ExceptionType">
+        <MappingFragment StoreEntitySet="ExceptionType">
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="DisplayCode" ColumnName="DisplayCode" />
+          <ScalarProperty Name="ExceptionCode" ColumnName="ExceptionCode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ExceptionWorkQueue">
+      <EntityTypeMapping TypeName="LSG_AIDCModel.ExceptionWorkQueue">
+        <MappingFragment StoreEntitySet="ExceptionWorkQueue">
+          <ScalarProperty Name="AddiitonalInfo" ColumnName="AddiitonalInfo" />
+          <ScalarProperty Name="Operator_ID" ColumnName="Operator_ID" />
+          <ScalarProperty Name="ExceptionCode" ColumnName="ExceptionCode" />
+          <ScalarProperty Name="MaterialReceiptEvent_ID" ColumnName="MaterialReceiptEvent_ID" />
+          <ScalarProperty Name="ExceptionWorkQueue_ID" ColumnName="ExceptionWorkQueue_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ExpirationDateType">
+      <EntityTypeMapping TypeName="LSG_AIDCModel.ExpirationDateType">
+        <MappingFragment StoreEntitySet="ExpirationDateType">
+          <ScalarProperty Name="NumofDays" ColumnName="NumofDays" />
+          <ScalarProperty Name="ComparisonOperator" ColumnName="ComparisonOperator" />
+          <ScalarProperty Name="RejectionTimeUnit" ColumnName="RejectionTimeUnit" />
+          <ScalarProperty Name="RejectionCutoff" ColumnName="RejectionCutoff" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="DisplayCode" ColumnName="DisplayCode" />
+          <ScalarProperty Name="ExpirationDateCode" ColumnName="ExpirationDateCode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MaterialReceiptEvent">
+      <EntityTypeMapping TypeName="LSG_AIDCModel.MaterialReceiptEvent">
+        <MappingFragment StoreEntitySet="MaterialReceiptEvent">
+          <ScalarProperty Name="ProductConditionCode" ColumnName="ProductConditionCode" />
+          <ScalarProperty Name="ProblemCode" ColumnName="ProblemCode" />
+          <ScalarProperty Name="TimeStamp" ColumnName="TimeStamp" />
+          <ScalarProperty Name="WeightReceived" ColumnName="WeightReceived" />
+          <ScalarProperty Name="QtyReceived" ColumnName="QtyReceived" />
+          <ScalarProperty Name="UOM_Entered" ColumnName="UOM_Entered" />
+          <ScalarProperty Name="QtyEntered" ColumnName="QtyEntered" />
+          <ScalarProperty Name="Lot" ColumnName="Lot" />
+          <ScalarProperty Name="Batch" ColumnName="Batch" />
+          <ScalarProperty Name="Expiration" ColumnName="Expiration" />
+          <ScalarProperty Name="Temperature" ColumnName="Temperature" />
+          <ScalarProperty Name="Operator_ID" ColumnName="Operator_ID" />
+          <ScalarProperty Name="VendorDeliveryMaterial_ID" ColumnName="VendorDeliveryMaterial_ID" />
+          <ScalarProperty Name="MaterialReceiptEvent_ID" ColumnName="MaterialReceiptEvent_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NLINK_ActivityProgress">
+      <EntityTypeMapping TypeName="LSG_AIDCModel.NLINK_ActivityProgress">
+        <MappingFragment StoreEntitySet="NLINK_ActivityProgress">
+          <ScalarProperty Name="ApplicationMessage" ColumnName="ApplicationMessage" />
+          <ScalarProperty Name="SystemMessage" ColumnName="SystemMessage" />
+          <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+          <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+          <ScalarProperty Name="ProgressPercentage" ColumnName="ProgressPercentage" />
+          <ScalarProperty Name="ActivityStatus" ColumnName="ActivityStatus" />
+          <ScalarProperty Name="ActivityCode" ColumnName="ActivityCode" />
+          <ScalarProperty Name="ProcessPhaseCode" ColumnName="ProcessPhaseCode" />
+          <ScalarProperty Name="NLINK_ActivityProgress_ID" ColumnName="NLINK_ActivityProgress_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NLINK_ActivityStatus">
+      <EntityTypeMapping TypeName="LSG_AIDCModel.NLINK_ActivityStatus">
+        <MappingFragment StoreEntitySet="NLINK_ActivityStatus">
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="DisplayCode" ColumnName="DisplayCode" />
+          <ScalarProperty Name="ActivityStatusCode" ColumnName="ActivityStatusCode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NLINK_PostReceipt">
+      <EntityTypeMapping TypeName="LSG_AIDCModel.NLINK_PostReceipt">
+        <MappingFragment StoreEntitySet="NLINK_PostReceipt">
+          <ScalarProperty Name="NLINK_ActivityProgress_ID" ColumnName="NLINK_ActivityProgress_ID" />
+          <ScalarProperty Name="SAP_PO_ID" ColumnName="SAP_PO_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NLINK_ProcessActivityType">
+      <EntityTypeMapping TypeName="LSG_AIDCModel.NLINK_ProcessActivityType">
+        <MappingFragment StoreEntitySet="NLINK_ProcessActivityType">
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="DisplayCode" ColumnName="DisplayCode" />
+          <ScalarProperty Name="ActivityCode" ColumnName="ActivityCode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NLINK_ProgressPhaseType">
+      <EntityTypeMapping TypeName="LSG_AIDCModel.NLINK_ProgressPhaseType">
+        <MappingFragment StoreEntitySet="NLINK_ProgressPhaseType">
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="DisplayCode" ColumnName="DisplayCode" />
+          <ScalarProperty Name="ProcessPhaseCode" ColumnName="ProcessPhaseCode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PHF_CodeMap">
+      <EntityTypeMapping TypeName="LSG_AIDCModel.PHF_CodeMap">
+        <MappingFragment StoreEntitySet="PHF_CodeMap">
+          <ScalarProperty Name="ExpirationDateCode" ColumnName="ExpirationDateCode" />
+          <ScalarProperty Name="TempValidationCode" ColumnName="TempValidationCode" />
+          <ScalarProperty Name="SAP_PHF_Code" ColumnName="SAP_PHF_Code" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PO_PhaseStatus">
+      <EntityTypeMapping TypeName="LSG_AIDCModel.PO_PhaseStatus">
+        <MappingFragment StoreEntitySet="PO_PhaseStatus">
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="DisplayStatusCode" ColumnName="DisplayStatusCode" />
+          <ScalarProperty Name="PO_PhaseStatusCode" ColumnName="PO_PhaseStatusCode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PO_Worklist">
+      <EntityTypeMapping TypeName="LSG_AIDCModel.PO_Worklist">
+        <MappingFragment StoreEntitySet="PO_Worklist">
+          <ScalarProperty Name="SAP_VendorName" ColumnName="SAP_VendorName" />
+          <ScalarProperty Name="SAP_Vendor_ID" ColumnName="SAP_Vendor_ID" />
+          <ScalarProperty Name="SAP_PO_ID" ColumnName="SAP_PO_ID" />
+          <ScalarProperty Name="SAP_ExpectedDeliveryDate" ColumnName="SAP_ExpectedDeliveryDate" />
+          <ScalarProperty Name="IsUnexpected" ColumnName="IsUnexpected" />
+          <ScalarProperty Name="Entered_PO_Number" ColumnName="Entered_PO_Number" />
+          <ScalarProperty Name="Operator_ID" ColumnName="Operator_ID" />
+          <ScalarProperty Name="PO_PhaseStatus" ColumnName="PO_PhaseStatus" />
+          <ScalarProperty Name="VendorDelivery_ID" ColumnName="VendorDelivery_ID" />
+          <ScalarProperty Name="PO_WorkList_ID" ColumnName="PO_WorkList_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PO_WorkListItem">
+      <EntityTypeMapping TypeName="LSG_AIDCModel.PO_WorkListItem">
+        <MappingFragment StoreEntitySet="PO_WorkListItem">
+          <ScalarProperty Name="IsItemPosted" ColumnName="IsItemPosted" />
+          <ScalarProperty Name="GoodsMovementLine" ColumnName="GoodsMovementLine" />
+          <ScalarProperty Name="GoodsMovementYear" ColumnName="GoodsMovementYear" />
+          <ScalarProperty Name="GoodsMovementDoc" ColumnName="GoodsMovementDoc" />
+          <ScalarProperty Name="ReturnQty" ColumnName="ReturnQty" />
+          <ScalarProperty Name="SAP_Location" ColumnName="SAP_Location" />
+          <ScalarProperty Name="SAP_Plant" ColumnName="SAP_Plant" />
+          <ScalarProperty Name="SAP_LineItem_ID" ColumnName="SAP_LineItem_ID" />
+          <ScalarProperty Name="WeightOffTempDist" ColumnName="WeightOffTempDist" />
+          <ScalarProperty Name="QtyOffTempDist" ColumnName="QtyOffTempDist" />
+          <ScalarProperty Name="QtyDamageDist" ColumnName="QtyDamageDist" />
+          <ScalarProperty Name="WeightNormalDist" ColumnName="WeightNormalDist" />
+          <ScalarProperty Name="QtyNormalDist" ColumnName="QtyNormalDist" />
+          <ScalarProperty Name="WeightExpected" ColumnName="WeightExpected" />
+          <ScalarProperty Name="QtyExpected" ColumnName="QtyExpected" />
+          <ScalarProperty Name="IsKLine" ColumnName="IsKLine" />
+          <ScalarProperty Name="IsItemComplete" ColumnName="IsItemComplete" />
+          <ScalarProperty Name="VendorDeliveryMaterial_ID" ColumnName="VendorDeliveryMaterial_ID" />
+          <ScalarProperty Name="PO_WorkList_ID" ColumnName="PO_WorkList_ID" />
+          <ScalarProperty Name="PO_WorklistItem_ID" ColumnName="PO_WorklistItem_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProbeMaster">
+      <EntityTypeMapping TypeName="LSG_AIDCModel.ProbeMaster">
+        <MappingFragment StoreEntitySet="ProbeMaster">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProbeSlave">
+      <EntityTypeMapping TypeName="LSG_AIDCModel.ProbeSlave">
+        <MappingFragment StoreEntitySet="ProbeSlave">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProblemType">
+      <EntityTypeMapping TypeName="LSG_AIDCModel.ProblemType">
+        <MappingFragment StoreEntitySet="ProblemType">
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="DisplayCode" ColumnName="DisplayCode" />
+          <ScalarProperty Name="ProblemCode" ColumnName="ProblemCode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TempValidationType">
+      <EntityTypeMapping TypeName="LSG_AIDCModel.TempValidationType">
+        <MappingFragment StoreEntitySet="TempValidationType">
+          <ScalarProperty Name="ComparisonOperator" ColumnName="ComparisonOperator" />
+          <ScalarProperty Name="MaxTemp" ColumnName="MaxTemp" />
+          <ScalarProperty Name="MinTemp" ColumnName="MinTemp" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="DisplayCode" ColumnName="DisplayCode" />
+          <ScalarProperty Name="TempValidationCode" ColumnName="TempValidationCode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TruckCondition">
+      <EntityTypeMapping TypeName="LSG_AIDCModel.TruckCondition">
+        <MappingFragment StoreEntitySet="TruckCondition">
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="DisplayCode" ColumnName="DisplayCode" />
+          <ScalarProperty Name="ConditionCode" ColumnName="ConditionCode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TruckInspection">
+      <EntityTypeMapping TypeName="LSG_AIDCModel.TruckInspection">
+        <MappingFragment StoreEntitySet="TruckInspection">
+          <ScalarProperty Name="Temperature" ColumnName="Temperature" />
+          <ScalarProperty Name="Operator_ID" ColumnName="Operator_ID" />
+          <ScalarProperty Name="InspectionPass" ColumnName="InspectionPass" />
+          <ScalarProperty Name="TruckCode" ColumnName="TruckCode" />
+          <ScalarProperty Name="ConditionCode" ColumnName="ConditionCode" />
+          <ScalarProperty Name="Comments" ColumnName="Comments" />
+          <ScalarProperty Name="VendorDelivery_ID" ColumnName="VendorDelivery_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TruckType">
+      <EntityTypeMapping TypeName="LSG_AIDCModel.TruckType">
+        <MappingFragment StoreEntitySet="TruckType">
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="DisplayCode" ColumnName="DisplayCode" />
+          <ScalarProperty Name="TruckCode" ColumnName="TruckCode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VendorDelivery">
+      <EntityTypeMapping TypeName="LSG_AIDCModel.VendorDelivery">
+        <MappingFragment StoreEntitySet="VendorDelivery">
+          <ScalarProperty Name="SAP_Vendor_ID" ColumnName="SAP_Vendor_ID" />
+          <ScalarProperty Name="SAP_VendorName" ColumnName="SAP_VendorName" />
+          <ScalarProperty Name="DeliveryStatus" ColumnName="DeliveryStatus" />
+          <ScalarProperty Name="IsInspectionRequired" ColumnName="IsInspectionRequired" />
+          <ScalarProperty Name="FirstExpectedDeliveryDate" ColumnName="FirstExpectedDeliveryDate" />
+          <ScalarProperty Name="DeliveryCompletionDate" ColumnName="DeliveryCompletionDate" />
+          <ScalarProperty Name="DeliveryArrivalDate" ColumnName="DeliveryArrivalDate" />
+          <ScalarProperty Name="VendorDelivery_ID" ColumnName="VendorDelivery_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VendorDeliveryMaterial">
+      <EntityTypeMapping TypeName="LSG_AIDCModel.VendorDeliveryMaterial">
+        <MappingFragment StoreEntitySet="VendorDeliveryMaterial">
+          <ScalarProperty Name="SAP_AllergenCode" ColumnName="SAP_AllergenCode" />
+          <ScalarProperty Name="SAP_ReligiousDietCode" ColumnName="SAP_ReligiousDietCode" />
+          <ScalarProperty Name="SAP_PHF_Code" ColumnName="SAP_PHF_Code" />
+          <ScalarProperty Name="SAP_OrderUOM" ColumnName="SAP_OrderUOM" />
+          <ScalarProperty Name="SAP_BaseUOM" ColumnName="SAP_BaseUOM" />
+          <ScalarProperty Name="SAP_Description" ColumnName="SAP_Description" />
+          <ScalarProperty Name="SAP_Material_ID" ColumnName="SAP_Material_ID" />
+          <ScalarProperty Name="SAP_VendorMaterialDesc" ColumnName="SAP_VendorMaterialDesc" />
+          <ScalarProperty Name="SAP_VendorMaterial_ID" ColumnName="SAP_VendorMaterial_ID" />
+          <ScalarProperty Name="ExpirationDateCode" ColumnName="ExpirationDateCode" />
+          <ScalarProperty Name="TempValidationCode" ColumnName="TempValidationCode" />
+          <ScalarProperty Name="EnteredMaterialUOM" ColumnName="EnteredMaterialUOM" />
+          <ScalarProperty Name="EnteredMaterial_Description" ColumnName="EnteredMaterial_Description" />
+          <ScalarProperty Name="EnteredMaterial_ID" ColumnName="EnteredMaterial_ID" />
+          <ScalarProperty Name="IsUnexpectedMaterial" ColumnName="IsUnexpectedMaterial" />
+          <ScalarProperty Name="WeightReceived" ColumnName="WeightReceived" />
+          <ScalarProperty Name="WeightExpected" ColumnName="WeightExpected" />
+          <ScalarProperty Name="QtyReceived" ColumnName="QtyReceived" />
+          <ScalarProperty Name="QtyExpected" ColumnName="QtyExpected" />
+          <ScalarProperty Name="VendorDelivery_ID" ColumnName="VendorDelivery_ID" />
+          <ScalarProperty Name="VendorDeliveryMaterial_ID" ColumnName="VendorDeliveryMaterial_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Books">
+      <EntityTypeMapping TypeName="LSG_AIDCModel.Books">
+        <MappingFragment StoreEntitySet="Books">
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="BookTitle" ColumnName="BookTitle" />
+          <ScalarProperty Name="BookID" ColumnName="BookID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="GetReceiveReceiptInfo" FunctionName="LSG_AIDCModel.Store.GetReceiveReceiptInfo">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="LSG_AIDCModel.GetReceiveReceiptInfo_Result">
+          <ScalarProperty Name="SAP_PO_ID" ColumnName="SAP_PO_ID" />
+          <ScalarProperty Name="SAP_Material_ID" ColumnName="SAP_Material_ID" />
+          <ScalarProperty Name="SAP_Description" ColumnName="SAP_Description" />
+          <ScalarProperty Name="QtyExpected" ColumnName="QtyExpected" />
+          <ScalarProperty Name="SAP_BaseUOM" ColumnName="SAP_BaseUOM" />
+          <ScalarProperty Name="QtyNormalDist" ColumnName="QtyNormalDist" />
+          <ScalarProperty Name="SAP_OrderUOM" ColumnName="SAP_OrderUOM" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping>

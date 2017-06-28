@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LSG_AIDC", "LSG_AIDC\LSG_AIDC.csproj", "{EEA3BD86-B1DE-4205-A510-242C5AC82907}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LSG_AIDC.BLL", "LSG_AIDC.BLL\LSG_AIDC.BLL.csproj", "{A258303A-95B0-488D-B0C7-421F97A752FD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LSG_AIDC.DAL", "LSG_AIDC.DAL\LSG_AIDC.DAL.csproj", "{149799A1-7D97-4454-A526-0B27018A33DB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EEA3BD86-B1DE-4205-A510-242C5AC82907}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EEA3BD86-B1DE-4205-A510-242C5AC82907}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EEA3BD86-B1DE-4205-A510-242C5AC82907}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EEA3BD86-B1DE-4205-A510-242C5AC82907}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A258303A-95B0-488D-B0C7-421F97A752FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A258303A-95B0-488D-B0C7-421F97A752FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A258303A-95B0-488D-B0C7-421F97A752FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A258303A-95B0-488D-B0C7-421F97A752FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{149799A1-7D97-4454-A526-0B27018A33DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{149799A1-7D97-4454-A526-0B27018A33DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{149799A1-7D97-4454-A526-0B27018A33DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{149799A1-7D97-4454-A526-0B27018A33DB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
