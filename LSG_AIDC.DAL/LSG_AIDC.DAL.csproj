@@ -65,6 +65,9 @@
     <Compile Include="ExpirationDateType.cs">
       <DependentUpon>LSG_AIDC_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="GetListOfPOs_Result.cs">
+      <DependentUpon>LSG_AIDC_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="GetReceiveReceiptInfo_Result.cs">
       <DependentUpon>LSG_AIDC_Model.tt</DependentUpon>
     </Compile>

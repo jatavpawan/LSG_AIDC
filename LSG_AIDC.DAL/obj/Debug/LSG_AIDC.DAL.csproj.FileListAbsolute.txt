@@ -7,4 +7,3 @@ C:\Projects\ActiveDev\LSG_AIDC\LSG_AIDC.DAL\bin\Debug\EntityFramework.xml
 C:\Projects\ActiveDev\LSG_AIDC\LSG_AIDC.DAL\bin\Debug\EntityFramework.SqlServer.xml
 C:\Projects\ActiveDev\LSG_AIDC\LSG_AIDC.DAL\obj\Debug\LSG_AIDC.DAL.dll
 C:\Projects\ActiveDev\LSG_AIDC\LSG_AIDC.DAL\obj\Debug\LSG_AIDC.DAL.pdb
-C:\Projects\ActiveDev\LSG_AIDC\LSG_AIDC.DAL\obj\Debug\LSG_AIDC.DAL.csprojResolveAssemblyReference.cache

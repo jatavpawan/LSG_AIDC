@@ -803,4 +803,7 @@
     <Property Type="Decimal" Name="QtyNormalDist" Nullable="true" Precision="13" Scale="3" />
     <Property Type="String" Name="SAP_OrderUOM" Nullable="true" MaxLength="3" />
   </ComplexType>
+  <ComplexType Name="GetListOfPOs_Result">
+    <Property Type="String" Name="SAP_PO_ID" Nullable="false" />
+  </ComplexType>
 </Schema>
