@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="LSG_AIDCModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <!--Errors Found During Generation:
-warning 6002: The table/view 'LSG_AIDC.dbo.Books' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'LSG_AIDC_TEST.dbo.Books' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="Books">
     <Key>
       <PropertyRef Name="BookID" />
@@ -533,9 +533,12 @@ warning 6002: The table/view 'LSG_AIDC.dbo.Books' does not have a primary key de
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Function Name="GetListOfPOs" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="VendorDeliveryId" Type="int" Mode="In" />
+  </Function>
   <Function Name="GetReceiveReceiptInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="VendorDeliveryId" Type="int" Mode="In" />
-    <Parameter Name="POWorkListId" Type="int" Mode="In" />
+    <Parameter Name="SapPOWorkListId" Type="varchar" Mode="In" />
     <Parameter Name="VendorDeliveryCode" Type="nvarchar" Mode="In" />
     <Parameter Name="IsException" Type="bit" Mode="In" />
   </Function>

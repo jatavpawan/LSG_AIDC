@@ -143,15 +143,15 @@ namespace LSG_AIDC.DAL
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<RCV_REVIEW_RECEIPT_GRID_Result>("RCV_REVIEW_RECEIPT_GRID", vendorDelivery_IDParameter);
         }
     
-        public virtual ObjectResult<GetReceiveReceiptInfo_Result> GetReceiveReceiptInfo(Nullable<int> vendorDeliveryId, Nullable<int> pOWorkListId, string vendorDeliveryCode, Nullable<bool> isException)
+        public virtual ObjectResult<GetReceiveReceiptInfo_Result> GetReceiveReceiptInfo(Nullable<int> vendorDeliveryId, string sapPOWorkListId, string vendorDeliveryCode, Nullable<bool> isException)
         {
             var vendorDeliveryIdParameter = vendorDeliveryId.HasValue ?
                 new ObjectParameter("VendorDeliveryId", vendorDeliveryId) :
                 new ObjectParameter("VendorDeliveryId", typeof(int));
     
-            var pOWorkListIdParameter = pOWorkListId.HasValue ?
-                new ObjectParameter("POWorkListId", pOWorkListId) :
-                new ObjectParameter("POWorkListId", typeof(int));
+            var sapPOWorkListIdParameter = sapPOWorkListId != null ?
+                new ObjectParameter("SapPOWorkListId", sapPOWorkListId) :
+                new ObjectParameter("SapPOWorkListId", typeof(string));
     
             var vendorDeliveryCodeParameter = vendorDeliveryCode != null ?
                 new ObjectParameter("VendorDeliveryCode", vendorDeliveryCode) :
@@ -161,7 +161,16 @@ namespace LSG_AIDC.DAL
                 new ObjectParameter("IsException", isException) :
                 new ObjectParameter("IsException", typeof(bool));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetReceiveReceiptInfo_Result>("GetReceiveReceiptInfo", vendorDeliveryIdParameter, pOWorkListIdParameter, vendorDeliveryCodeParameter, isExceptionParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetReceiveReceiptInfo_Result>("GetReceiveReceiptInfo", vendorDeliveryIdParameter, sapPOWorkListIdParameter, vendorDeliveryCodeParameter, isExceptionParameter);
+        }
+    
+        public virtual ObjectResult<string> GetListOfPOs(Nullable<int> vendorDeliveryId)
+        {
+            var vendorDeliveryIdParameter = vendorDeliveryId.HasValue ?
+                new ObjectParameter("VendorDeliveryId", vendorDeliveryId) :
+                new ObjectParameter("VendorDeliveryId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetListOfPOs", vendorDeliveryIdParameter);
         }
     }
 }

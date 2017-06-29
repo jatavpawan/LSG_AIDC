@@ -14,7 +14,7 @@ namespace LSG_AIDC.Api
     public class VendorReviewController : ApiController
     {
         [HttpGet]
-        public ResponseData ReceiveReceipt(int vendorDeliveryId, int? pOWorkListId, bool isException, string vendorDeliveryCode)
+        public ResponseData ReceiveReceipt(int vendorDeliveryId, string pOWorkListId, bool isException, string vendorDeliveryCode)
         {
             try
             {
@@ -22,7 +22,7 @@ namespace LSG_AIDC.Api
                 ResponseData result = new ResponseData();
                 try
                 {
-                    if (pOWorkListId == 0)
+                    if (pOWorkListId == "null")
                         pOWorkListId = null;
                     if (vendorDeliveryCode == "null")
                         vendorDeliveryCode = null;
@@ -46,7 +46,33 @@ namespace LSG_AIDC.Api
                 return null;
             }
         }
+        [HttpGet]
+        public ResponseData GetPOList(int deliveryId)
+        {
+            try
+            {
+              
+                    ReceiveReceiptReposistory obj = new ReceiveReceiptReposistory();
+                    ResponseData result = new ResponseData();
+                   
+                    return result;
+              
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+        [HttpGet]
+        public ResponseData GetDeliveriesList()
+        {
+            try{
 
-
+                return new ResponseData();
+            }catch(Exception ex)
+            {
+                return null;
+            }
+        }
     }
 }

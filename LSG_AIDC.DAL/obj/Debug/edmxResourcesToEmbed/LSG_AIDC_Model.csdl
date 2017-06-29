@@ -1,6 +1,693 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="LSG_AIDCModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="DeliveryStatus">
+    <Key>
+      <PropertyRef Name="DeliveryStatusCode" />
+    </Key>
+    <Property Name="DeliveryStatusCode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DisplayStatusCode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="VendorDelivery" Relationship="Self.fk_VendorDelivery_1" FromRole="DeliveryStatus" ToRole="VendorDelivery" />
+  </EntityType>
+  <EntityType Name="ExceptionType">
+    <Key>
+      <PropertyRef Name="ExceptionCode" />
+    </Key>
+    <Property Name="ExceptionCode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DisplayCode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="ExceptionWorkQueue" Relationship="Self.fk_ExceptionWorkQueue_1" FromRole="ExceptionType" ToRole="ExceptionWorkQueue" />
+  </EntityType>
+  <EntityType Name="ExceptionWorkQueue">
+    <Key>
+      <PropertyRef Name="ExceptionWorkQueue_ID" />
+    </Key>
+    <Property Name="ExceptionWorkQueue_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MaterialReceiptEvent_ID" Type="Int32" Nullable="false" />
+    <Property Name="ExceptionCode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Operator_ID" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="AddiitonalInfo" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="ExceptionType" Relationship="Self.fk_ExceptionWorkQueue_1" FromRole="ExceptionWorkQueue" ToRole="ExceptionType" />
+    <NavigationProperty Name="MaterialReceiptEvent" Relationship="Self.fk_ExceptionWorkQueue" FromRole="ExceptionWorkQueue" ToRole="MaterialReceiptEvent" />
+  </EntityType>
+  <EntityType Name="ExpirationDateType">
+    <Key>
+      <PropertyRef Name="ExpirationDateCode" />
+    </Key>
+    <Property Name="ExpirationDateCode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DisplayCode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+    <Property Name="RejectionCutoff" Type="Int32" Nullable="false" />
+    <Property Name="RejectionTimeUnit" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ComparisonOperator" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="NumofDays" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="PHF_CodeMap" Relationship="Self.fk_PHF_CodeMap_0" FromRole="ExpirationDateType" ToRole="PHF_CodeMap" />
+    <NavigationProperty Name="VendorDeliveryMaterial" Relationship="Self.fk_VendorDeliveryMaterial_0" FromRole="ExpirationDateType" ToRole="VendorDeliveryMaterial" />
+  </EntityType>
+  <EntityType Name="MaterialReceiptEvent">
+    <Key>
+      <PropertyRef Name="MaterialReceiptEvent_ID" />
+    </Key>
+    <Property Name="MaterialReceiptEvent_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="VendorDeliveryMaterial_ID" Type="Int32" Nullable="false" />
+    <Property Name="Operator_ID" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="Temperature" Type="Decimal" Precision="13" Scale="3" />
+    <Property Name="Expiration" Type="DateTime" Precision="3" />
+    <Property Name="Batch" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Lot" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="QtyEntered" Type="Decimal" Precision="13" Scale="3" />
+    <Property Name="UOM_Entered" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+    <Property Name="QtyReceived" Type="Decimal" Precision="13" Scale="3" />
+    <Property Name="WeightReceived" Type="Decimal" Precision="13" Scale="3" />
+    <Property Name="TimeStamp" Type="DateTime" Precision="3" />
+    <Property Name="ProblemCode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ProductConditionCode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="ExceptionWorkQueue" Relationship="Self.fk_ExceptionWorkQueue" FromRole="MaterialReceiptEvent" ToRole="ExceptionWorkQueue" />
+    <NavigationProperty Name="VendorDeliveryMaterial" Relationship="Self.fk_MaterialReceiptEvent_1" FromRole="MaterialReceiptEvent" ToRole="VendorDeliveryMaterial" />
+    <NavigationProperty Name="ProblemType" Relationship="Self.fk_MaterialReceiptEvent_2" FromRole="MaterialReceiptEvent" ToRole="ProblemType" />
+  </EntityType>
+  <EntityType Name="NLINK_ActivityProgress">
+    <Key>
+      <PropertyRef Name="NLINK_ActivityProgress_ID" />
+    </Key>
+    <Property Name="NLINK_ActivityProgress_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProcessPhaseCode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ActivityCode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ActivityStatus" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ProgressPercentage" Type="Int32" />
+    <Property Name="StartTime" Type="DateTime" Precision="3" />
+    <Property Name="EndTime" Type="DateTime" Precision="3" />
+    <Property Name="SystemMessage" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="ApplicationMessage" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="NLINK_ProcessActivityType" Relationship="Self.fk_NLINK_ActivityProgress" FromRole="NLINK_ActivityProgress" ToRole="NLINK_ProcessActivityType" />
+    <NavigationProperty Name="NLINK_ProgressPhaseType" Relationship="Self.fk_NLINK_ActivityProgress_0" FromRole="NLINK_ActivityProgress" ToRole="NLINK_ProgressPhaseType" />
+    <NavigationProperty Name="NLINK_ActivityStatus" Relationship="Self.fk_NLINK_ActivityProgress_1" FromRole="NLINK_ActivityProgress" ToRole="NLINK_ActivityStatus" />
+    <NavigationProperty Name="NLINK_PostReceipt" Relationship="Self.fk_NLINK_PostReceipt" FromRole="NLINK_ActivityProgress" ToRole="NLINK_PostReceipt" />
+  </EntityType>
+  <EntityType Name="NLINK_ActivityStatus">
+    <Key>
+      <PropertyRef Name="ActivityStatusCode" />
+    </Key>
+    <Property Name="ActivityStatusCode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DisplayCode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="NLINK_ActivityProgress" Relationship="Self.fk_NLINK_ActivityProgress_1" FromRole="NLINK_ActivityStatus" ToRole="NLINK_ActivityProgress" />
+  </EntityType>
+  <EntityType Name="NLINK_PostReceipt">
+    <Key>
+      <PropertyRef Name="SAP_PO_ID" />
+    </Key>
+    <Property Name="SAP_PO_ID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="NLINK_ActivityProgress_ID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="NLINK_ActivityProgress" Relationship="Self.fk_NLINK_PostReceipt" FromRole="NLINK_PostReceipt" ToRole="NLINK_ActivityProgress" />
+  </EntityType>
+  <EntityType Name="NLINK_ProcessActivityType">
+    <Key>
+      <PropertyRef Name="ActivityCode" />
+    </Key>
+    <Property Name="ActivityCode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DisplayCode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="NLINK_ActivityProgress" Relationship="Self.fk_NLINK_ActivityProgress" FromRole="NLINK_ProcessActivityType" ToRole="NLINK_ActivityProgress" />
+  </EntityType>
+  <EntityType Name="NLINK_ProgressPhaseType">
+    <Key>
+      <PropertyRef Name="ProcessPhaseCode" />
+    </Key>
+    <Property Name="ProcessPhaseCode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DisplayCode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="NLINK_ActivityProgress" Relationship="Self.fk_NLINK_ActivityProgress_0" FromRole="NLINK_ProgressPhaseType" ToRole="NLINK_ActivityProgress" />
+  </EntityType>
+  <EntityType Name="PHF_CodeMap">
+    <Key>
+      <PropertyRef Name="SAP_PHF_Code" />
+    </Key>
+    <Property Name="SAP_PHF_Code" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="TempValidationCode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ExpirationDateCode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="ExpirationDateType" Relationship="Self.fk_PHF_CodeMap_0" FromRole="PHF_CodeMap" ToRole="ExpirationDateType" />
+    <NavigationProperty Name="TempValidationType" Relationship="Self.fk_PHF_CodeMap" FromRole="PHF_CodeMap" ToRole="TempValidationType" />
+  </EntityType>
+  <EntityType Name="PO_PhaseStatus">
+    <Key>
+      <PropertyRef Name="PO_PhaseStatusCode" />
+    </Key>
+    <Property Name="PO_PhaseStatusCode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DisplayStatusCode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="PO_Worklist" Relationship="Self.fk_PO_Worklist_1" FromRole="PO_PhaseStatus" ToRole="PO_Worklist" />
+  </EntityType>
+  <EntityType Name="PO_Worklist">
+    <Key>
+      <PropertyRef Name="PO_WorkList_ID" />
+    </Key>
+    <Property Name="PO_WorkList_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="VendorDelivery_ID" Type="Int32" Nullable="false" />
+    <Property Name="PO_PhaseStatus" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Operator_ID" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="Entered_PO_Number" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="IsUnexpected" Type="Byte" />
+    <Property Name="SAP_ExpectedDeliveryDate" Type="DateTime" Precision="0" />
+    <Property Name="SAP_PO_ID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="SAP_Vendor_ID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="SAP_VendorName" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="PO_PhaseStatus1" Relationship="Self.fk_PO_Worklist_1" FromRole="PO_Worklist" ToRole="PO_PhaseStatus" />
+    <NavigationProperty Name="VendorDelivery" Relationship="Self.fk_PO_Worklist_0" FromRole="PO_Worklist" ToRole="VendorDelivery" />
+    <NavigationProperty Name="PO_WorkListItem" Relationship="Self.fk_PO_WorkListItems" FromRole="PO_Worklist" ToRole="PO_WorkListItem" />
+  </EntityType>
+  <EntityType Name="PO_WorkListItem">
+    <Key>
+      <PropertyRef Name="PO_WorklistItem_ID" />
+    </Key>
+    <Property Name="PO_WorklistItem_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PO_WorkList_ID" Type="Int32" Nullable="false" />
+    <Property Name="VendorDeliveryMaterial_ID" Type="Int32" Nullable="false" />
+    <Property Name="IsItemComplete" Type="Byte" Nullable="false" />
+    <Property Name="IsKLine" Type="Byte" Nullable="false" />
+    <Property Name="QtyExpected" Type="Decimal" Precision="13" Scale="3" />
+    <Property Name="WeightExpected" Type="Decimal" Precision="13" Scale="3" />
+    <Property Name="QtyNormalDist" Type="Decimal" Precision="13" Scale="3" />
+    <Property Name="WeightNormalDist" Type="Decimal" Precision="13" Scale="3" />
+    <Property Name="QtyDamageDist" Type="Decimal" Precision="13" Scale="3" />
+    <Property Name="QtyOffTempDist" Type="Decimal" Precision="13" Scale="3" />
+    <Property Name="WeightOffTempDist" Type="Decimal" Precision="13" Scale="3" />
+    <Property Name="SAP_LineItem_ID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="SAP_Plant" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+    <Property Name="SAP_Location" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+    <Property Name="ReturnQty" Type="Decimal" Precision="13" Scale="3" />
+    <Property Name="GoodsMovementDoc" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="GoodsMovementYear" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+    <Property Name="GoodsMovementLine" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+    <Property Name="IsItemPosted" Type="Byte" />
+    <NavigationProperty Name="PO_Worklist" Relationship="Self.fk_PO_WorkListItems" FromRole="PO_WorkListItem" ToRole="PO_Worklist" />
+    <NavigationProperty Name="VendorDeliveryMaterial" Relationship="Self.fk_PO_WorkListItem" FromRole="PO_WorkListItem" ToRole="VendorDeliveryMaterial" />
+  </EntityType>
+  <EntityType Name="ProbeMaster">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="ProbeSlave" Relationship="Self.Fk" FromRole="ProbeMaster" ToRole="ProbeSlave" />
+  </EntityType>
+  <EntityType Name="ProbeSlave">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="120" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="ProbeMaster" Relationship="Self.Fk" FromRole="ProbeSlave" ToRole="ProbeMaster" />
+  </EntityType>
+  <EntityType Name="ProblemType">
+    <Key>
+      <PropertyRef Name="ProblemCode" />
+    </Key>
+    <Property Name="ProblemCode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DisplayCode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="MaterialReceiptEvent" Relationship="Self.fk_MaterialReceiptEvent_2" FromRole="ProblemType" ToRole="MaterialReceiptEvent" />
+  </EntityType>
+  <EntityType Name="TempValidationType">
+    <Key>
+      <PropertyRef Name="TempValidationCode" />
+    </Key>
+    <Property Name="TempValidationCode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DisplayCode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+    <Property Name="MinTemp" Type="Decimal" Precision="13" Scale="3" />
+    <Property Name="MaxTemp" Type="Decimal" Precision="13" Scale="3" />
+    <Property Name="ComparisonOperator" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="PHF_CodeMap" Relationship="Self.fk_PHF_CodeMap" FromRole="TempValidationType" ToRole="PHF_CodeMap" />
+    <NavigationProperty Name="VendorDeliveryMaterial" Relationship="Self.fk_VendorDeliveryMaterial_1" FromRole="TempValidationType" ToRole="VendorDeliveryMaterial" />
+  </EntityType>
+  <EntityType Name="TruckCondition">
+    <Key>
+      <PropertyRef Name="ConditionCode" />
+    </Key>
+    <Property Name="ConditionCode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DisplayCode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="TruckInspection" Relationship="Self.fk_TruckInspection_0" FromRole="TruckCondition" ToRole="TruckInspection" />
+  </EntityType>
+  <EntityType Name="TruckInspection">
+    <Key>
+      <PropertyRef Name="VendorDelivery_ID" />
+    </Key>
+    <Property Name="VendorDelivery_ID" Type="Int32" Nullable="false" />
+    <Property Name="Comments" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+    <Property Name="ConditionCode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="TruckCode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="InspectionPass" Type="Byte" Nullable="false" />
+    <Property Name="Operator_ID" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="Temperature" Type="Decimal" Precision="13" Scale="3" Nullable="false" />
+    <NavigationProperty Name="TruckCondition" Relationship="Self.fk_TruckInspection_0" FromRole="TruckInspection" ToRole="TruckCondition" />
+    <NavigationProperty Name="TruckType" Relationship="Self.fk_TruckInspection_1" FromRole="TruckInspection" ToRole="TruckType" />
+    <NavigationProperty Name="VendorDelivery" Relationship="Self.fk_TruckInspection_2" FromRole="TruckInspection" ToRole="VendorDelivery" />
+  </EntityType>
+  <EntityType Name="TruckType">
+    <Key>
+      <PropertyRef Name="TruckCode" />
+    </Key>
+    <Property Name="TruckCode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DisplayCode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="TruckInspection" Relationship="Self.fk_TruckInspection_1" FromRole="TruckType" ToRole="TruckInspection" />
+  </EntityType>
+  <EntityType Name="VendorDelivery">
+    <Key>
+      <PropertyRef Name="VendorDelivery_ID" />
+    </Key>
+    <Property Name="VendorDelivery_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DeliveryArrivalDate" Type="DateTime" Precision="3" />
+    <Property Name="DeliveryCompletionDate" Type="DateTime" Precision="3" />
+    <Property Name="FirstExpectedDeliveryDate" Type="DateTime" Precision="3" />
+    <Property Name="IsInspectionRequired" Type="Byte" />
+    <Property Name="DeliveryStatus" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SAP_VendorName" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+    <Property Name="SAP_Vendor_ID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="DeliveryStatus1" Relationship="Self.fk_VendorDelivery_1" FromRole="VendorDelivery" ToRole="DeliveryStatus" />
+    <NavigationProperty Name="PO_Worklist" Relationship="Self.fk_PO_Worklist_0" FromRole="VendorDelivery" ToRole="PO_Worklist" />
+    <NavigationProperty Name="TruckInspection" Relationship="Self.fk_TruckInspection_2" FromRole="VendorDelivery" ToRole="TruckInspection" />
+    <NavigationProperty Name="VendorDeliveryMaterial" Relationship="Self.fk_VendorDeliveryMaterial" FromRole="VendorDelivery" ToRole="VendorDeliveryMaterial" />
+  </EntityType>
+  <EntityType Name="VendorDeliveryMaterial">
+    <Key>
+      <PropertyRef Name="VendorDeliveryMaterial_ID" />
+    </Key>
+    <Property Name="VendorDeliveryMaterial_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="VendorDelivery_ID" Type="Int32" Nullable="false" />
+    <Property Name="QtyExpected" Type="Decimal" Precision="13" Scale="3" />
+    <Property Name="QtyReceived" Type="Decimal" Precision="13" Scale="3" />
+    <Property Name="WeightExpected" Type="Decimal" Precision="13" Scale="3" />
+    <Property Name="WeightReceived" Type="Decimal" Precision="13" Scale="3" />
+    <Property Name="IsUnexpectedMaterial" Type="Byte" />
+    <Property Name="EnteredMaterial_ID" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="EnteredMaterial_Description" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+    <Property Name="EnteredMaterialUOM" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="TempValidationCode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="ExpirationDateCode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="SAP_VendorMaterial_ID" Type="String" MaxLength="18" FixedLength="false" Unicode="false" />
+    <Property Name="SAP_VendorMaterialDesc" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="SAP_Material_ID" Type="String" MaxLength="18" FixedLength="false" Unicode="false" />
+    <Property Name="SAP_Description" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="SAP_BaseUOM" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+    <Property Name="SAP_OrderUOM" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+    <Property Name="SAP_PHF_Code" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="SAP_ReligiousDietCode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="SAP_AllergenCode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="ExpirationDateType" Relationship="Self.fk_VendorDeliveryMaterial_0" FromRole="VendorDeliveryMaterial" ToRole="ExpirationDateType" />
+    <NavigationProperty Name="MaterialReceiptEvent" Relationship="Self.fk_MaterialReceiptEvent_1" FromRole="VendorDeliveryMaterial" ToRole="MaterialReceiptEvent" />
+    <NavigationProperty Name="PO_WorkListItem" Relationship="Self.fk_PO_WorkListItem" FromRole="VendorDeliveryMaterial" ToRole="PO_WorkListItem" />
+    <NavigationProperty Name="TempValidationType" Relationship="Self.fk_VendorDeliveryMaterial_1" FromRole="VendorDeliveryMaterial" ToRole="TempValidationType" />
+    <NavigationProperty Name="VendorDelivery" Relationship="Self.fk_VendorDeliveryMaterial" FromRole="VendorDeliveryMaterial" ToRole="VendorDelivery" />
+  </EntityType>
+  <EntityType Name="Books">
+    <Key>
+      <PropertyRef Name="BookID" />
+      <PropertyRef Name="BookTitle" />
+    </Key>
+    <Property Name="BookID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BookTitle" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <Association Name="fk_VendorDelivery_1">
+    <End Role="DeliveryStatus" Type="Self.DeliveryStatus" Multiplicity="1" />
+    <End Role="VendorDelivery" Type="Self.VendorDelivery" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DeliveryStatus">
+        <PropertyRef Name="DeliveryStatusCode" />
+      </Principal>
+      <Dependent Role="VendorDelivery">
+        <PropertyRef Name="DeliveryStatus" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_ExceptionWorkQueue_1">
+    <End Role="ExceptionType" Type="Self.ExceptionType" Multiplicity="1" />
+    <End Role="ExceptionWorkQueue" Type="Self.ExceptionWorkQueue" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ExceptionType">
+        <PropertyRef Name="ExceptionCode" />
+      </Principal>
+      <Dependent Role="ExceptionWorkQueue">
+        <PropertyRef Name="ExceptionCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_ExceptionWorkQueue">
+    <End Role="MaterialReceiptEvent" Type="Self.MaterialReceiptEvent" Multiplicity="1" />
+    <End Role="ExceptionWorkQueue" Type="Self.ExceptionWorkQueue" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MaterialReceiptEvent">
+        <PropertyRef Name="MaterialReceiptEvent_ID" />
+      </Principal>
+      <Dependent Role="ExceptionWorkQueue">
+        <PropertyRef Name="MaterialReceiptEvent_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_PHF_CodeMap_0">
+    <End Role="ExpirationDateType" Type="Self.ExpirationDateType" Multiplicity="1" />
+    <End Role="PHF_CodeMap" Type="Self.PHF_CodeMap" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ExpirationDateType">
+        <PropertyRef Name="ExpirationDateCode" />
+      </Principal>
+      <Dependent Role="PHF_CodeMap">
+        <PropertyRef Name="ExpirationDateCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_VendorDeliveryMaterial_0">
+    <End Role="ExpirationDateType" Type="Self.ExpirationDateType" Multiplicity="0..1" />
+    <End Role="VendorDeliveryMaterial" Type="Self.VendorDeliveryMaterial" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ExpirationDateType">
+        <PropertyRef Name="ExpirationDateCode" />
+      </Principal>
+      <Dependent Role="VendorDeliveryMaterial">
+        <PropertyRef Name="ExpirationDateCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_MaterialReceiptEvent_1">
+    <End Role="VendorDeliveryMaterial" Type="Self.VendorDeliveryMaterial" Multiplicity="1" />
+    <End Role="MaterialReceiptEvent" Type="Self.MaterialReceiptEvent" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="VendorDeliveryMaterial">
+        <PropertyRef Name="VendorDeliveryMaterial_ID" />
+      </Principal>
+      <Dependent Role="MaterialReceiptEvent">
+        <PropertyRef Name="VendorDeliveryMaterial_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_MaterialReceiptEvent_2">
+    <End Role="ProblemType" Type="Self.ProblemType" Multiplicity="1" />
+    <End Role="MaterialReceiptEvent" Type="Self.MaterialReceiptEvent" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProblemType">
+        <PropertyRef Name="ProblemCode" />
+      </Principal>
+      <Dependent Role="MaterialReceiptEvent">
+        <PropertyRef Name="ProblemCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_NLINK_ActivityProgress">
+    <End Role="NLINK_ProcessActivityType" Type="Self.NLINK_ProcessActivityType" Multiplicity="1" />
+    <End Role="NLINK_ActivityProgress" Type="Self.NLINK_ActivityProgress" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NLINK_ProcessActivityType">
+        <PropertyRef Name="ActivityCode" />
+      </Principal>
+      <Dependent Role="NLINK_ActivityProgress">
+        <PropertyRef Name="ActivityCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_NLINK_ActivityProgress_0">
+    <End Role="NLINK_ProgressPhaseType" Type="Self.NLINK_ProgressPhaseType" Multiplicity="1" />
+    <End Role="NLINK_ActivityProgress" Type="Self.NLINK_ActivityProgress" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NLINK_ProgressPhaseType">
+        <PropertyRef Name="ProcessPhaseCode" />
+      </Principal>
+      <Dependent Role="NLINK_ActivityProgress">
+        <PropertyRef Name="ProcessPhaseCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_NLINK_ActivityProgress_1">
+    <End Role="NLINK_ActivityStatus" Type="Self.NLINK_ActivityStatus" Multiplicity="1" />
+    <End Role="NLINK_ActivityProgress" Type="Self.NLINK_ActivityProgress" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NLINK_ActivityStatus">
+        <PropertyRef Name="ActivityStatusCode" />
+      </Principal>
+      <Dependent Role="NLINK_ActivityProgress">
+        <PropertyRef Name="ActivityStatus" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_NLINK_PostReceipt">
+    <End Role="NLINK_ActivityProgress" Type="Self.NLINK_ActivityProgress" Multiplicity="1" />
+    <End Role="NLINK_PostReceipt" Type="Self.NLINK_PostReceipt" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NLINK_ActivityProgress">
+        <PropertyRef Name="NLINK_ActivityProgress_ID" />
+      </Principal>
+      <Dependent Role="NLINK_PostReceipt">
+        <PropertyRef Name="NLINK_ActivityProgress_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_PHF_CodeMap">
+    <End Role="TempValidationType" Type="Self.TempValidationType" Multiplicity="1" />
+    <End Role="PHF_CodeMap" Type="Self.PHF_CodeMap" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TempValidationType">
+        <PropertyRef Name="TempValidationCode" />
+      </Principal>
+      <Dependent Role="PHF_CodeMap">
+        <PropertyRef Name="TempValidationCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_PO_Worklist_1">
+    <End Role="PO_PhaseStatus" Type="Self.PO_PhaseStatus" Multiplicity="1" />
+    <End Role="PO_Worklist" Type="Self.PO_Worklist" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PO_PhaseStatus">
+        <PropertyRef Name="PO_PhaseStatusCode" />
+      </Principal>
+      <Dependent Role="PO_Worklist">
+        <PropertyRef Name="PO_PhaseStatus" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_PO_Worklist_0">
+    <End Role="VendorDelivery" Type="Self.VendorDelivery" Multiplicity="1" />
+    <End Role="PO_Worklist" Type="Self.PO_Worklist" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="VendorDelivery">
+        <PropertyRef Name="VendorDelivery_ID" />
+      </Principal>
+      <Dependent Role="PO_Worklist">
+        <PropertyRef Name="VendorDelivery_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_PO_WorkListItems">
+    <End Role="PO_Worklist" Type="Self.PO_Worklist" Multiplicity="1" />
+    <End Role="PO_WorkListItem" Type="Self.PO_WorkListItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PO_Worklist">
+        <PropertyRef Name="PO_WorkList_ID" />
+      </Principal>
+      <Dependent Role="PO_WorkListItem">
+        <PropertyRef Name="PO_WorkList_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_PO_WorkListItem">
+    <End Role="VendorDeliveryMaterial" Type="Self.VendorDeliveryMaterial" Multiplicity="1" />
+    <End Role="PO_WorkListItem" Type="Self.PO_WorkListItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="VendorDeliveryMaterial">
+        <PropertyRef Name="VendorDeliveryMaterial_ID" />
+      </Principal>
+      <Dependent Role="PO_WorkListItem">
+        <PropertyRef Name="VendorDeliveryMaterial_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Fk">
+    <End Role="ProbeMaster" Type="Self.ProbeMaster" Multiplicity="1" />
+    <End Role="ProbeSlave" Type="Self.ProbeSlave" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="ProbeMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ProbeSlave">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_VendorDeliveryMaterial_1">
+    <End Role="TempValidationType" Type="Self.TempValidationType" Multiplicity="0..1" />
+    <End Role="VendorDeliveryMaterial" Type="Self.VendorDeliveryMaterial" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TempValidationType">
+        <PropertyRef Name="TempValidationCode" />
+      </Principal>
+      <Dependent Role="VendorDeliveryMaterial">
+        <PropertyRef Name="TempValidationCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_TruckInspection_0">
+    <End Role="TruckCondition" Type="Self.TruckCondition" Multiplicity="1" />
+    <End Role="TruckInspection" Type="Self.TruckInspection" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TruckCondition">
+        <PropertyRef Name="ConditionCode" />
+      </Principal>
+      <Dependent Role="TruckInspection">
+        <PropertyRef Name="ConditionCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_TruckInspection_1">
+    <End Role="TruckType" Type="Self.TruckType" Multiplicity="1" />
+    <End Role="TruckInspection" Type="Self.TruckInspection" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TruckType">
+        <PropertyRef Name="TruckCode" />
+      </Principal>
+      <Dependent Role="TruckInspection">
+        <PropertyRef Name="TruckCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_TruckInspection_2">
+    <End Role="VendorDelivery" Type="Self.VendorDelivery" Multiplicity="1" />
+    <End Role="TruckInspection" Type="Self.TruckInspection" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="VendorDelivery">
+        <PropertyRef Name="VendorDelivery_ID" />
+      </Principal>
+      <Dependent Role="TruckInspection">
+        <PropertyRef Name="VendorDelivery_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_VendorDeliveryMaterial">
+    <End Role="VendorDelivery" Type="Self.VendorDelivery" Multiplicity="1" />
+    <End Role="VendorDeliveryMaterial" Type="Self.VendorDeliveryMaterial" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="VendorDelivery">
+        <PropertyRef Name="VendorDelivery_ID" />
+      </Principal>
+      <Dependent Role="VendorDeliveryMaterial">
+        <PropertyRef Name="VendorDelivery_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="LSG_AIDCEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="DeliveryStatus" EntityType="Self.DeliveryStatus" />
+    <EntitySet Name="ExceptionType" EntityType="Self.ExceptionType" />
+    <EntitySet Name="ExceptionWorkQueue" EntityType="Self.ExceptionWorkQueue" />
+    <EntitySet Name="ExpirationDateType" EntityType="Self.ExpirationDateType" />
+    <EntitySet Name="MaterialReceiptEvent" EntityType="Self.MaterialReceiptEvent" />
+    <EntitySet Name="NLINK_ActivityProgress" EntityType="Self.NLINK_ActivityProgress" />
+    <EntitySet Name="NLINK_ActivityStatus" EntityType="Self.NLINK_ActivityStatus" />
+    <EntitySet Name="NLINK_PostReceipt" EntityType="Self.NLINK_PostReceipt" />
+    <EntitySet Name="NLINK_ProcessActivityType" EntityType="Self.NLINK_ProcessActivityType" />
+    <EntitySet Name="NLINK_ProgressPhaseType" EntityType="Self.NLINK_ProgressPhaseType" />
+    <EntitySet Name="PHF_CodeMap" EntityType="Self.PHF_CodeMap" />
+    <EntitySet Name="PO_PhaseStatus" EntityType="Self.PO_PhaseStatus" />
+    <EntitySet Name="PO_Worklist" EntityType="Self.PO_Worklist" />
+    <EntitySet Name="PO_WorkListItem" EntityType="Self.PO_WorkListItem" />
+    <EntitySet Name="ProbeMaster" EntityType="Self.ProbeMaster" />
+    <EntitySet Name="ProbeSlave" EntityType="Self.ProbeSlave" />
+    <EntitySet Name="ProblemType" EntityType="Self.ProblemType" />
+    <EntitySet Name="TempValidationType" EntityType="Self.TempValidationType" />
+    <EntitySet Name="TruckCondition" EntityType="Self.TruckCondition" />
+    <EntitySet Name="TruckInspection" EntityType="Self.TruckInspection" />
+    <EntitySet Name="TruckType" EntityType="Self.TruckType" />
+    <EntitySet Name="VendorDelivery" EntityType="Self.VendorDelivery" />
+    <EntitySet Name="VendorDeliveryMaterial" EntityType="Self.VendorDeliveryMaterial" />
+    <EntitySet Name="Books" EntityType="Self.Books" />
+    <AssociationSet Name="fk_VendorDelivery_1" Association="Self.fk_VendorDelivery_1">
+      <End Role="DeliveryStatus" EntitySet="DeliveryStatus" />
+      <End Role="VendorDelivery" EntitySet="VendorDelivery" />
+    </AssociationSet>
+    <AssociationSet Name="fk_ExceptionWorkQueue_1" Association="Self.fk_ExceptionWorkQueue_1">
+      <End Role="ExceptionType" EntitySet="ExceptionType" />
+      <End Role="ExceptionWorkQueue" EntitySet="ExceptionWorkQueue" />
+    </AssociationSet>
+    <AssociationSet Name="fk_ExceptionWorkQueue" Association="Self.fk_ExceptionWorkQueue">
+      <End Role="MaterialReceiptEvent" EntitySet="MaterialReceiptEvent" />
+      <End Role="ExceptionWorkQueue" EntitySet="ExceptionWorkQueue" />
+    </AssociationSet>
+    <AssociationSet Name="fk_PHF_CodeMap_0" Association="Self.fk_PHF_CodeMap_0">
+      <End Role="ExpirationDateType" EntitySet="ExpirationDateType" />
+      <End Role="PHF_CodeMap" EntitySet="PHF_CodeMap" />
+    </AssociationSet>
+    <AssociationSet Name="fk_VendorDeliveryMaterial_0" Association="Self.fk_VendorDeliveryMaterial_0">
+      <End Role="ExpirationDateType" EntitySet="ExpirationDateType" />
+      <End Role="VendorDeliveryMaterial" EntitySet="VendorDeliveryMaterial" />
+    </AssociationSet>
+    <AssociationSet Name="fk_MaterialReceiptEvent_1" Association="Self.fk_MaterialReceiptEvent_1">
+      <End Role="VendorDeliveryMaterial" EntitySet="VendorDeliveryMaterial" />
+      <End Role="MaterialReceiptEvent" EntitySet="MaterialReceiptEvent" />
+    </AssociationSet>
+    <AssociationSet Name="fk_MaterialReceiptEvent_2" Association="Self.fk_MaterialReceiptEvent_2">
+      <End Role="ProblemType" EntitySet="ProblemType" />
+      <End Role="MaterialReceiptEvent" EntitySet="MaterialReceiptEvent" />
+    </AssociationSet>
+    <AssociationSet Name="fk_NLINK_ActivityProgress" Association="Self.fk_NLINK_ActivityProgress">
+      <End Role="NLINK_ProcessActivityType" EntitySet="NLINK_ProcessActivityType" />
+      <End Role="NLINK_ActivityProgress" EntitySet="NLINK_ActivityProgress" />
+    </AssociationSet>
+    <AssociationSet Name="fk_NLINK_ActivityProgress_0" Association="Self.fk_NLINK_ActivityProgress_0">
+      <End Role="NLINK_ProgressPhaseType" EntitySet="NLINK_ProgressPhaseType" />
+      <End Role="NLINK_ActivityProgress" EntitySet="NLINK_ActivityProgress" />
+    </AssociationSet>
+    <AssociationSet Name="fk_NLINK_ActivityProgress_1" Association="Self.fk_NLINK_ActivityProgress_1">
+      <End Role="NLINK_ActivityStatus" EntitySet="NLINK_ActivityStatus" />
+      <End Role="NLINK_ActivityProgress" EntitySet="NLINK_ActivityProgress" />
+    </AssociationSet>
+    <AssociationSet Name="fk_NLINK_PostReceipt" Association="Self.fk_NLINK_PostReceipt">
+      <End Role="NLINK_ActivityProgress" EntitySet="NLINK_ActivityProgress" />
+      <End Role="NLINK_PostReceipt" EntitySet="NLINK_PostReceipt" />
+    </AssociationSet>
+    <AssociationSet Name="fk_PHF_CodeMap" Association="Self.fk_PHF_CodeMap">
+      <End Role="TempValidationType" EntitySet="TempValidationType" />
+      <End Role="PHF_CodeMap" EntitySet="PHF_CodeMap" />
+    </AssociationSet>
+    <AssociationSet Name="fk_PO_Worklist_1" Association="Self.fk_PO_Worklist_1">
+      <End Role="PO_PhaseStatus" EntitySet="PO_PhaseStatus" />
+      <End Role="PO_Worklist" EntitySet="PO_Worklist" />
+    </AssociationSet>
+    <AssociationSet Name="fk_PO_Worklist_0" Association="Self.fk_PO_Worklist_0">
+      <End Role="VendorDelivery" EntitySet="VendorDelivery" />
+      <End Role="PO_Worklist" EntitySet="PO_Worklist" />
+    </AssociationSet>
+    <AssociationSet Name="fk_PO_WorkListItems" Association="Self.fk_PO_WorkListItems">
+      <End Role="PO_Worklist" EntitySet="PO_Worklist" />
+      <End Role="PO_WorkListItem" EntitySet="PO_WorkListItem" />
+    </AssociationSet>
+    <AssociationSet Name="fk_PO_WorkListItem" Association="Self.fk_PO_WorkListItem">
+      <End Role="VendorDeliveryMaterial" EntitySet="VendorDeliveryMaterial" />
+      <End Role="PO_WorkListItem" EntitySet="PO_WorkListItem" />
+    </AssociationSet>
+    <AssociationSet Name="Fk" Association="Self.Fk">
+      <End Role="ProbeMaster" EntitySet="ProbeMaster" />
+      <End Role="ProbeSlave" EntitySet="ProbeSlave" />
+    </AssociationSet>
+    <AssociationSet Name="fk_VendorDeliveryMaterial_1" Association="Self.fk_VendorDeliveryMaterial_1">
+      <End Role="TempValidationType" EntitySet="TempValidationType" />
+      <End Role="VendorDeliveryMaterial" EntitySet="VendorDeliveryMaterial" />
+    </AssociationSet>
+    <AssociationSet Name="fk_TruckInspection_0" Association="Self.fk_TruckInspection_0">
+      <End Role="TruckCondition" EntitySet="TruckCondition" />
+      <End Role="TruckInspection" EntitySet="TruckInspection" />
+    </AssociationSet>
+    <AssociationSet Name="fk_TruckInspection_1" Association="Self.fk_TruckInspection_1">
+      <End Role="TruckType" EntitySet="TruckType" />
+      <End Role="TruckInspection" EntitySet="TruckInspection" />
+    </AssociationSet>
+    <AssociationSet Name="fk_TruckInspection_2" Association="Self.fk_TruckInspection_2">
+      <End Role="VendorDelivery" EntitySet="VendorDelivery" />
+      <End Role="TruckInspection" EntitySet="TruckInspection" />
+    </AssociationSet>
+    <AssociationSet Name="fk_VendorDeliveryMaterial" Association="Self.fk_VendorDeliveryMaterial">
+      <End Role="VendorDelivery" EntitySet="VendorDelivery" />
+      <End Role="VendorDeliveryMaterial" EntitySet="VendorDeliveryMaterial" />
+    </AssociationSet>
     <FunctionImport Name="NLINKCreateActivityProgress">
       <Parameter Name="in_ProcessPhaseCode" Mode="In" Type="String" />
       <Parameter Name="in_ActivityCode" Mode="In" Type="String" />
@@ -35,123 +722,14 @@
     <FunctionImport Name="RCV_REVIEW_RECEIPT_GRID" ReturnType="Collection(LSG_AIDCModel.RCV_REVIEW_RECEIPT_GRID_Result)">
       <Parameter Name="VendorDelivery_ID" Mode="In" Type="String" />
     </FunctionImport>
-    <EntitySet Name="DeliveryStatus" EntityType="LSG_AIDCModel.DeliveryStatus" />
-    <EntitySet Name="ExceptionType" EntityType="LSG_AIDCModel.ExceptionType" />
-    <EntitySet Name="ExceptionWorkQueue" EntityType="LSG_AIDCModel.ExceptionWorkQueue" />
-    <EntitySet Name="ExpirationDateType" EntityType="LSG_AIDCModel.ExpirationDateType" />
-    <EntitySet Name="MaterialReceiptEvent" EntityType="LSG_AIDCModel.MaterialReceiptEvent" />
-    <EntitySet Name="NLINK_ActivityProgress" EntityType="LSG_AIDCModel.NLINK_ActivityProgress" />
-    <EntitySet Name="NLINK_ActivityStatus" EntityType="LSG_AIDCModel.NLINK_ActivityStatus" />
-    <EntitySet Name="NLINK_PostReceipt" EntityType="LSG_AIDCModel.NLINK_PostReceipt" />
-    <EntitySet Name="NLINK_ProcessActivityType" EntityType="LSG_AIDCModel.NLINK_ProcessActivityType" />
-    <EntitySet Name="NLINK_ProgressPhaseType" EntityType="LSG_AIDCModel.NLINK_ProgressPhaseType" />
-    <EntitySet Name="PHF_CodeMap" EntityType="LSG_AIDCModel.PHF_CodeMap" />
-    <EntitySet Name="PO_PhaseStatus" EntityType="LSG_AIDCModel.PO_PhaseStatus" />
-    <EntitySet Name="PO_Worklist" EntityType="LSG_AIDCModel.PO_Worklist" />
-    <EntitySet Name="PO_WorkListItem" EntityType="LSG_AIDCModel.PO_WorkListItem" />
-    <EntitySet Name="ProbeMaster" EntityType="LSG_AIDCModel.ProbeMaster" />
-    <EntitySet Name="ProbeSlave" EntityType="LSG_AIDCModel.ProbeSlave" />
-    <EntitySet Name="ProblemType" EntityType="LSG_AIDCModel.ProblemType" />
-    <EntitySet Name="TempValidationType" EntityType="LSG_AIDCModel.TempValidationType" />
-    <EntitySet Name="TruckCondition" EntityType="LSG_AIDCModel.TruckCondition" />
-    <EntitySet Name="TruckInspection" EntityType="LSG_AIDCModel.TruckInspection" />
-    <EntitySet Name="TruckType" EntityType="LSG_AIDCModel.TruckType" />
-    <EntitySet Name="VendorDelivery" EntityType="LSG_AIDCModel.VendorDelivery" />
-    <EntitySet Name="VendorDeliveryMaterial" EntityType="LSG_AIDCModel.VendorDeliveryMaterial" />
-    <EntitySet Name="Books" EntityType="LSG_AIDCModel.Books" />
-    <AssociationSet Name="fk_VendorDelivery_1" Association="LSG_AIDCModel.fk_VendorDelivery_1">
-      <End Role="DeliveryStatus" EntitySet="DeliveryStatus" />
-      <End Role="VendorDelivery" EntitySet="VendorDelivery" />
-    </AssociationSet>
-    <AssociationSet Name="fk_ExceptionWorkQueue_1" Association="LSG_AIDCModel.fk_ExceptionWorkQueue_1">
-      <End Role="ExceptionType" EntitySet="ExceptionType" />
-      <End Role="ExceptionWorkQueue" EntitySet="ExceptionWorkQueue" />
-    </AssociationSet>
-    <AssociationSet Name="fk_ExceptionWorkQueue" Association="LSG_AIDCModel.fk_ExceptionWorkQueue">
-      <End Role="MaterialReceiptEvent" EntitySet="MaterialReceiptEvent" />
-      <End Role="ExceptionWorkQueue" EntitySet="ExceptionWorkQueue" />
-    </AssociationSet>
-    <AssociationSet Name="fk_PHF_CodeMap_0" Association="LSG_AIDCModel.fk_PHF_CodeMap_0">
-      <End Role="ExpirationDateType" EntitySet="ExpirationDateType" />
-      <End Role="PHF_CodeMap" EntitySet="PHF_CodeMap" />
-    </AssociationSet>
-    <AssociationSet Name="fk_VendorDeliveryMaterial_0" Association="LSG_AIDCModel.fk_VendorDeliveryMaterial_0">
-      <End Role="ExpirationDateType" EntitySet="ExpirationDateType" />
-      <End Role="VendorDeliveryMaterial" EntitySet="VendorDeliveryMaterial" />
-    </AssociationSet>
-    <AssociationSet Name="fk_MaterialReceiptEvent_1" Association="LSG_AIDCModel.fk_MaterialReceiptEvent_1">
-      <End Role="VendorDeliveryMaterial" EntitySet="VendorDeliveryMaterial" />
-      <End Role="MaterialReceiptEvent" EntitySet="MaterialReceiptEvent" />
-    </AssociationSet>
-    <AssociationSet Name="fk_MaterialReceiptEvent_2" Association="LSG_AIDCModel.fk_MaterialReceiptEvent_2">
-      <End Role="ProblemType" EntitySet="ProblemType" />
-      <End Role="MaterialReceiptEvent" EntitySet="MaterialReceiptEvent" />
-    </AssociationSet>
-    <AssociationSet Name="fk_NLINK_ActivityProgress" Association="LSG_AIDCModel.fk_NLINK_ActivityProgress">
-      <End Role="NLINK_ProcessActivityType" EntitySet="NLINK_ProcessActivityType" />
-      <End Role="NLINK_ActivityProgress" EntitySet="NLINK_ActivityProgress" />
-    </AssociationSet>
-    <AssociationSet Name="fk_NLINK_ActivityProgress_0" Association="LSG_AIDCModel.fk_NLINK_ActivityProgress_0">
-      <End Role="NLINK_ProgressPhaseType" EntitySet="NLINK_ProgressPhaseType" />
-      <End Role="NLINK_ActivityProgress" EntitySet="NLINK_ActivityProgress" />
-    </AssociationSet>
-    <AssociationSet Name="fk_NLINK_ActivityProgress_1" Association="LSG_AIDCModel.fk_NLINK_ActivityProgress_1">
-      <End Role="NLINK_ActivityStatus" EntitySet="NLINK_ActivityStatus" />
-      <End Role="NLINK_ActivityProgress" EntitySet="NLINK_ActivityProgress" />
-    </AssociationSet>
-    <AssociationSet Name="fk_NLINK_PostReceipt" Association="LSG_AIDCModel.fk_NLINK_PostReceipt">
-      <End Role="NLINK_ActivityProgress" EntitySet="NLINK_ActivityProgress" />
-      <End Role="NLINK_PostReceipt" EntitySet="NLINK_PostReceipt" />
-    </AssociationSet>
-    <AssociationSet Name="fk_PHF_CodeMap" Association="LSG_AIDCModel.fk_PHF_CodeMap">
-      <End Role="TempValidationType" EntitySet="TempValidationType" />
-      <End Role="PHF_CodeMap" EntitySet="PHF_CodeMap" />
-    </AssociationSet>
-    <AssociationSet Name="fk_PO_Worklist_1" Association="LSG_AIDCModel.fk_PO_Worklist_1">
-      <End Role="PO_PhaseStatus" EntitySet="PO_PhaseStatus" />
-      <End Role="PO_Worklist" EntitySet="PO_Worklist" />
-    </AssociationSet>
-    <AssociationSet Name="fk_PO_Worklist_0" Association="LSG_AIDCModel.fk_PO_Worklist_0">
-      <End Role="VendorDelivery" EntitySet="VendorDelivery" />
-      <End Role="PO_Worklist" EntitySet="PO_Worklist" />
-    </AssociationSet>
-    <AssociationSet Name="fk_PO_WorkListItems" Association="LSG_AIDCModel.fk_PO_WorkListItems">
-      <End Role="PO_Worklist" EntitySet="PO_Worklist" />
-      <End Role="PO_WorkListItem" EntitySet="PO_WorkListItem" />
-    </AssociationSet>
-    <AssociationSet Name="fk_PO_WorkListItem" Association="LSG_AIDCModel.fk_PO_WorkListItem">
-      <End Role="VendorDeliveryMaterial" EntitySet="VendorDeliveryMaterial" />
-      <End Role="PO_WorkListItem" EntitySet="PO_WorkListItem" />
-    </AssociationSet>
-    <AssociationSet Name="Fk" Association="LSG_AIDCModel.Fk">
-      <End Role="ProbeMaster" EntitySet="ProbeMaster" />
-      <End Role="ProbeSlave" EntitySet="ProbeSlave" />
-    </AssociationSet>
-    <AssociationSet Name="fk_VendorDeliveryMaterial_1" Association="LSG_AIDCModel.fk_VendorDeliveryMaterial_1">
-      <End Role="TempValidationType" EntitySet="TempValidationType" />
-      <End Role="VendorDeliveryMaterial" EntitySet="VendorDeliveryMaterial" />
-    </AssociationSet>
-    <AssociationSet Name="fk_TruckInspection_0" Association="LSG_AIDCModel.fk_TruckInspection_0">
-      <End Role="TruckCondition" EntitySet="TruckCondition" />
-      <End Role="TruckInspection" EntitySet="TruckInspection" />
-    </AssociationSet>
-    <AssociationSet Name="fk_TruckInspection_1" Association="LSG_AIDCModel.fk_TruckInspection_1">
-      <End Role="TruckType" EntitySet="TruckType" />
-      <End Role="TruckInspection" EntitySet="TruckInspection" />
-    </AssociationSet>
-    <AssociationSet Name="fk_TruckInspection_2" Association="LSG_AIDCModel.fk_TruckInspection_2">
-      <End Role="VendorDelivery" EntitySet="VendorDelivery" />
-      <End Role="TruckInspection" EntitySet="TruckInspection" />
-    </AssociationSet>
-    <AssociationSet Name="fk_VendorDeliveryMaterial" Association="LSG_AIDCModel.fk_VendorDeliveryMaterial">
-      <End Role="VendorDelivery" EntitySet="VendorDelivery" />
-      <End Role="VendorDeliveryMaterial" EntitySet="VendorDeliveryMaterial" />
-    </AssociationSet>
     <FunctionImport Name="GetReceiveReceiptInfo" ReturnType="Collection(LSG_AIDCModel.GetReceiveReceiptInfo_Result)">
       <Parameter Name="VendorDeliveryId" Mode="In" Type="Int32" />
-      <Parameter Name="POWorkListId" Mode="In" Type="Int32" />
+      <Parameter Name="SapPOWorkListId" Mode="In" Type="String" />
       <Parameter Name="VendorDeliveryCode" Mode="In" Type="String" />
       <Parameter Name="IsException" Mode="In" Type="Boolean" />
+    </FunctionImport>
+    <FunctionImport Name="GetListOfPOs" ReturnType="Collection(String)">
+      <Parameter Name="VendorDeliveryId" Mode="In" Type="Int32" />
     </FunctionImport>
   </EntityContainer>
   <ComplexType Name="RCV_REVIEW_RECEIPT_GRID_Result">
@@ -216,581 +794,6 @@
     <Property Type="String" Name="SAP_VendorName1" Nullable="true" MaxLength="300" />
     <Property Type="String" Name="StatusValue" Nullable="false" MaxLength="5" />
   </ComplexType>
-  <EntityType Name="DeliveryStatus">
-    <Key>
-      <PropertyRef Name="DeliveryStatusCode" />
-    </Key>
-    <Property Name="DeliveryStatusCode" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-    <Property Name="DisplayStatusCode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-    <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="VendorDelivery" Relationship="LSG_AIDCModel.fk_VendorDelivery_1" FromRole="DeliveryStatus" ToRole="VendorDelivery" />
-  </EntityType>
-  <EntityType Name="ExceptionType">
-    <Key>
-      <PropertyRef Name="ExceptionCode" />
-    </Key>
-    <Property Name="ExceptionCode" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-    <Property Name="DisplayCode" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-    <Property Name="Description" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="ExceptionWorkQueue" Relationship="LSG_AIDCModel.fk_ExceptionWorkQueue_1" FromRole="ExceptionType" ToRole="ExceptionWorkQueue" />
-  </EntityType>
-  <EntityType Name="ExceptionWorkQueue">
-    <Key>
-      <PropertyRef Name="ExceptionWorkQueue_ID" />
-    </Key>
-    <Property Name="ExceptionWorkQueue_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="MaterialReceiptEvent_ID" Type="Int32" Nullable="false" />
-    <Property Name="ExceptionCode" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-    <Property Name="Operator_ID" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
-    <Property Name="AddiitonalInfo" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="ExceptionType" Relationship="LSG_AIDCModel.fk_ExceptionWorkQueue_1" FromRole="ExceptionWorkQueue" ToRole="ExceptionType" />
-    <NavigationProperty Name="MaterialReceiptEvent" Relationship="LSG_AIDCModel.fk_ExceptionWorkQueue" FromRole="ExceptionWorkQueue" ToRole="MaterialReceiptEvent" />
-  </EntityType>
-  <EntityType Name="ExpirationDateType">
-    <Key>
-      <PropertyRef Name="ExpirationDateCode" />
-    </Key>
-    <Property Name="ExpirationDateCode" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-    <Property Name="DisplayCode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-    <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
-    <Property Name="RejectionCutoff" Type="Int32" Nullable="false" />
-    <Property Name="RejectionTimeUnit" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-    <Property Name="ComparisonOperator" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
-    <Property Name="NumofDays" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="PHF_CodeMap" Relationship="LSG_AIDCModel.fk_PHF_CodeMap_0" FromRole="ExpirationDateType" ToRole="PHF_CodeMap" />
-    <NavigationProperty Name="VendorDeliveryMaterial" Relationship="LSG_AIDCModel.fk_VendorDeliveryMaterial_0" FromRole="ExpirationDateType" ToRole="VendorDeliveryMaterial" />
-  </EntityType>
-  <EntityType Name="MaterialReceiptEvent">
-    <Key>
-      <PropertyRef Name="MaterialReceiptEvent_ID" />
-    </Key>
-    <Property Name="MaterialReceiptEvent_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="VendorDeliveryMaterial_ID" Type="Int32" Nullable="false" />
-    <Property Name="Operator_ID" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
-    <Property Name="Temperature" Type="Decimal" Precision="13" Scale="3" />
-    <Property Name="Expiration" Type="DateTime" Precision="3" />
-    <Property Name="Batch" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-    <Property Name="Lot" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-    <Property Name="QtyEntered" Type="Decimal" Precision="13" Scale="3" />
-    <Property Name="UOM_Entered" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-    <Property Name="QtyReceived" Type="Decimal" Precision="13" Scale="3" />
-    <Property Name="WeightReceived" Type="Decimal" Precision="13" Scale="3" />
-    <Property Name="TimeStamp" Type="DateTime" Precision="3" />
-    <Property Name="ProblemCode" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-    <Property Name="ProductConditionCode" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="ExceptionWorkQueue" Relationship="LSG_AIDCModel.fk_ExceptionWorkQueue" FromRole="MaterialReceiptEvent" ToRole="ExceptionWorkQueue" />
-    <NavigationProperty Name="VendorDeliveryMaterial" Relationship="LSG_AIDCModel.fk_MaterialReceiptEvent_1" FromRole="MaterialReceiptEvent" ToRole="VendorDeliveryMaterial" />
-    <NavigationProperty Name="ProblemType" Relationship="LSG_AIDCModel.fk_MaterialReceiptEvent_2" FromRole="MaterialReceiptEvent" ToRole="ProblemType" />
-  </EntityType>
-  <EntityType Name="NLINK_ActivityProgress">
-    <Key>
-      <PropertyRef Name="NLINK_ActivityProgress_ID" />
-    </Key>
-    <Property Name="NLINK_ActivityProgress_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="ProcessPhaseCode" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-    <Property Name="ActivityCode" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-    <Property Name="ActivityStatus" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-    <Property Name="ProgressPercentage" Type="Int32" />
-    <Property Name="StartTime" Type="DateTime" Precision="3" />
-    <Property Name="EndTime" Type="DateTime" Precision="3" />
-    <Property Name="SystemMessage" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-    <Property Name="ApplicationMessage" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="NLINK_ProcessActivityType" Relationship="LSG_AIDCModel.fk_NLINK_ActivityProgress" FromRole="NLINK_ActivityProgress" ToRole="NLINK_ProcessActivityType" />
-    <NavigationProperty Name="NLINK_ProgressPhaseType" Relationship="LSG_AIDCModel.fk_NLINK_ActivityProgress_0" FromRole="NLINK_ActivityProgress" ToRole="NLINK_ProgressPhaseType" />
-    <NavigationProperty Name="NLINK_ActivityStatus" Relationship="LSG_AIDCModel.fk_NLINK_ActivityProgress_1" FromRole="NLINK_ActivityProgress" ToRole="NLINK_ActivityStatus" />
-    <NavigationProperty Name="NLINK_PostReceipt" Relationship="LSG_AIDCModel.fk_NLINK_PostReceipt" FromRole="NLINK_ActivityProgress" ToRole="NLINK_PostReceipt" />
-  </EntityType>
-  <EntityType Name="NLINK_ActivityStatus">
-    <Key>
-      <PropertyRef Name="ActivityStatusCode" />
-    </Key>
-    <Property Name="ActivityStatusCode" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-    <Property Name="DisplayCode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-    <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="NLINK_ActivityProgress" Relationship="LSG_AIDCModel.fk_NLINK_ActivityProgress_1" FromRole="NLINK_ActivityStatus" ToRole="NLINK_ActivityProgress" />
-  </EntityType>
-  <EntityType Name="NLINK_PostReceipt">
-    <Key>
-      <PropertyRef Name="SAP_PO_ID" />
-    </Key>
-    <Property Name="SAP_PO_ID" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-    <Property Name="NLINK_ActivityProgress_ID" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="NLINK_ActivityProgress" Relationship="LSG_AIDCModel.fk_NLINK_PostReceipt" FromRole="NLINK_PostReceipt" ToRole="NLINK_ActivityProgress" />
-  </EntityType>
-  <EntityType Name="NLINK_ProcessActivityType">
-    <Key>
-      <PropertyRef Name="ActivityCode" />
-    </Key>
-    <Property Name="ActivityCode" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-    <Property Name="DisplayCode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-    <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="NLINK_ActivityProgress" Relationship="LSG_AIDCModel.fk_NLINK_ActivityProgress" FromRole="NLINK_ProcessActivityType" ToRole="NLINK_ActivityProgress" />
-  </EntityType>
-  <EntityType Name="NLINK_ProgressPhaseType">
-    <Key>
-      <PropertyRef Name="ProcessPhaseCode" />
-    </Key>
-    <Property Name="ProcessPhaseCode" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-    <Property Name="DisplayCode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-    <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="NLINK_ActivityProgress" Relationship="LSG_AIDCModel.fk_NLINK_ActivityProgress_0" FromRole="NLINK_ProgressPhaseType" ToRole="NLINK_ActivityProgress" />
-  </EntityType>
-  <EntityType Name="PHF_CodeMap">
-    <Key>
-      <PropertyRef Name="SAP_PHF_Code" />
-    </Key>
-    <Property Name="SAP_PHF_Code" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-    <Property Name="TempValidationCode" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-    <Property Name="ExpirationDateCode" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="ExpirationDateType" Relationship="LSG_AIDCModel.fk_PHF_CodeMap_0" FromRole="PHF_CodeMap" ToRole="ExpirationDateType" />
-    <NavigationProperty Name="TempValidationType" Relationship="LSG_AIDCModel.fk_PHF_CodeMap" FromRole="PHF_CodeMap" ToRole="TempValidationType" />
-  </EntityType>
-  <EntityType Name="PO_PhaseStatus">
-    <Key>
-      <PropertyRef Name="PO_PhaseStatusCode" />
-    </Key>
-    <Property Name="PO_PhaseStatusCode" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-    <Property Name="DisplayStatusCode" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-    <Property Name="Description" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="PO_Worklist" Relationship="LSG_AIDCModel.fk_PO_Worklist_1" FromRole="PO_PhaseStatus" ToRole="PO_Worklist" />
-  </EntityType>
-  <EntityType Name="PO_Worklist">
-    <Key>
-      <PropertyRef Name="PO_WorkList_ID" />
-    </Key>
-    <Property Name="PO_WorkList_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="VendorDelivery_ID" Type="Int32" Nullable="false" />
-    <Property Name="PO_PhaseStatus" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-    <Property Name="Operator_ID" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
-    <Property Name="Entered_PO_Number" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-    <Property Name="IsUnexpected" Type="Byte" />
-    <Property Name="SAP_ExpectedDeliveryDate" Type="DateTime" Precision="0" />
-    <Property Name="SAP_PO_ID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-    <Property Name="SAP_Vendor_ID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-    <Property Name="SAP_VendorName" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="PO_PhaseStatus1" Relationship="LSG_AIDCModel.fk_PO_Worklist_1" FromRole="PO_Worklist" ToRole="PO_PhaseStatus" />
-    <NavigationProperty Name="VendorDelivery" Relationship="LSG_AIDCModel.fk_PO_Worklist_0" FromRole="PO_Worklist" ToRole="VendorDelivery" />
-    <NavigationProperty Name="PO_WorkListItem" Relationship="LSG_AIDCModel.fk_PO_WorkListItems" FromRole="PO_Worklist" ToRole="PO_WorkListItem" />
-  </EntityType>
-  <EntityType Name="PO_WorkListItem">
-    <Key>
-      <PropertyRef Name="PO_WorklistItem_ID" />
-    </Key>
-    <Property Name="PO_WorklistItem_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="PO_WorkList_ID" Type="Int32" Nullable="false" />
-    <Property Name="VendorDeliveryMaterial_ID" Type="Int32" Nullable="false" />
-    <Property Name="IsItemComplete" Type="Byte" Nullable="false" />
-    <Property Name="IsKLine" Type="Byte" Nullable="false" />
-    <Property Name="QtyExpected" Type="Decimal" Precision="13" Scale="3" />
-    <Property Name="WeightExpected" Type="Decimal" Precision="13" Scale="3" />
-    <Property Name="QtyNormalDist" Type="Decimal" Precision="13" Scale="3" />
-    <Property Name="WeightNormalDist" Type="Decimal" Precision="13" Scale="3" />
-    <Property Name="QtyDamageDist" Type="Decimal" Precision="13" Scale="3" />
-    <Property Name="QtyOffTempDist" Type="Decimal" Precision="13" Scale="3" />
-    <Property Name="WeightOffTempDist" Type="Decimal" Precision="13" Scale="3" />
-    <Property Name="SAP_LineItem_ID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-    <Property Name="SAP_Plant" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
-    <Property Name="SAP_Location" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
-    <Property Name="ReturnQty" Type="Decimal" Precision="13" Scale="3" />
-    <Property Name="GoodsMovementDoc" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-    <Property Name="GoodsMovementYear" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
-    <Property Name="GoodsMovementLine" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
-    <Property Name="IsItemPosted" Type="Byte" />
-    <NavigationProperty Name="PO_Worklist" Relationship="LSG_AIDCModel.fk_PO_WorkListItems" FromRole="PO_WorkListItem" ToRole="PO_Worklist" />
-    <NavigationProperty Name="VendorDeliveryMaterial" Relationship="LSG_AIDCModel.fk_PO_WorkListItem" FromRole="PO_WorkListItem" ToRole="VendorDeliveryMaterial" />
-  </EntityType>
-  <EntityType Name="ProbeMaster">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="Int32" Nullable="false" />
-    <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="ProbeSlave" Relationship="LSG_AIDCModel.Fk" FromRole="ProbeMaster" ToRole="ProbeSlave" />
-  </EntityType>
-  <EntityType Name="ProbeSlave">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="Int32" Nullable="false" />
-    <Property Name="Name" Type="String" Nullable="false" MaxLength="120" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="ProbeMaster" Relationship="LSG_AIDCModel.Fk" FromRole="ProbeSlave" ToRole="ProbeMaster" />
-  </EntityType>
-  <EntityType Name="ProblemType">
-    <Key>
-      <PropertyRef Name="ProblemCode" />
-    </Key>
-    <Property Name="ProblemCode" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-    <Property Name="DisplayCode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-    <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="MaterialReceiptEvent" Relationship="LSG_AIDCModel.fk_MaterialReceiptEvent_2" FromRole="ProblemType" ToRole="MaterialReceiptEvent" />
-  </EntityType>
-  <EntityType Name="TempValidationType">
-    <Key>
-      <PropertyRef Name="TempValidationCode" />
-    </Key>
-    <Property Name="TempValidationCode" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-    <Property Name="DisplayCode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-    <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
-    <Property Name="MinTemp" Type="Decimal" Precision="13" Scale="3" />
-    <Property Name="MaxTemp" Type="Decimal" Precision="13" Scale="3" />
-    <Property Name="ComparisonOperator" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="PHF_CodeMap" Relationship="LSG_AIDCModel.fk_PHF_CodeMap" FromRole="TempValidationType" ToRole="PHF_CodeMap" />
-    <NavigationProperty Name="VendorDeliveryMaterial" Relationship="LSG_AIDCModel.fk_VendorDeliveryMaterial_1" FromRole="TempValidationType" ToRole="VendorDeliveryMaterial" />
-  </EntityType>
-  <EntityType Name="TruckCondition">
-    <Key>
-      <PropertyRef Name="ConditionCode" />
-    </Key>
-    <Property Name="ConditionCode" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-    <Property Name="DisplayCode" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-    <Property Name="Description" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="TruckInspection" Relationship="LSG_AIDCModel.fk_TruckInspection_0" FromRole="TruckCondition" ToRole="TruckInspection" />
-  </EntityType>
-  <EntityType Name="TruckInspection">
-    <Key>
-      <PropertyRef Name="VendorDelivery_ID" />
-    </Key>
-    <Property Name="VendorDelivery_ID" Type="Int32" Nullable="false" />
-    <Property Name="Comments" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
-    <Property Name="ConditionCode" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-    <Property Name="TruckCode" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-    <Property Name="InspectionPass" Type="Byte" Nullable="false" />
-    <Property Name="Operator_ID" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
-    <Property Name="Temperature" Type="Decimal" Nullable="false" Precision="13" Scale="3" />
-    <NavigationProperty Name="TruckCondition" Relationship="LSG_AIDCModel.fk_TruckInspection_0" FromRole="TruckInspection" ToRole="TruckCondition" />
-    <NavigationProperty Name="TruckType" Relationship="LSG_AIDCModel.fk_TruckInspection_1" FromRole="TruckInspection" ToRole="TruckType" />
-    <NavigationProperty Name="VendorDelivery" Relationship="LSG_AIDCModel.fk_TruckInspection_2" FromRole="TruckInspection" ToRole="VendorDelivery" />
-  </EntityType>
-  <EntityType Name="TruckType">
-    <Key>
-      <PropertyRef Name="TruckCode" />
-    </Key>
-    <Property Name="TruckCode" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-    <Property Name="DisplayCode" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-    <Property Name="Description" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="TruckInspection" Relationship="LSG_AIDCModel.fk_TruckInspection_1" FromRole="TruckType" ToRole="TruckInspection" />
-  </EntityType>
-  <EntityType Name="VendorDelivery">
-    <Key>
-      <PropertyRef Name="VendorDelivery_ID" />
-    </Key>
-    <Property Name="VendorDelivery_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="DeliveryArrivalDate" Type="DateTime" Precision="3" />
-    <Property Name="DeliveryCompletionDate" Type="DateTime" Precision="3" />
-    <Property Name="FirstExpectedDeliveryDate" Type="DateTime" Precision="3" />
-    <Property Name="IsInspectionRequired" Type="Byte" />
-    <Property Name="DeliveryStatus" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-    <Property Name="SAP_VendorName" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
-    <Property Name="SAP_Vendor_ID" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="DeliveryStatus1" Relationship="LSG_AIDCModel.fk_VendorDelivery_1" FromRole="VendorDelivery" ToRole="DeliveryStatus" />
-    <NavigationProperty Name="PO_Worklist" Relationship="LSG_AIDCModel.fk_PO_Worklist_0" FromRole="VendorDelivery" ToRole="PO_Worklist" />
-    <NavigationProperty Name="TruckInspection" Relationship="LSG_AIDCModel.fk_TruckInspection_2" FromRole="VendorDelivery" ToRole="TruckInspection" />
-    <NavigationProperty Name="VendorDeliveryMaterial" Relationship="LSG_AIDCModel.fk_VendorDeliveryMaterial" FromRole="VendorDelivery" ToRole="VendorDeliveryMaterial" />
-  </EntityType>
-  <EntityType Name="VendorDeliveryMaterial">
-    <Key>
-      <PropertyRef Name="VendorDeliveryMaterial_ID" />
-    </Key>
-    <Property Name="VendorDeliveryMaterial_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="VendorDelivery_ID" Type="Int32" Nullable="false" />
-    <Property Name="QtyExpected" Type="Decimal" Precision="13" Scale="3" />
-    <Property Name="QtyReceived" Type="Decimal" Precision="13" Scale="3" />
-    <Property Name="WeightExpected" Type="Decimal" Precision="13" Scale="3" />
-    <Property Name="WeightReceived" Type="Decimal" Precision="13" Scale="3" />
-    <Property Name="IsUnexpectedMaterial" Type="Byte" />
-    <Property Name="EnteredMaterial_ID" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-    <Property Name="EnteredMaterial_Description" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
-    <Property Name="EnteredMaterialUOM" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-    <Property Name="TempValidationCode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-    <Property Name="ExpirationDateCode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-    <Property Name="SAP_VendorMaterial_ID" Type="String" MaxLength="18" FixedLength="false" Unicode="false" />
-    <Property Name="SAP_VendorMaterialDesc" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
-    <Property Name="SAP_Material_ID" Type="String" MaxLength="18" FixedLength="false" Unicode="false" />
-    <Property Name="SAP_Description" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
-    <Property Name="SAP_BaseUOM" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-    <Property Name="SAP_OrderUOM" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-    <Property Name="SAP_PHF_Code" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-    <Property Name="SAP_ReligiousDietCode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-    <Property Name="SAP_AllergenCode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="ExpirationDateType" Relationship="LSG_AIDCModel.fk_VendorDeliveryMaterial_0" FromRole="VendorDeliveryMaterial" ToRole="ExpirationDateType" />
-    <NavigationProperty Name="MaterialReceiptEvent" Relationship="LSG_AIDCModel.fk_MaterialReceiptEvent_1" FromRole="VendorDeliveryMaterial" ToRole="MaterialReceiptEvent" />
-    <NavigationProperty Name="PO_WorkListItem" Relationship="LSG_AIDCModel.fk_PO_WorkListItem" FromRole="VendorDeliveryMaterial" ToRole="PO_WorkListItem" />
-    <NavigationProperty Name="TempValidationType" Relationship="LSG_AIDCModel.fk_VendorDeliveryMaterial_1" FromRole="VendorDeliveryMaterial" ToRole="TempValidationType" />
-    <NavigationProperty Name="VendorDelivery" Relationship="LSG_AIDCModel.fk_VendorDeliveryMaterial" FromRole="VendorDeliveryMaterial" ToRole="VendorDelivery" />
-  </EntityType>
-  <EntityType Name="Books">
-    <Key>
-      <PropertyRef Name="BookID" />
-      <PropertyRef Name="BookTitle" />
-    </Key>
-    <Property Name="BookID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="BookTitle" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
-    <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
-  </EntityType>
-  <Association Name="fk_VendorDelivery_1">
-    <End Type="LSG_AIDCModel.DeliveryStatus" Role="DeliveryStatus" Multiplicity="1" />
-    <End Type="LSG_AIDCModel.VendorDelivery" Role="VendorDelivery" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="DeliveryStatus">
-        <PropertyRef Name="DeliveryStatusCode" />
-      </Principal>
-      <Dependent Role="VendorDelivery">
-        <PropertyRef Name="DeliveryStatus" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="fk_ExceptionWorkQueue_1">
-    <End Type="LSG_AIDCModel.ExceptionType" Role="ExceptionType" Multiplicity="1" />
-    <End Type="LSG_AIDCModel.ExceptionWorkQueue" Role="ExceptionWorkQueue" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ExceptionType">
-        <PropertyRef Name="ExceptionCode" />
-      </Principal>
-      <Dependent Role="ExceptionWorkQueue">
-        <PropertyRef Name="ExceptionCode" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="fk_ExceptionWorkQueue">
-    <End Type="LSG_AIDCModel.MaterialReceiptEvent" Role="MaterialReceiptEvent" Multiplicity="1" />
-    <End Type="LSG_AIDCModel.ExceptionWorkQueue" Role="ExceptionWorkQueue" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="MaterialReceiptEvent">
-        <PropertyRef Name="MaterialReceiptEvent_ID" />
-      </Principal>
-      <Dependent Role="ExceptionWorkQueue">
-        <PropertyRef Name="MaterialReceiptEvent_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="fk_PHF_CodeMap_0">
-    <End Type="LSG_AIDCModel.ExpirationDateType" Role="ExpirationDateType" Multiplicity="1" />
-    <End Type="LSG_AIDCModel.PHF_CodeMap" Role="PHF_CodeMap" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ExpirationDateType">
-        <PropertyRef Name="ExpirationDateCode" />
-      </Principal>
-      <Dependent Role="PHF_CodeMap">
-        <PropertyRef Name="ExpirationDateCode" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="fk_VendorDeliveryMaterial_0">
-    <End Type="LSG_AIDCModel.ExpirationDateType" Role="ExpirationDateType" Multiplicity="0..1" />
-    <End Type="LSG_AIDCModel.VendorDeliveryMaterial" Role="VendorDeliveryMaterial" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ExpirationDateType">
-        <PropertyRef Name="ExpirationDateCode" />
-      </Principal>
-      <Dependent Role="VendorDeliveryMaterial">
-        <PropertyRef Name="ExpirationDateCode" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="fk_MaterialReceiptEvent_1">
-    <End Type="LSG_AIDCModel.VendorDeliveryMaterial" Role="VendorDeliveryMaterial" Multiplicity="1" />
-    <End Type="LSG_AIDCModel.MaterialReceiptEvent" Role="MaterialReceiptEvent" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="VendorDeliveryMaterial">
-        <PropertyRef Name="VendorDeliveryMaterial_ID" />
-      </Principal>
-      <Dependent Role="MaterialReceiptEvent">
-        <PropertyRef Name="VendorDeliveryMaterial_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="fk_MaterialReceiptEvent_2">
-    <End Type="LSG_AIDCModel.ProblemType" Role="ProblemType" Multiplicity="1" />
-    <End Type="LSG_AIDCModel.MaterialReceiptEvent" Role="MaterialReceiptEvent" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ProblemType">
-        <PropertyRef Name="ProblemCode" />
-      </Principal>
-      <Dependent Role="MaterialReceiptEvent">
-        <PropertyRef Name="ProblemCode" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="fk_NLINK_ActivityProgress">
-    <End Type="LSG_AIDCModel.NLINK_ProcessActivityType" Role="NLINK_ProcessActivityType" Multiplicity="1" />
-    <End Type="LSG_AIDCModel.NLINK_ActivityProgress" Role="NLINK_ActivityProgress" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="NLINK_ProcessActivityType">
-        <PropertyRef Name="ActivityCode" />
-      </Principal>
-      <Dependent Role="NLINK_ActivityProgress">
-        <PropertyRef Name="ActivityCode" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="fk_NLINK_ActivityProgress_0">
-    <End Type="LSG_AIDCModel.NLINK_ProgressPhaseType" Role="NLINK_ProgressPhaseType" Multiplicity="1" />
-    <End Type="LSG_AIDCModel.NLINK_ActivityProgress" Role="NLINK_ActivityProgress" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="NLINK_ProgressPhaseType">
-        <PropertyRef Name="ProcessPhaseCode" />
-      </Principal>
-      <Dependent Role="NLINK_ActivityProgress">
-        <PropertyRef Name="ProcessPhaseCode" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="fk_NLINK_ActivityProgress_1">
-    <End Type="LSG_AIDCModel.NLINK_ActivityStatus" Role="NLINK_ActivityStatus" Multiplicity="1" />
-    <End Type="LSG_AIDCModel.NLINK_ActivityProgress" Role="NLINK_ActivityProgress" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="NLINK_ActivityStatus">
-        <PropertyRef Name="ActivityStatusCode" />
-      </Principal>
-      <Dependent Role="NLINK_ActivityProgress">
-        <PropertyRef Name="ActivityStatus" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="fk_NLINK_PostReceipt">
-    <End Type="LSG_AIDCModel.NLINK_ActivityProgress" Role="NLINK_ActivityProgress" Multiplicity="1" />
-    <End Type="LSG_AIDCModel.NLINK_PostReceipt" Role="NLINK_PostReceipt" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="NLINK_ActivityProgress">
-        <PropertyRef Name="NLINK_ActivityProgress_ID" />
-      </Principal>
-      <Dependent Role="NLINK_PostReceipt">
-        <PropertyRef Name="NLINK_ActivityProgress_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="fk_PHF_CodeMap">
-    <End Type="LSG_AIDCModel.TempValidationType" Role="TempValidationType" Multiplicity="1" />
-    <End Type="LSG_AIDCModel.PHF_CodeMap" Role="PHF_CodeMap" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="TempValidationType">
-        <PropertyRef Name="TempValidationCode" />
-      </Principal>
-      <Dependent Role="PHF_CodeMap">
-        <PropertyRef Name="TempValidationCode" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="fk_PO_Worklist_1">
-    <End Type="LSG_AIDCModel.PO_PhaseStatus" Role="PO_PhaseStatus" Multiplicity="1" />
-    <End Type="LSG_AIDCModel.PO_Worklist" Role="PO_Worklist" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="PO_PhaseStatus">
-        <PropertyRef Name="PO_PhaseStatusCode" />
-      </Principal>
-      <Dependent Role="PO_Worklist">
-        <PropertyRef Name="PO_PhaseStatus" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="fk_PO_Worklist_0">
-    <End Type="LSG_AIDCModel.VendorDelivery" Role="VendorDelivery" Multiplicity="1" />
-    <End Type="LSG_AIDCModel.PO_Worklist" Role="PO_Worklist" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="VendorDelivery">
-        <PropertyRef Name="VendorDelivery_ID" />
-      </Principal>
-      <Dependent Role="PO_Worklist">
-        <PropertyRef Name="VendorDelivery_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="fk_PO_WorkListItems">
-    <End Type="LSG_AIDCModel.PO_Worklist" Role="PO_Worklist" Multiplicity="1" />
-    <End Type="LSG_AIDCModel.PO_WorkListItem" Role="PO_WorkListItem" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="PO_Worklist">
-        <PropertyRef Name="PO_WorkList_ID" />
-      </Principal>
-      <Dependent Role="PO_WorkListItem">
-        <PropertyRef Name="PO_WorkList_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="fk_PO_WorkListItem">
-    <End Type="LSG_AIDCModel.VendorDeliveryMaterial" Role="VendorDeliveryMaterial" Multiplicity="1" />
-    <End Type="LSG_AIDCModel.PO_WorkListItem" Role="PO_WorkListItem" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="VendorDeliveryMaterial">
-        <PropertyRef Name="VendorDeliveryMaterial_ID" />
-      </Principal>
-      <Dependent Role="PO_WorkListItem">
-        <PropertyRef Name="VendorDeliveryMaterial_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="Fk">
-    <End Type="LSG_AIDCModel.ProbeMaster" Role="ProbeMaster" Multiplicity="1" />
-    <End Type="LSG_AIDCModel.ProbeSlave" Role="ProbeSlave" Multiplicity="0..1" />
-    <ReferentialConstraint>
-      <Principal Role="ProbeMaster">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="ProbeSlave">
-        <PropertyRef Name="Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="fk_VendorDeliveryMaterial_1">
-    <End Type="LSG_AIDCModel.TempValidationType" Role="TempValidationType" Multiplicity="0..1" />
-    <End Type="LSG_AIDCModel.VendorDeliveryMaterial" Role="VendorDeliveryMaterial" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="TempValidationType">
-        <PropertyRef Name="TempValidationCode" />
-      </Principal>
-      <Dependent Role="VendorDeliveryMaterial">
-        <PropertyRef Name="TempValidationCode" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="fk_TruckInspection_0">
-    <End Type="LSG_AIDCModel.TruckCondition" Role="TruckCondition" Multiplicity="1" />
-    <End Type="LSG_AIDCModel.TruckInspection" Role="TruckInspection" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="TruckCondition">
-        <PropertyRef Name="ConditionCode" />
-      </Principal>
-      <Dependent Role="TruckInspection">
-        <PropertyRef Name="ConditionCode" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="fk_TruckInspection_1">
-    <End Type="LSG_AIDCModel.TruckType" Role="TruckType" Multiplicity="1" />
-    <End Type="LSG_AIDCModel.TruckInspection" Role="TruckInspection" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="TruckType">
-        <PropertyRef Name="TruckCode" />
-      </Principal>
-      <Dependent Role="TruckInspection">
-        <PropertyRef Name="TruckCode" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="fk_TruckInspection_2">
-    <End Type="LSG_AIDCModel.VendorDelivery" Role="VendorDelivery" Multiplicity="1" />
-    <End Type="LSG_AIDCModel.TruckInspection" Role="TruckInspection" Multiplicity="0..1" />
-    <ReferentialConstraint>
-      <Principal Role="VendorDelivery">
-        <PropertyRef Name="VendorDelivery_ID" />
-      </Principal>
-      <Dependent Role="TruckInspection">
-        <PropertyRef Name="VendorDelivery_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="fk_VendorDeliveryMaterial">
-    <End Type="LSG_AIDCModel.VendorDelivery" Role="VendorDelivery" Multiplicity="1" />
-    <End Type="LSG_AIDCModel.VendorDeliveryMaterial" Role="VendorDeliveryMaterial" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="VendorDelivery">
-        <PropertyRef Name="VendorDelivery_ID" />
-      </Principal>
-      <Dependent Role="VendorDeliveryMaterial">
-        <PropertyRef Name="VendorDelivery_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <ComplexType Name="GetReceiveReceiptInfo_Result">
     <Property Type="String" Name="SAP_PO_ID" Nullable="true" MaxLength="10" />
     <Property Type="String" Name="SAP_Material_ID" Nullable="true" MaxLength="18" />
