@@ -1,0 +1,112 @@
+﻿<div>
+    <div class="edit-draft-modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" *ngIf="!customerService.selectedCustomer">Edit Draft</h3>
+                <h3 class="modal-title" *ngIf="customerService.selectedCustomer">View Draft</h3>
+
+                <button type="button" class="close" data-auto-id="edit_draft_modal_exit" (click)="close()">&times;</button>
+            </div>
+
+            <div class="modal-body ModalContentText ta-draft-edit-modal-content">
+                <form (ngSubmit)="save()" class="form-horizontal" #globalDraftsForm="ngForm" *ngIf="!customerService.selectedCustomer">
+                    <div class="row">
+                        <div class="col-md-6" >
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <span>Account Number</span>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-control draft-form-control form-control-sm" data-auto-id="edit_draft_modal_accountNumber" type="number" name="accountNumber" [(ngModel)]="editedAccountNumber" #accountNumber="ngModel" (change)="formIsValid()" />
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <span>Draft Number</span>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-control draft-form-control form-control-sm" data-auto-id="edit_draft_modal_draftNumber" type="number" name="draftNumber" [(ngModel)]="editedDraftNumber" #draftNumber="ngModel" (change)="formIsValid()" />
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <span>Amount</span>
+                                </div>
+                                <div class="col-md-4">
+                                    <input currencyMask [options]="{ align: 'left', prefix: '$ ', thousands: ',', decimal: '.', precision: '2' }" class="form-control draft-form-control form-control-sm" data-auto-id="edit_draft_modal_amount" type="text" name="amount" [(ngModel)]="editedAmount" #amount="ngModel" (change)="formIsValid()" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group" [ngClass]="(!errorMessage)?'form-group':'ta-draft-has-danger'">
+
+                                        <div class="form-control-feedback" data-auto-id="edit_draft_modal_errorMessage" [hidden]="!errorMessage">
+                                            <span class="ta-draft-alert-span">{{errorMessage}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="alert alert-danger col-md-12" *ngIf="isDeleteConfirmationActive">
+                                <div class="row" style="padding-left:10px">
+                                    Are you sure you want to delete this draft?
+                                    <br />
+                                </div>
+
+                                <div class="row" style="padding-left: 200px">
+                                    <button class="btn btn-sm btn-danger" data-auto-id="edit_draft_modal_confirmDeletion" (click)="delete()">Yes</button> &nbsp;&nbsp;
+                                    <button class="btn btn-sm btn-default" data-auto-id="edit_draft_modal_cancelDeletion" (click)="cancelDelete()">No</button>
+                                </div>
+                            </div>
+                            <br *ngIf="!isDeleteConfirmationActive" />
+
+                            <div *ngIf="!isDeleteConfirmationActive" class="row btn-group pull-right ta-btn-group">
+                                <button type="button" class="btn btn-success" data-auto-id="edit_draft_modal_save" (click)="save()">Save</button> &nbsp;&nbsp;
+                                <button type="button" class="btn btn-default" data-auto-id="edit_draft_modal_cancel" (click)="cancel()">Cancel</button> &nbsp;&nbsp;
+                                <button type="button" class="btn btn-danger" data-auto-id="edit_draft_modal_delete" (click)="showDeleteConfirmation()">Delete</button> &nbsp;&nbsp;
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row draft-image-row" data-auto-id="edit_draft_modal_front_image">
+                                <img src="{{frontImageSrcString}}" class="draft-image" (click)="openImageModal('front')" title="Click to view" />
+                            </div>
+                            <br />
+                            <div class="row draft-image-row" data-auto-id="edit_draft_modal_back_image">
+                                <img src="{{backImageSrcString}}" class="draft-image" (click)="openImageModal('back')" title="Click to view" />
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                
+                <form class="form-horizontal" #globalDraftsForm="ngForm" *ngIf="customerService.selectedCustomer">
+
+                    <div>
+                        Click image to enlarge
+                    </div>
+                    <br/>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="row draft-image-row-customer-front" data-auto-id="edit_draft_modal_front_image">
+                                <img src="{{frontImageSrcString}}" class="draft-image-customer" (click)="openImageModal('front')" title="Click to view"/>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row draft-image-row-customer-back" data-auto-id="edit_draft_modal_back_image">
+                                <img src="{{backImageSrcString}}" class="draft-image-customer" (click)="openImageModal('back')" title="Click to view"/>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div *ngIf="showFullImage">
+                <a class="ta-draft-close-image pull-right" href="javascript:void();" (click)="closeImage()" title="Click to close">Close Image</a>
+                <div class="ta-draft-modal-content ta-draft-image-view">
+                    <img src="{{fullImageSrcString}}" class="full-draft-image" (click)="closeImage()"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

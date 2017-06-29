@@ -1,0 +1,22 @@
+﻿<div class="ta-container">
+    <h2>Create ACH</h2>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <span>Bank Template</span>
+            <ach-template-selector [parentCustomerId]='customerId' [bankTemplateId]='bankTemplateId' (onSelectedChanged)="bankTemplateChanged($event)"></ach-template-selector>
+        </div>
+        <div class="col-md-4">
+            <span>ACH Type</span>
+            <select data-auto-id="achtype" class="form-control form-control-label-sm" [disabled]="isAchTypeDisabled" #achTypeSelect (change)="achType = achTypeSelect.value">
+                <option selected disabled>Select an ACH Type...</option>
+                <option [selected]="achType === 'In'" value='In'>In</option>
+                <option [selected]="achType === 'Out'" value='Out'>Out</option>
+            </select>
+        </div>
+    </div>
+    <hr />
+    <div *ngIf="template && achType">
+        <ach [bankTemplate]='template' [achType]='achType'></ach>
+    </div>
+</div>

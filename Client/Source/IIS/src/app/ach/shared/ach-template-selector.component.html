@@ -1,0 +1,4 @@
+<select data-auto-id="templateselector" class="form-control form-control-label-sm" [(ngModel)]="bankTemplate" (change)="templateSelected()">
+    <option disabled [selected] [value]="utilities.defaultDropDownValue">Select an Existing Bank Account Template</option>
+    <option *ngFor="let template of templates" [ngValue]="template">{{ template.BankName }} {{template.BankAccountType.Description}} {{template.ExternalAccountNumber}}</option>
+</select>

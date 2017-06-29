@@ -1,0 +1,36 @@
+﻿<div class="large-modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 class="modal-title">Retail Incoming Wire Unassign</h2>
+            <button type="button" class="close">&times;</button>
+        </div>
+
+        <div class="modal-body ModalContentText">
+
+            <form (ngSubmit)="submit()" class="form-horizontal" #wiresInUnAssignmentForm="ngForm">
+                
+               
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="comment" class="form-control-label form-control-label-sm">Comment: </label>                            
+                            <input type="text" data-auto-id="retail_unassign_comment" name="comment" id="comment" class="form-control form-control-sm" [(ngModel)]="comment" />
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row buttongroup">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="pull-right">
+                                <button data-auto-id="retail_unassign_button_confirm" type="button" class="ta-primary-button" (click)="submit()">Unassign</button>&nbsp;&nbsp;
+                                <button data-auto-id="retail_unassign_button_cancel" type="button" class="btn pull-right" (click)="cancel()">Cancel</button>&nbsp;&nbsp;
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

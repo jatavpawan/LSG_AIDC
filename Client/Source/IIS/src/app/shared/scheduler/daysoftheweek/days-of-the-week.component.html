@@ -1,0 +1,40 @@
+﻿<div class="row">
+    <div class="col-md-12">
+        <span>Pay On The</span>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2">
+        <input data-auto-id="first_checkbox" type="checkbox" [disabled]="isReadOnly" [checked]="isChecked(1)" value="1" #firstCheckBoxSelected (change)="daySelectedToggle(firstCheckBoxSelected.value)"/> First
+    </div>
+    <div class="col-md-2">
+        <input data-auto-id="second_checkbox" type="checkbox" [disabled]="isReadOnly" [checked]="isChecked(2)" value="2" #secondCheckBoxSelected (change)="daySelectedToggle(secondCheckBoxSelected.value)"/> Second
+    </div>
+    <div class="col-md-2">
+        <input data-auto-id="third_checkbox" type="checkbox" [disabled]="isReadOnly" [checked]="isChecked(3)" value="3" #thirdCheckBoxSelected (change)="daySelectedToggle(thirdCheckBoxSelected.value)"/> Third
+    </div>
+    <div class="col-md-2">
+        <input data-auto-id="fourth_checkbox" type="checkbox" [disabled]="isReadOnly" [checked]="isChecked(4)" value="4" #fourthCheckBoxSelected (change)="daySelectedToggle(fourthCheckBoxSelected.value)"/> Fourth
+    </div>
+    <div class="col-md-2">
+        <input data-auto-id="last_checkbox" type="checkbox" [disabled]="isReadOnly" [checked]="isChecked(5)" value="5" #lastCheckBoxSelected (change)="daySelectedToggle(lastCheckBoxSelected.value)"/> Last
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="alert alert-danger" [hidden]="!payOnIndexRequired">Pay On Week Required</div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <select data-auto-id="days-of-the-week-weekday-selector" [disabled]="isReadOnly" class="form-control form-control-label-sm" #dayOfTheWeekSelection (change)="setDayOfTheWeek(dayOfTheWeekSelection.value)">
+            <option selected disabled>Select Weekday</option>
+            <option [selected]="daysOfTheWeek.PayOnWeekday?.DayOfTheWeekNumber === 2" value="2">Monday</option>
+            <option [selected]="daysOfTheWeek.PayOnWeekday?.DayOfTheWeekNumber === 3" value="3">Tuesday</option>
+            <option [selected]="daysOfTheWeek.PayOnWeekday?.DayOfTheWeekNumber === 4" value="4">Wednesday</option>
+            <option [selected]="daysOfTheWeek.PayOnWeekday?.DayOfTheWeekNumber === 5" value="5">Thursday</option>
+            <option [selected]="daysOfTheWeek.PayOnWeekday?.DayOfTheWeekNumber === 6" value="6">Friday</option>
+        </select>
+        <div class="alert alert-danger" [hidden]="!weekdaySelectionRequired">Weekday Selection Required</div>
+    </div>
+</div>

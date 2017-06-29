@@ -1,0 +1,31 @@
+﻿<p-dataTable data-auto-id='deal-display-table' sortField="Status" sortOrder="1" [value]="filteredDeals" [globalFilter]="gb" [paginator]="true" [rows]="10"
+             #dt selectionMode="single" (onRowSelect)="rowSelect($event)" tableStyleClass="grid-results">
+
+
+    <p-column field="DealName" header="Deal Name" [filter]="false" filterMatchMode="in" [style]="{'width': '180px'}"
+              data-auto-id='deal-name'>
+    </p-column>
+
+    <p-column field="HostBank" header="Primary Entity" [filter]="false" filterMatchMode="in" [style]="{'width': '180px'}"
+              data-auto-id='deal-host-bank'>
+    </p-column>
+	
+    <p-column field="RelationshipTypeDesc" header="Relationship" [filter]="false" filterMatchMode="in" [style]="{'width': '100px'}"
+              data-auto-id='deal-relationship-type-description'>
+    </p-column>
+	
+    <p-column field="HostBankNetCurrentCommitment" header="Total Liability" [filter]="false" filterMatchMode="in" [style]="{'width': '90px'}"
+              data-auto-id='deal-host-bank-net-current-committment'>
+        <ng-template pTemplate="body" let-item="rowData">
+            {{item.HostBankNetCurrentCommitment | currency:'USD':true | currencyformat}}
+        </ng-template>
+    </p-column>
+	
+    <p-column field="FcsAmericaNetHold" header="Net Hold" [filter]="false" filterMatchMode="in" [style]="{'width': '90px'}"
+              data-auto-id='deal-fcsamerica-net-hold'>
+        <ng-template pTemplate="body" let-item="rowData">
+            {{item.FcsAmericaNetHold | currency:'USD':true | currencyformat}}
+        </ng-template>
+    </p-column>
+
+</p-dataTable>

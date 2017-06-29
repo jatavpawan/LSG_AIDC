@@ -1,0 +1,53 @@
+﻿<div class="ta-container">
+    <div class="row no-gutters">
+        <h2>Reject Draft</h2>
+        <br />
+    </div>
+    <div class="row no-gutters">
+        <p class="text-danger">All rejections need to be processed by 1 pm CST. Please contact Cash Management for any questions.</p>
+
+        <div class="col-md-12">
+
+            <p-dataTable id="draftRejectiontable" sortField="TransactionDate" sortOrder="1" [(selection)] ="selectedDraftTransaction" selectionMode="single" dataKey="DraftId" [value]="draftTransactions" [rows]="10" [paginator]="true" [globalFilter]="gb" #dt>
+
+                <p-column field="Account" header="Account" [filter]="false" [style]="{'overflow':'visible'}"
+                          [sortable]="true">
+                </p-column>
+                <p-column field="Purpose" header="Type" [filter]="false" [sortable]="true" sortOrder="1" filterMatchMode="in" [style]="{'overflow':'visible'}"
+                          data-auto-id='account-type'>
+                </p-column>
+
+                <p-column field="Amount" header="Amount" [filter]="false" [style]="{'overflow':'visible'}" [sortable]="true">
+                    <ng-template pTemplate="body" let-item="rowData">
+                        {{item.Amount | currency:'USD':true | currencyformat}}
+                    </ng-template>
+
+                </p-column>
+
+                <p-column header="Draft Number" field="DraftNumber" [filter]="false" [style]="{'overflow':'visible'}" [sortable]="true">
+                    <ng-template pTemplate="body" let-item="rowData">
+                        {{item.DraftNumber}}
+                    </ng-template>
+                </p-column>
+
+                <p-column field="TransactionDate" header="Transaction Date" [filter]="false" [style]="{'overflow':'visible'}" [sortable]="true">
+                    <ng-template pTemplate="body" let-item="rowData">
+                        {{item.TransactionDate | dateformat:'MM/DD/YYYY'}}
+                    </ng-template>
+                </p-column>
+
+                <p-column [style]="{'overflow':'visible'}">
+                    <ng-template pTemplate="body" let-item="rowData">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-danger btn-sm" (click)="openConfirmDelete(item)" [attr.data-auto-id]="getDynamicAutoId('draft-confirm-delete-', item.DraftId)">
+                                <span>Reject</span>
+                            </button>
+                        </div>
+                    </ng-template>
+                </p-column>
+
+            </p-dataTable>
+
+        </div>
+    </div>
+</div>

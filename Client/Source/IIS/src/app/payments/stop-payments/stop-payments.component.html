@@ -1,0 +1,77 @@
+<form (ngSubmit)="submit()" class="form-horizontal" #stopPaymentForm="ngForm">
+    <h2>Stop Payment</h2>
+    <div class="ta-container">
+        <div class="btn-group pull-right separator-bottom" *ngIf="isRegionalCustomer">
+            <button type="button" class="ta-primary-button btn-sm" (click)="addNew()" [disabled]="isRegionalCustomer === false" data-auto-id="stop-payment-manager-add-new">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                    Add New
+                </button>
+        </div>
+
+        <p-dataTable data-auto-id="stop_payments_grid" id="test" [value]="stopPaymentsList" [(selection)] ="selectedStopPayment" selectionMode="single" dataKey="StopPaymentId" sortField="Account.AccountNumber" sortOrder="1" [rows]="10" [paginator]="true" #dt>
+            <p-column field="StopPaymentTypeDisplay" header="Stop Payment Type" [style]="{'overflow':'visible'}" [sortable]="true"></p-column>
+            <p-column field="Account.AccountNumber" header="Account Number" [style]="{'overflow':'visible'}" [sortable]="true"></p-column>
+            <p-column field="Account.Purpose" header="Type" [filter]="false" [sortable]="true" sortOrder="1" filterMatchMode="in" [style]="{'overflow':'visible'}"
+                      data-auto-id='account-type'>
+            </p-column>
+            <p-column field="DraftStopPayment.BeginningDraftNumber" header="Beginning Draft Number" [style]="{'overflow':'visible'}"
+                [sortable]="true">
+                <ng-template pTemplate="body" let-item="rowData">
+                    <div *ngIf="isDraft(item)">
+                        {{item.DraftStopPayment.BeginningDraftNumber}}
+                    </div>
+                </ng-template>
+            </p-column>
+            <p-column field="DraftStopPayment.EndingDraftNumber" header="Ending Draft Number" [style]="{'overflow':'visible'}" [sortable]="true">
+                <ng-template pTemplate="body" let-item="rowData">
+                    <div *ngIf="isDraft(item)">
+                        {{item.DraftStopPayment.EndingDraftNumber}}
+                    </div>
+                </ng-template>
+            </p-column>
+            <p-column field="DraftStopPayment?.Amount" header="Draft Amount" [style]="{'overflow':'visible'}" [sortable]="true">
+                <ng-template pTemplate="body" let-item="rowData">
+                    <div *ngIf="isDraft(item)">
+                        {{item.DraftStopPayment.Amount | currency:'USD':true }}
+                    </div>
+                </ng-template>
+            </p-column>
+            <p-column field="ACHStopPayment.CompanyName" header="Company Name" [style]="{'overflow':'visible'}" [sortable]="true">
+                <ng-template pTemplate="body" let-item="rowData">
+                    <div *ngIf="isAch(item)">
+                        {{item.ACHStopPayment?.CompanyName}}
+                    </div>
+                </ng-template>
+            </p-column>
+            <p-column field="ACHStopPayment?.FromAmount" header="ACH Amount" [style]="{'overflow':'visible'}" [sortable]="true">
+                <ng-template pTemplate="body" let-item="rowData">
+                    <span *ngIf="isAch(item)">
+                        {{item.ACHStopPayment?.FromAmount | currency:'USD':true }}
+                    </span>
+                    <span *ngIf="item.ACHStopPayment?.ToAmount > 0">
+                        - {{item.ACHStopPayment?.ToAmount | currency:'USD':true }}
+                    </span>
+                </ng-template>
+            </p-column>
+            <p-column field="Description" header="Description" [style]="{'overflow':'visible'}" [sortable]="true"></p-column>
+            <p-column field="ExpirationDateDisplay" header="Expiration Date" [style]="{'overflow':'visible'}" [sortable]="true"></p-column>
+            <p-column field="AuditInfo.CreatedBy" header="User Name" [style]="{'overflow':'visible'}" [sortable]="true"></p-column>
+            <div *ngIf="isRegionalCustomer">
+                <p-column [style]="{'overflow':'visible'}">
+                    <ng-template pTemplate="body" let-item="rowData">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-outline-primary dropdown-toggle btn-sm " data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">
+                            <i class="fa fa-bars" aria-hidden="true"></i>
+                        </button>
+                            <div class="ta-primary-dropdown-menu">
+                                <a class="dropdown-item" href="javascript:void(0);" (click)="editPayment(item)" [attr.data-auto-id]="getDynamicAutoId('stop-payment-edit-')">Edit Stop Payment</a>
+                                <a class="dropdown-item" href="javascript:void(0);" (click)="delete(item)" [attr.data-auto-id]="getDynamicAutoId('stop-payment-delete-')">Delete Stop Payment</a>
+                            </div>
+                        </div>
+                    </ng-template>
+                </p-column>
+            </div>
+        </p-dataTable>
+    </div>
+</form>

@@ -1,0 +1,87 @@
+@import "../../../variables";
+
+.sidebar {
+    padding-left: 0;
+    padding-right: 0;
+
+    .nav {
+        display: block !important;
+        margin-bottom: 20px;
+    }
+
+    .nav-item {
+        width: 100%;
+        font-weight: normal;
+
+        & + .nav-item {
+            margin-left: 0;
+        }
+    }
+
+    .nav-link {
+        border-radius: 0;
+        color: $ta-white;
+    }
+
+    .nav-pills .nav-link.active {
+        border-radius: 0;
+        color: $ta-blue-active-link-text;
+        background-color: $ta-blue-active-link;
+    }
+}
+
+.footer-sidebar {
+    position: relative;        
+    font-size: 0.5rem;
+    width: 100%;
+    margin-bottom: .5rem;
+
+    span {
+        display: block;
+        text-align: center;
+    }
+
+    hr {
+        background-color: $ta-gray-hr;
+        margin-left: 0px;
+    }
+}
+
+.search {
+    margin-top: 2%;
+}
+
+.recent-customers {
+    display: block;
+    color: $ta-white;
+    padding: 1rem 0px 0px 0px;
+
+    &:hover {
+        color: $ta-white;
+    }
+
+    &:active {
+        color: $ta-white;
+    }
+
+    &:visited {
+        color: $ta-white;
+    }
+
+    &:focus {
+        color: $ta-white;
+        text-decoration: none;
+    }
+}
+
+.search-container{
+    position: relative;
+
+}
+
+.nav-container{
+    position: relative;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 80%
+}

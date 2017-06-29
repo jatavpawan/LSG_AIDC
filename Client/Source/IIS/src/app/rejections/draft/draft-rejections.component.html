@@ -1,0 +1,76 @@
+﻿<div class="ta-container">
+
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Draft Rejections</h2>
+        </div>
+    </div>
+
+    <div class="row no-gutters">
+        <div class="col-md-12">
+
+            <p-dataTable data-auto-id='draftRejections-table' [(selection)] ="selectedAchRejection" [value]="draftRejections" selectionMode="single" dataKey="DraftId" [rows]="8" [paginator]="true" csvSeparator="|" exportFilename="Draft Rejects" sortField="Amount" sortOrder="1" #dt>
+
+                <p-column field="Bank" header="Bank" [filter]="false" filterMatchMode="in" [sortable]="true" sortOrder="-1" [style]="{'width':'12%'}"
+                          data-auto-id='draft-rejections-bank'>
+                </p-column>
+
+                <p-column field="RejectType" header="Reject Type" [filter]="false" filterMatchMode="in" [sortable]="true" sortOrder="1"
+                          data-auto-id='draft-rejections-reject-type'>
+                </p-column>
+
+                <p-column field="CostCenter" header="Cost Center" [filter]="false" filterMatchMode="in" [sortable]="true" data-auto-id='draft-rejections-cost-center'>
+                </p-column>
+
+                <p-column field="Account" header="Account" [filter]="false" filterMatchMode="in" [sortable]="true" data-auto-id='draft-rejections-account'>
+                </p-column>
+                <p-column field="Purpose" header="Type" [filter]="false" [sortable]="true" sortOrder="1" filterMatchMode="in" [style]="{'overflow':'visible'}"
+                          data-auto-id='account-type'>
+                </p-column>
+
+                <p-column field="CustomerName" header="Customer Name" [style]="{'width':'12%'}" [filter]="false" [sortable]="true" data-auto-id='draft-rejections-customer-name'>
+                </p-column>
+
+                <p-column field="PreparedBy" header="Prepared By" [filter]="false" [sortable]="true" data-auto-id='draft-rejections-status'>
+                </p-column>
+
+                <p-column field="DraftNumber" header="Draft Number" [filter]="false" [sortable]="true" data-auto-id='draft-rejections-company'>
+                </p-column>
+
+                <p-column field="Amount" header="Amount" [filter]="false" [sortable]="true" data-auto-id='draft-rejections-amount'>
+                    <ng-template pTemplate="body" let-item="rowData">
+                        {{ item.Amount | currency:'USD':true }}
+                    </ng-template>
+                </p-column>
+
+                <p-column field="Description" header="Reject Reason" [filter]="false" filterMatchMode="in" [sortable]="true"
+                          data-auto-id='draft-rejections-status' [style]="{'width':'12%'}">
+
+                    <ng-template pTemplate="body" let-item="rowData">
+                        <div class="truncate" title="{{ item.Description }}"> {{ item.Description }} </div>
+                    </ng-template>
+
+                </p-column>
+
+                <p-column field="StatusDisplay" header="Status" [filter]="false" filterMatchMode="in" [sortable]="true" data-auto-id='draft-rejections-status' [style]="{'width':'8%'}">
+                </p-column>
+
+                <p-column [style]="{'overflow':'visible'}">
+                    <template pTemplate type="header">
+                        <i data-auto-id="draft-rejection-export-csv" class="fa fa-file-excel-o ta-alight-left" (click)="draftRejectionsExport(dt)" title="Export CSV"></i>
+                    </template>
+
+                    <ng-template pTemplate="body" let-item="rowData">
+                        <div class="btn-group" [style]="{'width':'10%'}">
+                            <button type="button" class="btn btn-default btn-sm " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" [disabled]="item.IsActive == 0" (click)="deleteRejected(item)">
+                                Delete
+                            </button>
+                        </div>
+                    </ng-template>
+                </p-column>
+            </p-dataTable>
+
+        </div>
+    </div>
+
+</div>

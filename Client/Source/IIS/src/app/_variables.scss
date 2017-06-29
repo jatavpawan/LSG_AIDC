@@ -1,0 +1,27 @@
+﻿/*
+    Colors
+*/
+$ta-black: #444;
+$ta-gray-dark: #636c72;
+$ta-gray-light: lighten($ta-gray-dark, 35%);
+$ta-gray-nav: #555555;
+$ta-gray-topnav-separator: lighten(#636c72, 50);
+$ta-gray-hr: #C7C7C7;
+$ta-blue: #347597;
+$ta-blue-light: #a2c5d6;
+$ta-blue-dark: #245169;
+$ta-blue-active-link: #a2c5d6;
+$ta-blue-active-link-text: #f7f7f9;
+$ta-white:#ffffff;
+$ta-offwhite: #FAFAFA;
+$navbar-text-color: $ta-white;
+$ta-gold: #f0ce4e;
+$ta-gray-jumbotron: #DBDBDB;
+
+$ta-font-stack: "Helvetica Neue",Helvetica,Arial,sans-serif;
+
+$ta-disabled: #eceeef;
+$ta-red: red;
+
+$form-red: #a94442;
+$form-green: #42A948;

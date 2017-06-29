@@ -1,0 +1,127 @@
+﻿<div class="large-modal-dialog">
+    <form class="form-horizontal" #confirmForm="ngForm">
+        <div class="ta-modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Confirmation</h3>
+                <button data-auto-id="scheduler_modal_close_button" type="button" class="close" (click)="close()">&times;</button>
+            </div>
+            <div class="modal-body ModalText">
+
+                <div class="row">
+                    <div class="col-md-12 float-left">
+                        <span style="font-weight: bold;">Bank Template:</span> {{ach.BankTemplate.BankName}} {{ach.BankTemplate.BankAccountType.Description}} {{ach.BankTemplate.ExternalAccountNumber}}
+                    </div>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-5 float-left">                        
+                        <span style="font-weight: bold;">Form 2140 Signed:</span>
+                        <input data-auto-id="confirm_twentyonefourty_acknowledgement" type="checkbox" [checked]="ach.AuthorizationType === 1" disabled />
+                    </div>
+                    <div class="col-md-4 float-left" *ngIf="isAchInTransactionDirection()">
+                        <span style="font-weight: bold;">Verbal ACH Received:</span>
+                        <input data-auto-id="confirm_verbalAchReceived_acknowledgement" type="checkbox" [checked]="ach.AuthorizationType === 2" disabled />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 float-left">
+                        <span style="font-weight: bold;">Account Number:</span> {{ach.Account.AccountNumber}}
+                    </div>
+
+                    <div class="col-md-3  float-left">
+                        <span style="font-weight: bold;">ACH Type:</span> {{ach.TransactionDirectionDisplay}}
+                    </div>
+                    <div class="col-md-5 float-left">
+                        <span style="font-weight: bold;">Nickname:</span> {{ach.Nickname}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 float-left" *ngIf="isAchOutTransactionDirection()">
+                        <span style="font-weight: bold;">Approver:</span> {{ach.AchApprover.Name}}
+                    </div>
+                    <div class="col-md-4 float-left" *ngIf="isAchInTransactionDirection()">
+                        <span style="font-weight: bold;">How to Apply:</span> {{ach.HowToApply.Description}}
+                    </div>
+                    <div class="col-md-4 float-left" *ngIf="ach.OtherFeeCode">
+                        <span style="font-weight: bold;">Other Fee Code:</span> {{ach.OtherFeeCode.Description}}
+                    </div>
+
+                    <div class="col-md-5 float-left">
+                        <span style="font-weight: bold;">Amount:</span> {{ach.Amount | currency:'USD':true}}
+                    </div>
+
+                    <div class="col-md-3 float-left">
+                        <span style="font-weight: bold;">Frequency:</span> {{ach.Schedule.Frequency | titleCase}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 float-left" *ngIf="isAchInTransactionDirection()">
+                        <span style="font-weight: bold;">Excess Amount:</span> {{ach.ExcessAmount| currency:'USD':true}}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <span style="font-weight: bold;">Addenda:</span> {{ach.Addenda}}
+                    </div>
+                </div>
+
+
+                <!--Single Payment-->
+
+                <div *ngIf="ach.Schedule.Frequency === 'once'" class="row">
+                    <div class="col-md-5">
+                        <span style="font-weight: bold;">Pay On:</span> {{ach.Schedule.OneTimePaymentDate | dateformat:'MM/DD/YYYY'}}
+                    </div>
+                </div>
+               
+
+                <!--RecurringPayment-->
+                <div *ngIf="ach.Schedule.Frequency === 'recurring'">
+                    
+                    <div *ngIf="ach.Schedule.RecurringSchedule.Frequency === 'monthly'">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <span style="font-weight: bold;">Type:</span> Monthly Payment
+                            </div>
+                        </div>
+                        <br/>
+                        <monthly-component [minDate]="minDate" [monthlySchedule]="ach.Schedule.RecurringSchedule.MonthlySchedule" [isReadOnly]="true"></monthly-component>
+                    </div>
+                    <div *ngIf="ach.Schedule.RecurringSchedule.Frequency === 'weekly'">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <span style="font-weight: bold;">Type:</span> Weekly Payment
+                            </div>
+                        </div>
+                        <br/>
+                        <weekly-component [minDate]="minDate" [weeklySchedule]="ach.Schedule.RecurringSchedule.WeeklySchedule" [isReadOnly]="true"></weekly-component>
+                    </div>
+                </div>
+                <div *ngIf="ach.Schedule.RecurringSchedule.Frequency === 'quarterly'">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <span style="font-weight: bold;">Type:</span> Quarterly Payment
+                        </div>
+                    </div>
+                    <br/>
+                    <quarterly-component [minDate]="minDate" [quarterlySchedule]="ach.Schedule.RecurringSchedule.QuarterlySchedule" [isReadOnly]="true"></quarterly-component>
+                </div>
+                <div *ngIf="ach.Schedule.RecurringSchedule.Frequency === 'annual'">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <span style="font-weight: bold;">Type:</span> Annual Payment
+                        </div>
+                    </div>
+                    <br/>
+                    <annual-component [minDate]="minDate" [annualSchedule]="ach.Schedule.RecurringSchedule.AnnualSchedule" [isReadOnly]="true"></annual-component>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button *ngIf="confirmText.length > 0" data-auto-id='ach-transaction-confirm' type="button" class="ta-primary-button" (click)="confirm()">{{confirmText}}</button>
+                <button *ngIf="cancelText.length > 0" type="button" data-auto-id='ach-transaction-cancel' class="btn" (click)="cancel()">{{cancelText}}</button>
+            </div>
+        </div>
+    </form>
+</div>

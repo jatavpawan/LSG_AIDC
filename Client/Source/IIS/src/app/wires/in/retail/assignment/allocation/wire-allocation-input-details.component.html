@@ -1,0 +1,76 @@
+﻿
+<form class="form-horizontal" #wireallocationinput="ngForm">
+    <div class="row" *ngIf="selectedCustomer?.Id > 0">
+        <div class="col-md-12">
+            <label class="form-control-label form-control-label-sm">Customer: </label> {{selectedCustomer.DisplayName}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group" *ngIf="searchMode === 'customer'">
+                <label class="form-control-label form-control-label-sm">Account</label>
+                <select [disabled]="!selectedCustomer" data-auto-id="assign_account_dropdown" class="form-control form-control-label-sm" required name="account" id="account"
+                        [(ngModel)]="wireCustomerAllocation.incomingWireTransactionDetail.Account" #account="ngModel" placeholder>
+                    <option disabled [selected] [value]="undefined">Select an Account</option>
+                    <option *ngFor="let account of selectedCustomer.AccountNumbers" [ngValue]="account">{{account?.AccountNumber}}</option>
+                </select>
+
+            </div>
+            <div class="form-group" *ngIf="searchMode === 'glaccount'">
+                <label class="form-control-label form-control-label-sm">Account</label>
+                <p-autoComplete required [placeholder]="searchPlaceholder" [dropdown]="true" [(ngModel)]="searchSelection" autoHighlight="true" [suggestions]="results" field="Description" (completeMethod)="getTypeAheadData($event)" (onDropdownClick)="getTypeAheadData($event)" (onBlur)="glAccountOnBlur($event)" (onSelect)="setSelectionId($event)" emptyMessage="No Results Found" name="SearchInput" #SearchInput="ngModel" styleClass="auto-complete-form-control form-control-label-sm"></p-autoComplete>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group" *ngIf="searchMode === 'customer'">
+                <label class="form-control-label form-control-label-sm">How to Apply</label>
+                <select [disabled]="isDisabled()" data-auto-id="assign_howtoapply_dropdown" class="form-control form-control-label-sm" required name="howtoapply" id="howtoapply" [(ngModel)]="wireCustomerAllocation.incomingWireTransactionDetail.TransactionType" #howtoapply="ngModel" (change)="howToApplyChanged()">
+                    <option disabled [selected] [value]="undefined">Select How to Apply</option>
+                    <option *ngFor="let howtoApply of howtoApplyList" [ngValue]="howtoApply">{{howtoApply.Description}}</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col-md-4" *ngIf="showFeeCodes && searchMode ==='customer'">
+            <div class="form-group">
+                <label class="form-control-label form-control-label-sm">Fee Code</label>
+                <select [disabled]="isDisabled()" data-auto-id="assign_feecode_dropdown" class="form-control form-control-label-sm" required name="FeeCode" id="FeeCode" [(ngModel)]="wireCustomerAllocation.incomingWireTransactionDetail.FeeCode" #FeeCode="ngModel">
+                    <option disabled [selected] [value]="undefined">Select Fee Code</option>
+                    <option *ngFor="let feeCode of feeCodes" [ngValue]="feeCode">{{feeCode.Description}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="form-control-label form-control-label-sm">Amount</label>
+                <input [disabled]="isDisabled()" currencyMask [options]="{ align: 'left', prefix: '$ ', thousands: ',', decimal: '.', precision: '2', allowNegative: false }" class="form-control draft-form-control form-control-sm" data-auto-id="AssignAmount" type="text" name="Amount" required [(ngModel)]="wireCustomerAllocation.incomingWireTransactionDetail.Amount" #Amount="ngModel" />
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="form-control-label form-control-label-sm">Description</label>
+                <input [disabled]="isDisabled()" class="form-control form-control-sm" type="text" maxlength="20" required [(ngModel)]="wireCustomerAllocation.incomingWireTransactionDetail.Description" name="Description" #Description="ngModel" data-auto-id="AssignDescription" />
+            </div>
+        </div>
+        <div class="col-md-4" *ngIf="searchMode ==='glaccount'">
+            <div class="form-group">
+                <label class="form-control-label form-control-label-sm">GL Sub Ledger</label>
+                <input [disabled]="isDisabled()" class="form-control form-control-sm" type="text" required [(ngModel)]="wireCustomerAllocation.incomingWireTransactionDetail.GLSubledger" name="GLSubledger" #GLSubledger="ngModel" data-auto-id="AssignGLSubledger" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12" *ngIf="!isEdit">
+            <div class="pull-right">
+                <button [disabled]="isDisabled()" data-auto-id="detail_view_button_confirm" type="button" class="ta-primary-button" (click)="addAssignment()">Add</button>&nbsp;&nbsp;
+            </div>
+        </div>
+        <div class="col-md-12" *ngIf="isEdit">
+            <div class="pull-right">
+                <button [disabled]="isDisabled()" data-auto-id="detail_view_button_confirm_edit" type="button" class="ta-primary-button" (click)="editAssignment()">Edit</button>&nbsp;&nbsp;
+            </div>
+        </div>
+    </div>
+</form>

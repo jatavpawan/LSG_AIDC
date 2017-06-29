@@ -1,0 +1,123 @@
+﻿<div class="large-modal-dialog">
+    <form class="form-horizontal" #confirmForm="ngForm">
+        <div class="ta-modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">{{title}}</h3>
+                <button data-auto-id="view_transfer_modal_close_button" type="button" class="close" (click)="close()">&times;</button>
+            </div>
+            <div class="modal-body ModalText">
+
+                <div class="row">
+                    <div class="col-md-6 float-left">
+                        <span style="font-weight: bold;">From Customer:</span> {{transferObject.FromCustomer.DisplayName}}
+                    </div>
+                    <div class="col-md-6 float-left">
+                        <span style="font-weight: bold;">From Account:</span> {{transferObject.FromAccount.AccountNumber}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 float-left">
+                        <span style="font-weight: bold;">To Customer:</span> {{transferObject.ToCustomer.DisplayName}}
+                    </div>
+                    <div class="col-md-6 float-left">
+                        <span style="font-weight: bold;">To Account:</span> {{transferObject.ToAccount.AccountNumber}}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 float-left">
+                        <span style="font-weight: bold;">How to Apply:</span> {{transferObject.HowToApply.Description}}
+                    </div>
+                    <div class="col-md-6 float-left" *ngIf="transferObject.OtherFeeCode">
+                        <span style="font-weight: bold;">Other Fee Code:</span> {{transferObject.OtherFeeCode.Description}}
+                    </div>
+                    <div class="col-md-6 float-left">
+                        <span style="font-weight: bold;">Amount:</span> {{transferObject.Amount | currency:'USD':true}}
+                    </div>
+                </div>
+
+                <div class="row" *ngIf="transferObject.HowToApplyExcess">
+                    <div class="col-md-6 float-left">
+                        <span style="font-weight: bold;">How to Apply Excess:</span> {{transferObject.HowToApplyExcess?.Description}}
+                    </div>
+                    <div class="col-md-6 float-left">
+                        <span style="font-weight: bold;">Excess Amount:</span> {{transferObject.ExcessAmount| currency:'USD':true}}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 float-left">
+                        <span style="font-weight: bold;">Nickname:</span> {{transferObject.Nickname}}
+                    </div>
+                    <div *ngIf="transferObject.AuditInfo?.CreatedBy && transferObject.AuditInfo.CreatedBy?.length > 0" class="col-md-6 float-left">
+                        <span style="font-weight: bold;">Created By:</span> {{transferObject.AuditInfo.CreatedBy}}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 float-left">
+                        <span style="font-weight: bold;">Frequency:</span> {{transferObject.Schedule.Frequency | titleCase}}
+                    </div>
+                    <div *ngIf="isForm2279Required" class="col-md-6 float-left">
+                        <span style="font-weight: bold;">Form 2279 Complete:</span>
+                        <input data-auto-id="confirm_twentytwoseventynine_acknowledgement" type="checkbox" checked disabled />
+                    </div>
+                </div>
+                <!--Single Payment-->
+
+                <div *ngIf="transferObject.Schedule.Frequency === 'once'" class="row">
+                    <div class="col-md-6">
+                        <span style="font-weight: bold;">Pay On:</span> {{transferObject.Schedule.OneTimePaymentDate | dateformat:'MM/DD/YYYY'}}
+                    </div>
+                </div>
+
+
+                <!--RecurringPayment-->
+                <div *ngIf="transferObject.Schedule.Frequency === 'recurring'">
+                    <div *ngIf="transferObject.Schedule.RecurringSchedule.Frequency === 'monthly'">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <span style="font-weight: bold;">Type:</span> Monthly Payment
+                            </div>
+                        </div>
+                        <br />
+                        <monthly-component [minDate]="minDate" [prepaymentRestriction]="transferObject.ToAccount.PrePayRestriction" [monthlySchedule]="transferObject.Schedule.RecurringSchedule.MonthlySchedule" [isReadOnly]="true"></monthly-component>
+                    </div>
+
+                    <div *ngIf="transferObject.Schedule.RecurringSchedule.Frequency === 'weekly'">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <span style="font-weight: bold;">Type:</span> Weekly Payment
+                            </div>
+                        </div>
+                        <br />
+                        <weekly-component [minDate]="minDate" [weeklySchedule]="transferObject.Schedule.RecurringSchedule.WeeklySchedule" [isReadOnly]="true"></weekly-component>
+                    </div>
+                    
+                    <div *ngIf="transferObject.Schedule.RecurringSchedule.Frequency === 'quarterly'">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <span style="font-weight: bold;">Type:</span> Quarterly Payment
+                            </div>
+                        </div>
+                        <br/>
+                        <quarterly-component [minDate]="minDate" [quarterlySchedule]="transferObject.Schedule.RecurringSchedule.QuarterlySchedule" [isReadOnly]="true"></quarterly-component>
+                    </div>
+                    <div *ngIf="transferObject.Schedule.RecurringSchedule.Frequency === 'annual'">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <span style="font-weight: bold;">Type:</span> Annual Payment
+                            </div>
+                        </div>
+                        <br/>
+                        <annual-component [minDate]="minDate" [annualSchedule]="transferObject.Schedule.RecurringSchedule.AnnualSchedule" [isReadOnly]="true"></annual-component>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button *ngIf="confirmText.length > 0" data-auto-id='internal-transfer-confirm' type="button" class="ta-primary-button" (click)="confirm()">{{confirmText}}</button>
+                <button *ngIf="cancelText.length > 0" type="button" data-auto-id='internal-transfer-cancel' class="btn" (click)="cancel()">{{cancelText}}</button>
+            </div>
+        </div>
+    </form>
+</div>

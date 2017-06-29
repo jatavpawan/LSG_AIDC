@@ -1,0 +1,121 @@
+<div>
+    <div class="modal-dialog">
+        <div class="modal-content bank-template-modal">
+            <div class="modal-header">
+                <h3 *ngIf="achTemplateData.BankTemplateId > 0" class="modal-title">Bank Template: {{ achTemplateData.BankName}} {{achTemplateData.ExternalAccountNumber}}</h3>
+                <h3 *ngIf="achTemplateData.BankTemplateId === 0" class="modal-title">New Bank Template</h3>
+
+                <button type="button" class="close" (click)="close()">&times;</button>
+            </div>
+            <div class="modal-body ModalContentText">
+
+                <form (ngSubmit)="submit()" #achTemplateForm="ngForm" class="form-horizontal">
+                    <ta-invalid-form-message [isSubmitted]="achTemplateForm.submitted"></ta-invalid-form-message>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <ta-form-group-validation [isInvalid]="abaNotFound" [isRequired]="true">
+                                <label for="AbaRoutingNumber" class="form-control-label form-control-label-sm">ABA Number</label>
+                                <input data-auto-id="banktemplate_input_abanumber" [disabled]="achTemplateData.BankTemplateId > 0" class="form-control form-control-sm"
+                                       type="tel" maxlength="9" name="AbaRoutingNumber" id="AbaRoutingNumber" (blur)="lookupAba()"
+                                       [(ngModel)]="achTemplateData.AbaRoutingNumber" #AbaRoutingNumber="ngModel" required />
+
+                                <ta-invalid-control-message [isInvalid]="abaNotFound" [message]="'ABA Number was not found, please try again.'"></ta-invalid-control-message>
+                            </ta-form-group-validation>
+                        </div>
+                        <div class="col-md-6">
+                            <ta-form-group-validation>
+                                <label for="bankName" class="form-control-label form-control-label-sm">Bank Name</label>
+                                <input data-auto-id="banktemplate_input_bankName" class="form-control form-control-sm" disabled="true" type="text" name="bankName"
+                                       id="bankName" [(ngModel)]="achTemplateData.BankName" #bankName="ngModel" />
+                            </ta-form-group-validation>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <ta-form-group-validation>
+                                <label for="city" class="form-control-label form-control-label-sm">City</label>
+                                <input data-auto-id="banktemplate_input_city" class="form-control form-control-sm" disabled="true" type="text" name="city"
+                                       id="city" [(ngModel)]="achTemplateData.City" #city="ngModel" />
+                            </ta-form-group-validation>
+                        </div>
+                        <div class="col-md-6">
+                            <ta-form-group-validation>
+                                <label for="state" class="form-control-label form-control-label-sm">State</label>
+                                <input data-auto-id="banktemplate_input_state" class="form-control form-control-sm" disabled="true" type="text" name="state"
+                                       id="state" [(ngModel)]="achTemplateData.State" #state="ngModel" />
+                            </ta-form-group-validation>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <ta-form-group-validation [isRequired]="true">
+                                <label for="ExternalAccountNumber" class="form-control-label form-control-label-sm">Account Number</label>
+                                <span *ngIf="achTemplateData.BankTemplateId > 0" data-auto-id="banktemplate_input_accountNumber_span" class="form-control form-control-sm span-disabled"
+                                      type="number">
+                                    {{achTemplateData.ExternalAccountNumber | accountnumberformat }}
+                                </span>
+                                <div *ngIf="achTemplateData.BankTemplateId === 0">
+                                    <input data-auto-id="banktemplate_input_accountNumber" class="form-control form-control-sm" type="number" name="ExternalAccountNumber"
+                                           id="ExternalAccountNumber" [(ngModel)]="achTemplateData.ExternalAccountNumber" #ExternalAccountNumber="ngModel"
+                                           required />
+                                </div>
+                            </ta-form-group-validation>
+                        </div>
+                        <div class="col-md-6">
+                            <ta-form-group-validation [isRequired]="true">
+                                <label for="BankAccountTypeId" class="form-control-label form-control-label-sm">Account Type</label>
+                                <select data-auto-id="banktemplate_input_accountTypeId" [disabled]="achTemplateData.BankTemplateId > 0" class="form-control form-control-sm select-adjusted"
+                                        name="BankAccountTypeId" id="BankAccountTypeId" [(ngModel)]="achTemplateData.BankAccountType.Id"
+                                        #BankAccountTypeId="ngModel" required>
+                                    <option disabled selected value="undefined">Please select an account type</option>
+                                    <option *ngFor="let bankAccountType of accountTypes" [ngValue]="bankAccountType.Id">{{bankAccountType.Description}}</option>
+                                </select>
+                            </ta-form-group-validation>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <ta-form-group-validation [isRequired]="true">
+                                <label for="AccountHolderName" class="form-control-label form-control-label-sm">Account Holder Name</label>
+                                <input data-auto-id="banktemplate_input_accountHolderName" class="form-control form-control-sm" type="text" name="AccountHolderName"
+                                       id="AccountHolderName" [(ngModel)]="achTemplateData.AccountHolderName" #AccountHolderName="ngModel"
+                                       [disabled]="achTemplateData.BankTemplateId > 0" required />
+                            </ta-form-group-validation>
+                        </div>
+                        <div class="col-md-6">
+                            <ta-form-group-validation [isRequired]="true">
+                                <label for="accountHolderNameGroup" class="form-control-label form-control-label-sm">Account Holder</label>
+
+                                <select data-auto-id="banktemplate_input_isCustomerAccountHolder" [disabled]="achTemplateData.BankTemplateId > 0" class="form-control form-control-sm select-adjusted" required id="IsCustomerAccountHolder" name="IsCustomerAccountHolder" #IsCustomerAccountHolder="ngModel" [(ngModel)]="achTemplateData.IsCustomerAccountHolder">
+                                    <option disabled selected value="undefined">Please select a primary account holder</option>
+                                    <option value='true'>Customer</option>
+                                    <option value='false'>Other</option>
+                                </select>
+                            </ta-form-group-validation>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="pull-right">
+                                    <button data-auto-id="banktemplate_button_warningyes" type="submit" class="ta-primary-button spaced" *ngIf="isAddNew">Save</button>
+                                    <button data-auto-id="banktemplate_button_cancel" type="button" class="btn pull-right" (click)="close()">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <div class="modal-footer" *ngIf="achTemplateData.BankTemplateId > 0">
+                <div class="pull-left">
+                    <span *ngIf="achTemplateData.Status == 1">Created By:</span>
+                    <span *ngIf="achTemplateData.Status == 2">Deleted By:</span> {{achTemplateData.AuditInfo?.UpdatedBy}}
+                    on {{achTemplateData.AuditInfo?.UpdatedOn | date: 'MM/dd/yyyy h:mma'}}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

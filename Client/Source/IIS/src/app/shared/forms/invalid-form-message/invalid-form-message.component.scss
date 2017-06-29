@@ -1,0 +1,48 @@
+﻿@import "../../../variables";
+
+/*form.ng-valid .form-validation-message {*/
+/*form.ng-valid .form-validation-message {
+    display: none;
+}*/
+
+.bs-callout {
+    padding: 20px;
+    margin: 0 0 20px 0;
+    border: 1px solid #eee;
+    border-left-width: 5px;
+    border-radius: 3px;
+
+    h4 {
+        margin-top: 0;
+        margin-bottom: 5px;
+    }
+
+    p:last-child {
+        margin-bottom: 0;
+    }
+
+    code {
+        border-radius: 3px;
+    }
+
+    & + .bs-callout {
+        margin-top: -5px;
+    }
+}
+
+.bs-callout-default {
+    border-left-color: #777;
+
+    h4 {
+        color: #777;
+    }
+}
+
+.bs-callout-danger {
+    border-left-color: $form-red;
+    border-color: $form-red;
+
+    h4 {
+        color: $form-red;
+    }
+}

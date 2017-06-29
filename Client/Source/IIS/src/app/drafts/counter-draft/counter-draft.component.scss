@@ -1,0 +1,61 @@
+﻿@import "../../variables";
+
+.counter-draft-modal{
+
+    margin-left:-30%;
+    margin-right:-30%;
+}
+
+.span-disabled{
+    background-color: $ta-disabled;
+}
+
+.ui-inputtext {
+    height: 100%;
+    width: 96%;
+    padding: 0.5rem 0.75rem;
+    border: none;
+}
+
+.ui-button {
+    color: #000000;
+    background-color: #ffffff;
+    width: 3% !important;
+    border: none;
+    float: right;
+}
+
+.ui-button:hover {
+    color: #000000 !important;
+    background-color: #ffffff !important;
+    border: none !important;
+}
+
+
+.ng-valid[required], .ng-valid.required {
+    border-left: 5px solid #42A948; /* green */
+}
+
+.ng-invalid:not(form) {
+    border-left: 5px solid #a94442; /* red */
+}
+
+p-autocomplete.ng-invalid {
+    border-left: 0 none;
+}
+
+p-autocomplete.ng-dirty.ng-invalid > .ui-autocomplete > .ui-inputtext,
+p-autocomplete.ng-invalid > .ui-autocomplete > .ui-inputtext[required] {
+    border-left: 5px solid #a94442; /* red */
+    border-bottom: 1px solid #d6d6d6; /* Theme specific */
+}
+
+p-autocomplete.ng-valid[required] > .ui-autocomplete > .ui-inputtext,
+p-autocomplete.ng-valid.required > .ui-autocomplete > .ui-inputtext,
+p-autocomplete.ng-valid > .ui-autocomplete > .ui-inputtext[required] {
+    border-left: 5px solid #42A948; /* green */
+}
+
+p-autocomplete > .ui-autocomplete > .ui-inputtext {
+    padding: 6px 12px;
+}

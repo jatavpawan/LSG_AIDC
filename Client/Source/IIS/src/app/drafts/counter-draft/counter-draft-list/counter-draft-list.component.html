@@ -1,0 +1,68 @@
+﻿<div class="ta-container">
+    <div class="row no-gutters">
+        <h2>Counter Drafts</h2>
+        <br />
+
+        <div class="col-md-12">
+
+            <div class="btn-group pull-right separator-bottom" role="group">
+                <button type="button" class="ta-primary-button btn-sm" (click)="addNew()" data-auto-id='counter-draft-issue-new'>
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                    Issue New
+                </button>
+            </div>
+            <p-dataTable data-auto-id='counter-draft-table' [value]="filteredCounterDrafts" sortField="AccountNumberDisplay" [(selection)] ="selectedCounterDraft" selectionMode="single" dataKey="CounterDraftId" sortOrder="1" [rows]="10" [paginator]="true" [globalFilter]="gb" #dt>
+
+                <p-column field="Office.OfficeName" header="Office" [filter]="false" filterMatchMode="equals" [style]="{'overflow':'visible'}" data-auto-id='counter-draft-officeName'
+                          [sortable]="true">
+                </p-column>
+
+                <p-column field="LASAccountNumber" header="Account Number" [filter]="false" filterMatchMode="in" [style]="{'overflow':'visible'}" [sortable]="true" sortOrder="1" data-auto-id='counter-draft-account-number'>
+                </p-column>
+
+                <p-column field="BeginningDraftNumber" header="Beginning Draft Number" [filter]="false" filterMatchMode="in" [style]="{'width':'15%'}" [sortable]="true" data-auto-id='counter-draft-beginning-draft-number'>
+
+                </p-column>
+
+                <p-column field="EndingDraftNumber" header="Ending Draft Number" [filter]="false" filterMatchMode="in" [style]="{'overflow':'visible'}" [sortable]="true" data-auto-id='counter-draft-ending-draft-number'>
+
+                </p-column>
+
+
+                <p-column field="StatusDescription" header="Status" [filter]="true" filterMatchMode="in" [style]="{'overflow':'visible'}"
+                          [sortable]="true" data-auto-id='counter-draft-status-description'>
+                    <ng-template pTemplate="filter" let-col>
+                        <p-multiSelect data-auto-id="statusMultiSelects" [options]="statusMultiSelects" defaultLabel="Active" (onChange)="onStatusChanged(dt, $event, col)"
+                                       styleClass="ui-column-filter"></p-multiSelect>
+                    </ng-template>
+                </p-column>
+
+                <p-column field="PreparedBy" header="Issued By" [filter]="false" filterMatchMode="in" [style]="{'overflow':'visible'}"
+                          [sortable]="true" data-auto-id='counter-draft-created-by'>
+
+                </p-column>
+
+                <p-column field="AuditInfo.CreatedOn" header="Issued On" [filter]="false" filterMatchMode="in" [style]="{'overflow':'visible'}"
+                          [sortable]="true" sortOrder="-1" data-auto-id='counter-draft-created-on'>
+                    <ng-template pTemplate="body" let-item="rowData">
+                        {{item.AuditInfo.CreatedOn | dateformat:'MM/DD/YYYY'}}
+                    </ng-template>
+                </p-column>
+
+                <p-column [style]="{'overflow':'visible'}">
+                    <ng-template pTemplate="body" let-item="rowData">
+                        <div class="btn-group">
+                            <button type="button" [disabled]="!item.IsActive" class="btn btn-danger btn-sm" (click)="delete(item)" [attr.data-auto-id]="getDynamicAutoId('counter-draft-delete-', item.CounterDraftId)">
+                                <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                <span>Delete</span>
+                            </button>
+                        </div>
+                    </ng-template>
+                </p-column>
+
+            </p-dataTable>
+
+        </div>
+    </div>
+
+</div>

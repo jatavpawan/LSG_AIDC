@@ -1,0 +1,27 @@
+﻿<div class="ta-container">
+    <div class="row">
+        <div class="col-md-6">
+            <span>Type</span>
+            <select data-auto-id="scheduler-frequency-dropdown" class="form-control form-control-label-sm" #frequencySelected (change)="frequencyChanged(frequencySelected.value)">
+                <option selected disabled>Select Frequency...</option>
+                <option [selected]="recurringSchedule.Frequency === 'weekly'" value='weekly'>Weekly Payment</option>
+                <option [selected]="recurringSchedule.Frequency === 'monthly' || prepaymentRestriction === '1'" value='monthly'>Monthly Payment</option>
+                <option [selected]="recurringSchedule.Frequency === 'quarterly'" value='quarterly'>Quarterly Payment</option>
+                <option [selected]="recurringSchedule.Frequency === 'annual'"  value='annual'>Annual Payment</option>
+            </select>
+        </div>
+    </div>
+    <hr/>
+    <div *ngIf="recurringSchedule.Frequency === 'weekly'">
+        <weekly-component [weeklySchedule]="recurringSchedule.WeeklySchedule" [minDate]="minDate"></weekly-component>
+    </div>
+    <div *ngIf="recurringSchedule.Frequency === 'monthly'">
+        <monthly-component [prepaymentRestriction] ="prepaymentRestriction" [monthlySchedule]="recurringSchedule.MonthlySchedule" [minDate]="minDate"></monthly-component>
+    </div>
+    <div *ngIf="recurringSchedule.Frequency === 'quarterly'">
+        <quarterly-component [quarterlySchedule] ="recurringSchedule.QuarterlySchedule" (onDateSelected)="quarterlyChanged($event)" [minDate]="minDate"></quarterly-component>
+    </div>
+    <div *ngIf="recurringSchedule.Frequency === 'annual'">
+        <annual-component [annualSchedule] ="recurringSchedule.AnnualSchedule" (onDateSelected)="annualChanged($event)" [minDate]="minDate"></annual-component>
+    </div>
+</div>

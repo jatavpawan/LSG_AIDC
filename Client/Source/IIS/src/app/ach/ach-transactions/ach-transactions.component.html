@@ -1,0 +1,80 @@
+﻿<div class="ta-container">
+    <div class="row no-gutters">
+        <h2>ACH Transaction Setups</h2>
+        <br />
+
+        <div class="col-md-12">
+
+            <div class="btn-group pull-right separator-bottom" role="group">
+                <button type="button" class="ta-primary-button btn-sm" (click)="addNew()" data-auto-id='ach-transaction-issue-new'>
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                    New ACH Setup
+                </button>
+            </div>
+
+            <p-dataTable id="test" data-auto-id='ach-transaction-table' sortField="Account.AccountId" [(selection)] ="selectedAchTransaction" selectionMode="single" dataKey="AchId" sortOrder="1" [value]="filteredTransactions" [rows]="10" [paginator]="true" #dt>
+
+                <p-column field="Nickname" data-auto-id='ach-transaction-nickname' header="Nickname" [sortable]="true" [style]="{'width':'13%'}">
+                </p-column>
+                <p-column field="TransactionDirectionDisplay" header="ACH Type" data-auto-id='ach-transaction-type' [filter]="true" filterMatchMode="equals"
+                          [style]="{'width':'10%'}" [sortable]="true">
+                </p-column>
+                <p-column field="Account.AccountNumber" header="Account Number" data-auto-id='ach-transaction-accountNumber' [style]="{'width':'12%'}" [sortable]="true"></p-column>
+
+                <p-column field="Account.Purpose" header="Type" [filter]="false" [sortable]="true" sortOrder="1" filterMatchMode="in" [style]="{'overflow':'visible'}"
+                          data-auto-id='account-type'>
+                </p-column>
+
+                <p-column field="FrequencyDisplay" header="Frequency" [style]="{'overflow':'visible'}" data-auto-id='ach-transaction-frequencyDisplay' [sortable]="true">
+                </p-column>
+                <p-column field="StatusDescription" header="Status" [filter]="true" filterMatchMode="in" data-auto-id='ach-transaction-Status' [style]="{'overflow':'visible'}"
+                          [sortable]="true">
+                    <ng-template pTemplate="filter" let-col>
+                        <p-multiSelect data-auto-id="statusMultiSelects" [options]="statusMultiSelects" defaultLabel="Active" (onChange)="onStatusChanged(dt, $event, col)"
+                                       styleClass="ui-column-filter"></p-multiSelect>
+                    </ng-template>
+                </p-column>
+
+                <p-column field="AuditInfo.CreatedOn" header="Created On" data-auto-id='ach-transaction-createdOn' sortOrder="1" [style]="{'overflow':'visible'}"
+                          [sortable]="true">
+                    <ng-template pTemplate="body" let-item="rowData">
+                        {{item.AuditInfo.CreatedOn | dateformat:'MM/DD/YYYY'}}
+                    </ng-template>
+                </p-column>
+
+                <p-column field="AuditInfo.CreatedBy" header="Created By" data-auto-id='ach-transaction-createdBy' [style]="{'overflow':'visible'}"
+                          [sortable]="true">
+                </p-column>
+                <p-column field="AuditInfo.DeletedOn" header="Deleted On" data-auto-id='ach-transaction-deletedOn' [style]="{'overflow':'visible'}"
+                          [sortable]="true">
+                    <ng-template pTemplate="body" let-item="rowData">
+                        {{item.AuditInfo.DeletedOn | dateformat:'MM/DD/YYYY'}}
+                    </ng-template>
+                </p-column>
+                <p-column field="AuditInfo.DeletedBy" header="Deleted By" [style]="{'overflow':'visible'}" data-auto-id='ach-transaction-deletedBy'
+                          [sortable]="true">
+                </p-column>
+
+                <p-column [style]="{'overflow':'visible'}">
+                    <ng-template pTemplate="body" let-item="rowData">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-outline-primary dropdown-toggle btn-sm " data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
+                                <i class="fa fa-bars" aria-hidden="true"></i>
+                            </button>
+                            <div class="ta-primary-dropdown-menu">
+
+                                <a class="dropdown-item" href="javascript:void(0);" (click)="viewAch(item)" [attr.data-auto-id]="getDynamicAutoId('ach-transactions-view-ach-', item.Achng-templateId)">View ACH</a>
+                                <a class="dropdown-item" href="javascript:void(0);" (click)="copyAch(item)" [attr.data-auto-id]="getDynamicAutoId('ach-transactions-copy-ach-', item.Achng-templateId)">Copy ACH</a>
+                                <div *ngIf="getIsDeleted(item) === false">
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="javascript:void(0);" (click)="deleteAch(item)" [attr.data-auto-id]="getDynamicAutoId('ach-transactions-delete-ach-', item.Achng-templateId)">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </p-column>
+            </p-dataTable>
+        </div>
+    </div>
+</div>

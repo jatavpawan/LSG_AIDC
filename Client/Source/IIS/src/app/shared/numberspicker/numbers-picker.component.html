@@ -1,0 +1,11 @@
+﻿<div class="ta-container">
+    <div class="row">
+        <div class="col-md-4">
+            <table class="table ta-table-responsive">
+                <tr *ngFor="let rowNumber of rows" class="number-picker-row" >
+                    <td *ngFor="let i of generateColumnRange()" (click)="selectNumber($event, i)" class="{{setNumberPickerClass(i)}}">{{i.description}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

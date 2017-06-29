@@ -1,0 +1,225 @@
+﻿<p-dataTable data-auto-id='account-search-list-table' sortField="StatusDescription" sortOrder="1" [value]="filteredAccounts" [globalFilter]="gb" [paginator]="true" [rows]="10"
+             #dt selectionMode="single" (onRowSelect)="rowSelect($event)" [scrollable]="true" expandableRows="true" tableStyleClass="account-list grid-results">
+	
+<p-column expander="true" styleClass="col-icon" [style]="{'width': '30px'}"></p-column>
+
+<p-column field="AccountNumber" header="Loan" [filter]="false" filterMatchMode="in" [style]="{'width': '120px'}" 
+          data-auto-id='account-current-billed-amount'>
+</p-column>
+
+<p-column field="AccountDescription" header="Description" [filter]="false" filterMatchMode="in" [style]="{'width': '170px'}"
+          data-auto-id='account-liability-code-description'>
+</p-column>
+
+<p-column field="ProductTypeDescription" header="Loan Type" [filter]="false" filterMatchMode="in" [style]="{'width': '60px'}"
+          data-auto-id='account-liability-code-description'>
+</p-column>
+
+<p-column field="LoanLiabilityBalance" header="Balance" [filter]="false" filterMatchMode="in" [style]="{'width': '90px'}"
+          data-auto-id='account-interest-amount'>
+    <ng-template pTemplate="body" let-item="rowData">
+        {{item.LoanLiabilityBalance | currency:'USD':true | currencyformat}}
+    </ng-template>
+</p-column>
+
+<p-column field="CommitmentFcsAvailableAmount" header="Available Commitment" [filter]="false" filterMatchMode="in" [style]="{'width': '90px'}"
+          data-auto-id='account-interest-amount'>
+    <ng-template pTemplate="body" let-item="rowData">
+        {{item.CommitmentFcsAvailableAmount | currency:'USD':true | currencyformat}}
+    </ng-template>
+</p-column>
+
+<p-column field="MaturityDate" header="Maturity Date" [filter]="false" filterMatchMode="in" [style]="{'width': '80px'}"
+          data-auto-id='account-interest-amount'>
+    <ng-template pTemplate="body" let-item="rowData">
+        {{item.MaturityDate | dateformat:'MM/DD/YYYY'}}
+    </ng-template>
+</p-column>
+
+<p-column field="CurrentDueDate" header="Payment Due Date" [filter]="false" filterMatchMode="in" [style]="{'width': '80px'}"
+          data-auto-id='account-interest-amount'>
+    <ng-template pTemplate="body" let-item="rowData">
+        {{item.CurrentDueDate | dateformat:'MM/DD/YYYY'}}
+    </ng-template>
+</p-column>
+    
+<p-column field="PastDueDate" header="Past Due Date" [filter]="false" filterMatchMode="in" [style]="{'width': '80px'}"
+          data-auto-id='account-interest-amount'>
+    <ng-template pTemplate="body" let-item="rowData">
+        {{item.PastDueDate | dateformat:'MM/DD/YYYY'}}
+    </ng-template>
+</p-column>
+
+<p-column field="PastDueAmount" header="Past Due Amount" [filter]="false" filterMatchMode="in" [style]="{'width': '100px'}"
+          data-auto-id='account-interest-amount'>
+    <ng-template pTemplate="body" let-item="rowData">
+        {{item.PastDueAmount | currency:'USD':true | currencyformat}}
+    </ng-template>
+</p-column>
+
+<ng-template let-account pTemplate="rowexpansion">
+    <div class="ui-grid ui-grid-responsive ui-fluid" style="font-size:0.9em;padding:20px">
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-4">
+                <div class="row" style="margin-left: 2%">
+                    <div class="keyvalue-list">
+                        <div class="keyvalue-item">
+                            <div class="display-label" style="padding-right: 10px">
+                                <strong>Account Number</strong>
+                            </div>
+
+                            <div class="display-field">
+                                {{account.AccountNumber}}
+                            </div>
+                        </div>
+                        <div class="keyvalue-item">
+                            <div class="display-label" style="padding-right: 10px">
+                                <strong>Account Description</strong>
+                            </div>
+
+                            <div class="display-field">
+                                {{account.AccountDescription}}
+                            </div>
+                        </div>
+                        <div class="keyvalue-item">
+                            <div class="display-label" style="padding-right: 10px">
+                                <strong>Maturity Date</strong>
+                            </div>
+
+                            <div class="display-field">
+                                {{account.MaturityDate | dateformat:'MM/DD/YYYY'}}
+                            </div>
+                        </div>
+                        <div class="keyvalue-item">
+                            <div class="display-label" style="padding-right: 10px">
+                                <strong>Payment Amount</strong>
+                            </div>
+
+                            <div class="display-field">
+                                {{account.LoanLiabilityBalance | currency:'USD':true | currencyformat}}
+                            </div>
+                        </div>
+							
+                        <div class="keyvalue-item">
+                            <div class="display-label" style="padding-right: 10px">
+                                <strong>Accrued Interest</strong>
+                            </div>
+
+                            <div class="display-field">
+                                {{account.AccruedInterest | currency:'USD':true | currencyformat}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ui-grid-col-4">
+                <div class="row" style="margin-left: 4%">
+                    <div class="keyvalue-list">
+                        <div class="keyvalue-item">
+                            <div class="display-label" style="padding-right: 10px">
+                                <strong>Risk Rating</strong>
+                            </div>
+
+                            <div class="display-field">
+                                {{account.FinalRiskRating}}
+                            </div>
+                        </div>
+                        <div class="keyvalue-item">
+                            <div class="display-label" style="padding-right: 10px">
+                                <strong>Last Renewal Date</strong>
+                            </div>
+
+                            <div class="display-field">
+                                {{account.LastRenewalDate | dateformat:'MM/DD/YYYY'}}
+                            </div>
+                        </div>
+                        <div class="keyvalue-item">
+                            <div class="display-label" style="padding-right: 10px">
+                                <strong>Fees</strong>
+                            </div>
+
+                            <div class="display-field">
+                                {{account.FeeAmount | currency:'USD':true | currencyformat}}
+                            </div>
+                        </div>
+                        <div class="keyvalue-item">
+                            <div class="display-label" style="padding-right: 10px">
+                                <strong>Late Charges</strong>
+                            </div>
+
+                            <div class="display-field">
+                                {{account.LateChargeAmount | currency:'USD':true | currencyformat}}
+                            </div>
+                        </div>
+							
+                        <div class="keyvalue-item">
+                            <div class="display-label" style="padding-right: 10px">
+                                <strong>Prepayment Restricted (Y/N)</strong>
+                            </div>
+
+                            <div class="display-field">
+                                {{account.PrePayRestriction}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+				
+            <div class="ui-grid-col-4">
+                <div class="row" style="margin-left: 4%">
+                    <div class="keyvalue-list">
+                        <div class="keyvalue-item">
+                            <div class="display-label" style="padding-right: 10px">
+                                <strong>Interest Rate</strong>
+                            </div>
+
+                            <div class="display-field">
+                                {{account.InterestRate | currency:'USD':true | currencyformat}}
+                            </div>
+                        </div>
+                        <div class="keyvalue-item">
+                            <div class="display-label" style="padding-right: 10px">
+                                <strong>Per Diem</strong>
+                            </div>
+
+                            <div class="display-field">
+                                {{account.PerDiem | currency:'USD':true | currencyformat}}
+                            </div>
+                        </div>
+                        <div class="keyvalue-item">
+                            <div class="display-label" style="padding-right: 10px">
+                                <strong>Interest Paid YTD</strong>
+                            </div>
+
+                            <div class="display-field">
+                                {{account.InterestPaidToDate | currency:'USD':true | currencyformat}}
+                            </div>
+                        </div>
+                        <div class="keyvalue-item">
+                            <div class="display-label" style="padding-right: 10px">
+                                <strong>Interest Paid Last Year</strong>
+                            </div>
+
+                            <div class="display-field">
+                                {{account.InterestPaidEarnedLastYear | currency:'USD':true | currencyformat}}
+                            </div>
+                        </div>
+							
+                        <div class="keyvalue-item">
+                            <div class="display-label" style="padding-right: 10px">
+                                <strong>Interest Reported to IRS Last Year</strong>
+                            </div>
+
+                            <div class="display-field">
+                                {{account.InterestReportedIrsAmount | currency:'USD':true | currencyformat}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</ng-template>
+
+</p-dataTable>

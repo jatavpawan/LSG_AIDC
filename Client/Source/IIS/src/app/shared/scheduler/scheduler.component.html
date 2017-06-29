@@ -1,0 +1,47 @@
+﻿<div class="large-modal-dialog">
+    <form (ngSubmit)="save()" class="form-horizontal" #schedulerForm="ngForm">
+        <div class="ta-modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Scheduler</h3>
+                <button data-auto-id="scheduler_modal_close_button" type="button" class="close" (click)="close()">&times;</button>
+            </div>
+            <div class="modal-body ModalText">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <span>Frequency</span>
+                            <select data-auto-id="frequency_selector" class="form-control form-control-label-sm" #frequencySelected (change)="frequencyChanged(frequencySelected.value)">
+                                <option selected disabled>Select a Frequency</option>                              
+                                <option [selected]="schedulerContainer.Frequency === 'once'" value="once">One Time</option>
+                                <option *ngIf="isDisplayable('recurring')" [selected]="schedulerContainer.Frequency === 'recurring'" value="recurring">Recurring</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" *ngIf="schedulerContainer.Frequency === 'once'">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <span>Pay On</span>
+                            <datepicker-component [datePickerOptions]="datePickerOptions" [parentDate]="schedulerContainer.OneTimePaymentDate" (onDateSelected)="dateSelected($event)"></datepicker-component>
+                            <div class="alert alert-danger" [hidden]="!oneTimePaymentDateRequired">Payment Date Required</div>                            
+                            <div class="alert alert-danger" [hidden]="!dateSelectionError">{{dateSelectionError}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" *ngIf="schedulerContainer.Frequency === 'recurring'">
+                    <div class="col-md-12">
+                        <recurring-component [prepaymentRestriction]="prepaymentRestriction" [recurringSchedule]="schedulerContainer.RecurringSchedule" [minDate]="minDate"></recurring-component>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button data-auto-id="scheduler_modal_save" type="submit" class="btn btn-default">Ok</button>
+                <button data-auto-id="scheduler_modal_cancel" type="button" class="btn" (click)="cancel()">Cancel</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+

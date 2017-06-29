@@ -1,0 +1,58 @@
+﻿<div class="ta-container">
+    <h2>Account Search Results</h2>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-12">
+            <p-dataTable data-auto-id='account-search-list-table' sortField="AccountNumber" sortOrder="-1" [value]="filteredAccounts" [rows]="10" [paginator]="true" [globalFilter]="gb"
+                #dt selectionMode="single" (onRowSelect)="onRowSelect($event)">
+
+                <p-column field="AccountNumber" header="Account" [filter]="true" filterMatchMode="in" filterPlaceholder="Search" [style]="{'overflow':'visible'}"
+                          data-auto-id='account-number' [sortable]="true" sortOrder="1">
+                    <ng-template pTemplate="filter" let-col>
+                        <p-multiSelect data-auto-id="accountNumberMultiSelects" [options]="accountNumberMultiSelects" defaultLabel="All Accounts"
+                                       (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-multiSelect>
+                    </ng-template>
+                </p-column>
+
+                <p-column field="Purpose" header="Type" [filter]="false" [sortable]="true" sortOrder="1" filterMatchMode="in" [style]="{'overflow':'visible'}"
+                          data-auto-id='account-type'>
+                </p-column>
+
+                <p-column field="AccountDescription" header="Description" [filter]="true" filterMatchMode="in" [style]="{'overflow':'visible'}"
+                    [sortable]="true" sortOrder="1" data-auto-id='account-description'>
+                    <ng-template pTemplate="filter" let-col>
+                        <p-multiSelect data-auto-id="descriptionMultiSelects" [options]="descriptionMultiSelects" defaultLabel="All Descriptions"
+                            (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-multiSelect>
+                    </ng-template>
+                </p-column>
+
+                <p-column field="CurrentBilledAmount" header="Principal" [filter]="false" filterMatchMode="in" [style]="{'width':'15%'}"
+                    data-auto-id='account-current-billed-amount'>
+                    <ng-template pTemplate="body" let-item="rowData">
+                        {{item.CurrentBilledAmount | currency:'USD':true }}
+                    </ng-template>
+                </p-column>
+
+                <p-column field="InterestAmount" header="Interest" [filter]="false" filterMatchMode="in" [style]="{'overflow':'visible'}"
+                     data-auto-id='account-interest-amount'>
+                    <ng-template pTemplate="body" let-item="rowData">
+                        {{item.InterestAmount | currency:'USD':true }}
+                    </ng-template>
+                </p-column>
+
+
+                <p-column field="CommitmentFcsAvailableAmount" header="Available" [filter]="false" filterMatchMode="in" [style]="{'overflow':'visible'}"
+                    data-auto-id='account-commitment-available-amount'>
+                    <ng-template pTemplate="body" let-item="rowData">
+                        {{item.CommitmentFcsAvailableAmount | currency:'USD':true }}
+                    </ng-template>
+                </p-column>
+
+                <p-column field="AccountLiabilityCodeDescription" header="Liability" [filter]="false" filterMatchMode="in" [style]="{'overflow':'visible'}"
+                    data-auto-id='account-liability-code-description'>
+                </p-column>
+            </p-dataTable>
+        </div>
+    </div>
+</div>

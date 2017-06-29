@@ -1,0 +1,21 @@
+@import "../../variables";
+
+.recent-customers-menu {
+    background-color: $ta-gray-dark;
+    color: $ta-white;
+    font-size: .9rem;
+    margin-top: -3%;
+
+    .dropdown-item:hover, .dropdown-item:focus, .dropdown-item:active {
+        color: $ta-gray-dark !important;
+    }
+
+    a {
+        cursor: pointer;
+
+        &:hover, &:active, &:focus {
+            color: $ta-gray-dark !important;
+            text-decoration: none;
+        }
+    }
+}

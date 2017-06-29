@@ -1,0 +1,19 @@
+<div class="ta-container">
+    <div class="row">
+        <div class="col-md-10">
+            <h2>Incoming Wires Transaction Information</h2>
+        </div>
+    </div>
+
+    <br />
+    
+    <p-tabView>
+        <p-tabPanel header="Details">
+            <retail-wires-in-details [incomingWireId]="incomingWireId"></retail-wires-in-details>            
+        </p-tabPanel>
+        <p-tabPanel header="Assign">            
+            <wire-allocation [incomingWireId]="incomingWireId"></wire-allocation>
+        </p-tabPanel>
+    </p-tabView>
+
+</div>

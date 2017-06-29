@@ -1,0 +1,41 @@
+﻿.ta-schedule-button {
+    margin-top: 1%;
+}
+
+.ta-date-chip{
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    background-color: #eceeef;
+    color: black;
+    padding-right: 2%;
+    margin-right: 2%;
+    height: 38px;
+    line-height: 32px;
+    border-radius: 0px;
+}
+
+.ta-next-dates-ul {
+    display: inline;
+    opacity: 1;
+    padding-left: 0;
+}
+
+.ui-inputtext {
+    height: 100%;
+    width: 96%;
+    padding: 0.5rem 0.75rem;
+    border: none;
+}
+
+.ui-button {
+    color: #000000;
+    background-color: #ffffff;
+    width: 3% !important;
+    border: none;
+    float: right;
+}
+
+.ui-button:hover {
+    color: #000000 !important;
+    background-color: #ffffff !important;
+    border: none !important;
+}
