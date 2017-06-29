@@ -13,12 +13,15 @@ namespace LSG_AIDC.Api
 {
     public class VendorReviewController : ApiController
     {
+
+        private ReceiveReceiptReposistory obj = new ReceiveReceiptReposistory();
+
         [HttpGet]
         public ResponseData ReceiveReceipt(int vendorDeliveryId, string pOWorkListId, bool isException, string vendorDeliveryCode)
         {
             try
             {
-                ReceiveReceiptReposistory obj = new ReceiveReceiptReposistory();
+               
                 ResponseData result = new ResponseData();
                 try
                 {
@@ -47,16 +50,31 @@ namespace LSG_AIDC.Api
             }
         }
         [HttpGet]
-        public ResponseData GetPOList(int deliveryId)
+        public ResponseData GetPOList(int vendorDeliveryId)
         {
             try
             {
               
-                    ReceiveReceiptReposistory obj = new ReceiveReceiptReposistory();
+                  
                     ResponseData result = new ResponseData();
-                   
-                    return result;
-              
+
+                try
+                { 
+
+                    result.Data = obj.GetListOfPOs(vendorDeliveryId);
+                    result.Status = "SUCCESS";
+                    result.Error = "";
+                    result.ErrorCode = "";
+                }
+                catch (Win32Exception ex)
+                {
+                    result.Status = "FAIL";
+                    result.Error = ex.Message;
+                    result.ErrorCode = "";
+                }
+
+                return result;
+
             }
             catch (Exception ex)
             {

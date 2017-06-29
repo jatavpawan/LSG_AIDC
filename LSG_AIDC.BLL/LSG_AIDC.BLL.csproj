@@ -50,7 +50,6 @@
     <Compile Include="Class1.cs" />
     <Compile Include="Interface\IRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository\GetListOfPOs.cs" />
     <Compile Include="Repository\ReceiveReceiptReposistory.cs" />
     <Compile Include="Repository\Repository.cs" />
     <Compile Include="ResponseData.cs" />
