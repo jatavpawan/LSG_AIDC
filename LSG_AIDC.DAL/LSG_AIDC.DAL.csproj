@@ -89,6 +89,7 @@
     <Compile Include="MaterialReceiptEvent.cs">
       <DependentUpon>LSG_AIDC_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="models\GetDeliveriesIds.cs" />
     <Compile Include="NLINK_ActivityProgress.cs">
       <DependentUpon>LSG_AIDC_Model.tt</DependentUpon>
     </Compile>

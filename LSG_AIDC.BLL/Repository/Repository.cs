@@ -35,6 +35,7 @@ namespace LSG_AIDC.BLL.Repository
         {
             DbContext = new LSG_AIDCEntities();
             DbSet = DbContext.Set<T>();
+            this.DbContext.Configuration.LazyLoadingEnabled = false;
         }
 
         //public virtual IQueryable<T> GetAll()

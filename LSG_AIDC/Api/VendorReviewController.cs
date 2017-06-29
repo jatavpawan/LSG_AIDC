@@ -85,9 +85,24 @@ namespace LSG_AIDC.Api
         public ResponseData GetDeliveriesList()
         {
             try{
+                ResponseData result = new ResponseData();
+                try
+                {
+                    result.Data = obj.GetListOfDeliveries().Select(s=>s.VendorDelivery_ID).ToList();
+                    result.Status = "SUCCESS";
+                    result.Error = "";
+                    result.ErrorCode = "";
+                }
+                catch (Win32Exception ex)
+                {
+                    result.Status = "FAIL";
+                    result.Error = ex.Message;
+                    result.ErrorCode = "";
+                }
 
-                return new ResponseData();
-            }catch(Exception ex)
+                return result;
+            }
+            catch(Exception ex)
             {
                 return null;
             }
