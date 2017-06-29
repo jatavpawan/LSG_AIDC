@@ -1,0 +1,142 @@
+﻿<form (ngSubmit)="submitAch()" class="form-horizontal" #achOutForm="ngForm">
+    <div class="row">
+        <div class="col-md-4">
+            <label for="twentyOneFourty" class="form-control-label form-control-label-sm">Form 2140 Signed:</label>&nbsp;
+            <input data-auto-id="achout_input_twentyonefourty_acknowledgement" type="checkbox" [checked]="ach.AuthorizationType === 1" name="twentyOneFourty" id="twentyOneFourty" #twentyOneFourtySelected (change)="toggleFormFields(twentyOneFourtySelected.id)" />
+        </div>
+
+        <div class="col-md-4" *ngIf="achType === 'In'">
+            <label for="verbalAchReceived" class="form-control-label form-control-label-sm">Verbal ACH Received</label>&nbsp;
+            <input data-auto-id="ach_input_verbalAchReceived" type="checkbox" [checked]="ach.AuthorizationType === 2" name="verbalAchReceived" id="verbalAchReceived" #verbalAchReceivedSelected (change)="toggleFormFields(verbalAchReceivedSelected.id)" />
+        </div>
+
+    </div>
+    <div *ngIf="ach.AuthorizationType === 1 || ach.AuthorizationType === 2">
+        <hr />
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <span>Account Number</span>
+                    <select data-auto-id="achout_account_dropdown" class="form-control form-control-label-sm" required name="account" id="account" [(ngModel)]="ach.Account" (change)="accountNumberChanged()" #account="ngModel" placeholder>
+                        <option disabled [selected] [value]="utilities.defaultDropDownValue">Select an Account Number</option>
+                        <option *ngFor="let account of accounts" [ngValue]="account">{{account.AccountNumber}}</option>
+                    </select>
+                    <div class="alert alert-danger" [hidden]="account.pristine || account.valid || ach.AccountId > 0">Note Number is required</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <span>Amount</span>
+                    <input currencyMask [options]="{ align: 'left', prefix: '$ ', thousands: ',', decimal: '.', precision: '2' }" data-auto-id="achout_input_amount" name="amount" id="amount" [(ngModel)]="ach.Amount" #amount="ngModel" class="form-control form-control-sm" required />
+                    <div class="alert alert-danger" [hidden]="amount.pristine || amount.valid || ach.Amount > 0">Amount is required</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3" *ngIf="achType === 'In'">
+                <div class="form-group">
+                    <span>How to Apply</span>
+                    <select data-auto-id="ach_howtoapply_dropdown" class="form-control form-control-label-sm" required name="howtoapply" id="howtoapply" [(ngModel)]="ach.HowToApply" #howtoapply="ngModel" (change)="howToApplyChanged()">
+                        <option disabled [selected] [value]="utilities.defaultDropDownValue">Select How to Apply</option>
+                        <option *ngFor="let howtoApply of howtoApplyList" [ngValue]="howtoApply">{{howtoApply.Description}}</option>
+                    </select>
+                    <div class="alert alert-danger" [hidden]="howtoapply.pristine || howtoapply.valid || ach.HowToApplyId > 0">How to Apply is required</div>
+                </div>
+            </div>
+            <div class="col-md-3" *ngIf="ach.HowToApply?.Id == 10">
+                <div class="form-group">
+                    <span>Other Fee Code</span>
+                    <p-autoComplete name="otherFeeCode" #otherFeeCode [(ngModel)]="ach.OtherFeeCode" [minLength]="0" styleClass="auto-complete-form-control form-control-label-sm" [autoHighlight]="true" required [suggestions]="filteredFeeCodeList" (completeMethod)="feeCodeSearch($event)" (onBlur)="validateSelectedFeeCode($event)" (onDropdownClick)="handleDropdownClick($event)"
+                                    (onSelect)="otherFeeSelected($event)" [dropdown]="true" field="Description" placeholder="Select Other Fee Code">
+                    </p-autoComplete>
+                    <div class="alert alert-danger" [hidden]="!feeCodeHasBeenEdited || isFeeCodeValid">Fee Code is required</div>
+                </div>
+            </div>
+            <div class="col-md-3" *ngIf="ach.HowToApply?.Id == 9">
+                <div class="form-group">
+                    <span>Excess Amount</span>
+                    <input currencyMask [options]="{ align: 'left', prefix: '$ ', thousands: ',', decimal: '.', precision: '2' }" data-auto-id="ach_input_excess_amount" name="execessAmount" id="execessAmount" [required]="excessAmountRequired()" [disabled]="excessAmountDisabled()" [(ngModel)]="ach.ExcessAmount" #amount="ngModel" class="form-control form-control-sm" />
+                    <div class="alert alert-danger" [hidden]="hideExcessAmountValidation()">Excess Amount should be $250.00 or less</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <span>Nickname</span>
+                    <input data-auto-id="achout_input_nickname" type="text" maxlength="20" class="form-control form-control-sm" name="nickname" id="nickname" [(ngModel)]="ach.Nickname" #nickname="ngModel" />
+                </div>
+            </div>
+            <div class="col-md-3" *ngIf="achType === 'Out'">
+                <div class="form-group">
+                    <span>Approver</span>
+                    <select data-auto-id="achout_approver_dropdown" class="form-control form-control-label-sm" required name="approver" id="approver" [(ngModel)]="ach.AchApprover" #approver="ngModel" [disabled]="!ach.Account">
+                        <option [selected] [disabled] [value]="utilities.defaultDropDownValue">Select an Approver</option>
+                        <option *ngFor="let approver of approvers" [ngValue]="approver">{{approver.Name}}</option>
+                    </select>
+                    <div class="alert alert-danger" [hidden]="approver.pristine || approver.valid || ach.Approver > 0">Approver is required</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <span>Addenda</span>
+                    <div *ngIf="bankTemplate.IsCustomerAccountHolder">
+                        <input data-auto-id="achout_input_addenda" type="text" maxlength="80" class="form-control form-control-sm" name="addenda" id="addenda" [(ngModel)]="ach.Addenda" #addenda="ngModel" />
+                    </div>
+                    <div *ngIf="!bankTemplate.IsCustomerAccountHolder">
+                        <input data-auto-id="achout_display_addenda_customer" disabled type="text" class="form-control form-control-sm" name="addendacustomer" id="addendacustomer" [ngModel]="customerService.selectedCustomer?.DisplayNameReverse" #addendacustomer="ngModel" />
+                    </div>
+                </div>
+            </div>            
+            <div class="col-md-3" *ngIf="!bankTemplate.IsCustomerAccountHolder">
+                <div class="form-group">
+                    <span>Additional Addenda</span>
+                    <input data-auto-id="achout_input_addenda" type="text" maxlength="80" class="form-control form-control-sm" name="addenda" id="addenda" [(ngModel)]="ach.Addenda" #addenda="ngModel"/>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div *ngIf="ach.Schedule.FirstPaymentDate" class="col-md-3">
+                <div class="form-group">
+                    <span>First Payment Date</span>
+                    <input data-auto-id="first_payment_date" name="firstDate" id="firstDate" class="form-control form-control-sm" value="{{ach.Schedule.FirstPaymentDate | dateformat: 'MM/DD/YYYY'}}" readonly />
+                </div>
+            </div>
+
+            <div *ngIf="ach.Schedule.EndPaymentDate" class="col-md-3">
+                <div class="form-group">
+                    <span>Payment End Date</span>
+                    <input data-auto-id="end_payment_date" name="endDate" id="endDate" class="form-control form-control-sm" value="{{ach.Schedule.EndPaymentDate | dateformat: 'MM/DD/YYYY'}}" readonly />
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3 ta-schedule-button">
+                <button data-auto-id="achout_button_schedule_payments" type="button" class="btn btn-default" (click)="openScheduler()">Schedule Payments</button>
+            </div>
+            <div class="col-md-3 ta-schedule-button" *ngIf="ach.Schedule.NextPaymentDates && ach.Schedule.NextPaymentDates.length > 0">
+                <button data-auto-id="achout_button_view_payments" type="button" class="btn btn-default" (click)="viewPayments()">View Upcoming Payments</button>
+            </div>
+        </div>
+
+        <hr />
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="form-group pull-right">
+                    <button data-auto-id="achout_button_submit_ach_out" [disabled]="(achOutForm.pristine && !isCopy) || !achOutForm.valid || !ach.Schedule || isSaveDisabled()" type="submit" class="btn btn-success">Save</button> &nbsp;
+                    <button data-auto-id="achout_button_cancel_ach_out" (click)="navigateToAchTransactions()" type="button" class="btn">Cancel</button>
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+
+</form>
+

@@ -1,0 +1,56 @@
+﻿.draft-form-control {
+    height: 30px !important;
+}
+
+.draft-btn {
+    height: 28px;
+    text-align: center;
+    line-height: 14px;
+    font-size: medium;
+    z-index: -9999999;
+}
+
+.ta-draft-hr {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.ta-draft-middle-hr {
+    margin-top: -5px;
+    margin-bottom: 15px;
+}
+
+.ta-draft-form-row {
+    height: 51px;
+}
+
+.ta-draft-btn-group {
+    margin-bottom: 2px;
+    z-index: 1;
+}
+
+.ta-draft-dash {
+    width: 0;
+    margin-top: 25px;
+}
+
+.ta-draft-email-icon {
+    padding-right: 15%;
+}
+
+.ta-draft-pointer {
+    cursor: pointer;
+}
+
+.ui-chips-input-token input {
+    border: 0px;
+    outline: none;
+}
+
+p-chips > div > .ui-state-default {
+    border: 1px solid rgba(0, 0, 0, 0.15) !important;
+}
+
+p-chips > div > ul {
+    width: 100%;
+}

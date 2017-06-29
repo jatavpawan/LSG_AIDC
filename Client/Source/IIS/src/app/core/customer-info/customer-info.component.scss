@@ -1,0 +1,27 @@
+﻿@import "../../variables";
+
+.customer-info {
+    background-color: $ta-gray-dark !important;
+    margin: 53px 0 -1.5% 0;
+    height: 74px;
+    box-shadow: 0 1px 2px rgba(68, 68, 68, .8);
+}
+
+.customer-content-row {
+    font-weight: bold !important;
+    margin-left: -1%;
+}
+
+.customer-content-title {
+    font-weight: bold !important;
+    margin-left: -1%;
+    color: $ta-gold;
+}
+
+.search-history-star {
+    color: $ta-gold;
+}
+
+.no-wrap {
+    white-space: nowrap;
+}

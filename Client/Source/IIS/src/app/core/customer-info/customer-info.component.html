@@ -1,0 +1,40 @@
+﻿<div class="customer-info">
+    <div class="customer-info-content-area">
+        <div class="row" style="margin-right: 0px;">
+            <div class="col-md-7 pull-left">
+                <h6 *ngIf="customerService.selectedCustomer" class="customer-content-title">{{customerService.selectedCustomer?.DisplayName}} &nbsp;&nbsp; CIF {{customerService.selectedCustomer?.Cif}} &nbsp;&nbsp; {{customerService.selectedCustomer?.OfficeName}}</h6>
+                <h6 *ngIf="!customerService.selectedCustomer" class="customer-content-title">{{customerService.noCustomerSelectedText}}&nbsp;</h6>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="row" style="margin-right: 0px;">
+                <div *ngIf="customerService.selectedCustomer" class="col-md-7">
+                    <div class="row" style="margin-right: 0px;">
+                        <div class="col-md-auto info-item pull-left">
+                            <span class="title">Address</span>
+                            <span class="no-wrap">{{customerService.selectedCustomer?.DisplayAddress}}</span>
+                        </div>
+                        <div class="col-md-auto info-item">
+                            <span class="title">Phone</span>
+                            <span>{{customerService.selectedCustomer?.PhoneNumber | phoneformat}}</span>
+                        </div>
+                        <div class="col info-item">
+                            <span class="title">Account</span>
+                            {{accountsMediatorService.selectedAccount?.AccountNumber}}
+                            <a href="javascript:void(0)"><i class="fa fa-search pull-right customer-info-accounts-search-icon" (click)="searchAccounts()"></i></a>
+                            <a href="javascript:void(0)" *ngIf="accountsMediatorService.selectedAccount"><i class="fa fa-ellipsis-h pull-right customer-info-accounts-search-icon"></i></a>
+                        </div>
+                        <div class="col info-item">
+                            <span class="title">Available</span>
+                            <span>{{accountsMediatorService.selectedAccount?.CommitmentFcsAvailableAmount | currency:'USD':true | currencyformat}}</span>
+                        </div>
+                        <div class="col info-item">
+                            <span class="title">Maturity</span>
+                            <span>{{accountsMediatorService.selectedAccount?.MaturityDate | dateformat:'MM/DD/YYYY'}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

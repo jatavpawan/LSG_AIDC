@@ -1,0 +1,161 @@
+<div class="large-modal-dialog">
+    <form (ngSubmit)="confirm()" class="form-horizontal" #stopPaymentModal="ngForm">
+        <div class="ta-modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Stop Payment</h3>
+                <button data-auto-id="stop-payment_modal_close_button" type="button" class="close" (click)="close()">&times;</button>
+            </div>
+            <div class="modal-body ModalText">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="account" class="form-control-label form-control-label-sm">Account Number</label>
+                            <div class="input-group">
+                                <select data-auto-id="stoppayment_account_dropdown" class="form-control form-control-label-sm" required name="account" id="account"
+                                        [(ngModel)]="stopPayment.Account" #account="ngModel" placeholder>
+                                    <option disabled [selected] [value]="defaultDropDownValue">Select an Account Number...</option>
+                                    <option *ngFor="let account of accounts" [ngValue]="account">{{account.AccountNumber}}</option>
+                                </select>
+                            </div>
+                            <div class="alert alert-danger" [hidden]="account.pristine || account.valid || stopPayment.Account.AccountId > 0">Account Number is required</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="paymenttype" class="form-control-label form-control-label-sm">Stop Payment Type</label>
+                            <div class="input-group">
+                                <select data-auto-id="stoppayment_stoppaymenttype_dropdown" class="form-control form-control-label-sm" (change)="displayPaymentTypeSubsection()"
+                                        #paymenttype="ngModel" required name="paymenttype" id="paymenttype" [(ngModel)]="stopPayment.StopPaymentType">
+                                    <option selected disabled>Select a Payment Type...</option>
+                                    <option value="{{getAchStopPayment()}}">ACH</option>
+                                    <option value="{{getDraftStopPayment()}}">Draft</option>
+                                </select>
+                            </div>
+                            <div class="alert alert-danger" [hidden]="paymenttype.pristine || paymenttype.valid || stopPayment.StopPaymentType > 0">Stop Payment Type is required</div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="isDraftVisible">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="beginningdraftnumber" class="form-control-label form-control-label-sm">Beginning Draft Number</label>
+                                <div class="input-group">
+                                    <input data-auto-id="stoppayment_input_beginningdraft" class="form-control form-control-label-sm" type="number" name="beginningdraftnumnber"
+                                           id="beginningdraftnumber" [(ngModel)]="stopPayment.DraftStopPayment.BeginningDraftNumber"
+                                           (change)="setEndingDraftNumber()" #beginningdraftnumber="ngModel" required />
+                                </div>
+                                <div class="alert alert-danger" [hidden]="beginningdraftnumber.pristine || beginningdraftnumber.valid || stopPayment.DraftStopPayment.BeginningDraftNumber > 0">Beginning Draft Number is required</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="endingdraftnumber" class="form-control-label form-control-label-sm">Ending Draft Number</label>
+                                <div class="input-group">
+                                    <input data-auto-id="stoppayment_input_endingdraft" class="form-control form-control-label-sm" type="number" name="endingdraftnumber"
+                                           id="endingdraftnumber" [(ngModel)]="stopPayment.DraftStopPayment.EndingDraftNumber"
+                                           #endingdraftnumber="ngModel" required />
+                                </div>
+                                <div class="alert alert-danger" [hidden]="endingdraftnumber.pristine || endingdraftnumber.valid">Ending Draft Number is required</div>
+                                <div class="alert alert-danger" [hidden]="isEndingDraftNumberValid()">Ending Draft Number must be greater than or equal to Beginning Draft Number</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="amount" class="form-control-label form-control-label-sm">Amount</label>
+                                <div class="input-group">
+                                    <input currencyMask [options]="{ align: 'left', prefix: '$ ', thousands: ',', decimal: '.', precision: '2' }" class="form-control form-control-label-sm"
+                                           data-auto-id="stoppayment_input_amount" name="amount" id="amount" [(ngModel)]="stopPayment.DraftStopPayment.Amount"
+                                           #amount="ngModel" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="isAchVisible">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="companyname" class="form-control-label form-control-label-sm">Company Name</label>
+                                <div class="input-group">
+                                    <input data-auto-id="stoppayment_input_companyname" class="form-control form-control-label-sm" type="string" name="companyname"
+                                           id="companyname" [(ngModel)]="stopPayment.ACHStopPayment.CompanyName" #companyname="ngModel"
+                                           required />
+                                </div>
+                                <div class="alert alert-danger" [hidden]="companyname.pristine || companyname.valid">Company Name is required</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="amount" class="form-control-label form-control-label-sm">From Amount</label>
+                                <div class="input-group">
+                                    <input currencyMask [options]="{ align: 'left', prefix: '$ ', thousands: ',', decimal: '.', precision: '2' }" class="form-control form-control-label-sm"
+                                           data-auto-id="stoppayment_input_from_amount" name="fromamount" id="fromamount" [(ngModel)]="stopPayment.ACHStopPayment.FromAmount"
+                                           #fromamount="ngModel" required />
+                                </div>
+                                <div class="alert alert-danger" [hidden]="fromamount.pristine || fromamount.valid">From Amount is required</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="amount" class="form-control-label form-control-label-sm">To Amount</label>
+                                <div class="input-group">
+                                    <input currencyMask [options]="{ align: 'left', prefix: '$ ', thousands: ',', decimal: '.', precision: '2' }" class="form-control form-control-label-sm"
+                                           data-auto-id="stoppayment_input_to_amount" name="toamount" id="toamount" [(ngModel)]="stopPayment.ACHStopPayment.ToAmount"
+                                           #toamount="ngModel" />
+                                </div>
+                                <div class="alert alert-danger" [hidden]="isEndingAmountValueValid()">Ending Amount must be greater than or equal to Beginning Amount</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="isAchVisible || isDraftVisible">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-control-label form-control-label-sm">Expiration Date</label>
+                                <div class="input-group">
+                                    <input data-auto-id="stoppayment_input_expirationdate" class="form-control form-control-label-sm" type="string" name="expirationdate"
+                                           id="expirationdate" value="{{stopPayment.ExpirationDate | dateformat: 'MM/DD/YYYY'}}"
+                                           disabled />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-control-label form-control-label-sm">Description</label>
+                                <div class="input-group">
+                                    <input data-auto-id="stoppayment_input_description" class="form-control form-control-sm" type="string" maxlength="80" name="description"
+                                           id="description" #description="ngModel" [(ngModel)]="stopPayment.Description" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="form-group pull-right">
+                                <button data-auto-id="stoppayment_button_confirm_stop_payment" type="button" class="btn btn-success" [disabled]="stopPaymentModal.pristine || !stopPaymentModal.valid || !isEndingDraftNumberValid() || !isEndingAmountValueValid()"
+                                        (click)="confirm()">
+                                    Save
+                                </button> &nbsp;
+                                <button data-auto-id="stoppayment_button_clear_stop_payment" (click)="clear(stopPaymentModal)" type="button" class="btn">Clear</button>&nbsp;
+                                <button data-auto-id="stoppayment_button_cancel_stop_payment" (click)="cancel()" type="button" class="btn">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="isFeeVisible">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <label class="form-control-label form-control-label-sm" style="color: coral">Upon Save, please note, this loan will be charged a ${{feeAmount}} fee.</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

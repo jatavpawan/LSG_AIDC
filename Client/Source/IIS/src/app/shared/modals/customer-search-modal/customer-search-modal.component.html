@@ -1,0 +1,31 @@
+﻿<div>
+    <div class="modal-dialog customer-search-modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Customer Search</h3>
+                <button type="button" class="close" (click)="close()">&times;</button>
+            </div>
+            <div class="modal-body ModalContentText">
+                <form role="search" class="hidden-sm-down">
+                    <div class="input-group">
+                        <input data-auto-id="search-input" type="text" [(ngModel)]="searchQry" ta-autofocus placeholder="Search..." class="form-control" name="searchInput" #searchInput="ngModel" (keyup)="search(searchInput.value)">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" (click)="search(searchInput.value)">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </span>
+                    </div>
+                </form>
+                <div *ngIf="searchQry && searchQry.length > 0">
+                    <customer-results [customers]="customers" (onSelected)="customerSelected($event)"></customer-results>
+                </div>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="ta-primary-button" (click)="confirm()">Ok</button>
+                <button type="button" class="btn" (click)="cancel()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,15 @@
+<a class="recent-customers dropdown" data-auto-id="recent_customers" id="recent-customers" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="javascript:void(0);">
+    <i class="fa fa-history fa-fw"></i>
+    Recent Customers
+    <i class="fa fa-caret-down"></i>
+</a>
+<div class="dropdown-menu recent-customers-menu dropdown-menu-left" aria-labelledby="recent-customers">
+    <div *ngFor="let item of GetCustomersFromLocalStorage()" class="dropdown-item">
+        <i *ngIf="item.IsSelected" class="fa fa-star search-history-star" (click)="favorite(item.Id)"></i>
+        <i *ngIf="!item.IsSelected" class="fa fa-star-o search-history-star" (click)="favorite(item.Id)"></i>
+
+        <a (click)="selectCustomer(item.Id)">
+            {{item.Cif}} {{item.DisplayNameReverse}}
+        </a>
+    </div>
+</div>

@@ -1,0 +1,27 @@
+﻿<div class="row">
+    <div class="col-md-6">
+        <span>Start Date</span>
+        <datepicker-component data-auto-id="yearly_start_date" [isReadOnly]="isReadOnly" [parentDate]="annualSchedule.StartDate" [datePickerOptions]="datePickerOptions" (onDateSelected)="annualStartDateSelected($event)"></datepicker-component>
+        <div class="alert alert-danger" [hidden]="hideStartDateError">Start Date Required</div>
+    </div>
+    <div class="col-md-6">
+        <span>End Date</span>
+        <select data-auto-id="monthly_end_payment_selector" data-auto-id="scheduler-frequency-dropdown" class="form-control form-control-label-sm" [disabled]="isReadOnly" #endSelected (change)="scheduleEndChanged(endSelected.value)">
+            <option selected disabled>Select End...</option>
+            <option [selected]="annualSchedule.HasEndDate === false" value='none'>No End Date</option>
+            <option [selected]="annualSchedule.EndAfterNPayments" value='endAfter'>End After</option>
+            <option [selected]="annualSchedule.EndDate" value='endOn'>End On</option>
+        </select>
+        <div class="alert alert-danger" [hidden]="!endFrequencyRequired">End Date Required</div>
+        <br />
+        <div *ngIf="endDateOption && endDateOption === 'endAfter'">
+            <input data-auto-id="end_after_n_payments_monthly" type="number" [disabled]="isReadOnly" class="small-input-textbox" [(ngModel)]="annualSchedule.EndAfterNPayments" (change)="setEndPaymentsAfterNYearsDirty()" /> Payment(s)
+        </div>
+        <div class="alert alert-danger" [hidden]="!endAfterNPaymentsRequired">Payments Field Required</div>
+        <div *ngIf="endDateOption && endDateOption === 'endOn'">
+            <datepicker-component data-auto-id="monthly_end_date" [isReadOnly]="isReadOnly" [parentDate]="annualSchedule.EndDate" [datePickerOptions]="datePickerOptions" (onDateSelected)="endDateSelected($event)"></datepicker-component>
+        </div>
+        <div class="alert alert-danger" [hidden]="!endOnDateRequired">End Date Required</div>
+        <div class="alert alert-danger" [hidden]="!endDateSelectionError">{{endDateSelectionError}}</div>
+    </div>
+</div>

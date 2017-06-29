@@ -1,0 +1,74 @@
+﻿<div class="ta-container">
+    <div class="row no-gutters">
+        <h2>Reject ACH</h2>
+    </div>
+    <div class="row no-gutters">
+        <p class="text-danger pull-right">All rejections need to be processed by 1 pm CST. Please contact Cash Management for any questions.</p>
+
+        <div class="col-md-12">
+            <p-dataTable id="achRejectiontable" sortField="ExternalAccountNumber" sortOrder="1" [value]="rejectAchData" selectionMode="single" [(selection)]="selectedRejectAchData" dataKey="AchId"> [rows]="10" [paginator]="true" [globalFilter]="gb" #dt>
+
+                <p-column header="Transaction Direction" field="TransactionDirection" [filter]="false" [style]="{'overflow':'visible'}"
+                          [sortable]="false">
+                    <ng-template pTemplate="body" let-item="rowData">
+                        {{item.TransactionDirection.Description}}
+                    </ng-template>
+                </p-column>
+
+                <p-column field="ExternalAccountNumber" header="Account" [filter]="true" filterMatchMode="in" [style]="{'overflow':'visible'}"
+                          [sortable]="true">
+                    <ng-template pTemplate="filter" let-col>
+                        <p-multiSelect data-auto-id="external-account-number-multiselects" [options]="accountNumberMultiSelects" defaultLabel="All Accounts" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)"
+                                       styleClass="ui-column-filter"></p-multiSelect>
+                    </ng-template>
+                </p-column>
+
+                <p-column field="Purpose" header="Type" [filter]="false" [sortable]="true" sortOrder="1" filterMatchMode="in" [style]="{'overflow':'visible'}"
+                          data-auto-id='account-type'>
+                </p-column>
+
+                <p-column field="DisplayAmount" header="Amount" [filter]="true" filterMatchMode="in" [style]="{'overflow':'visible'}" [sortable]="true">
+                    <ng-template pTemplate="filter" let-col>
+                        <p-multiSelect data-auto-id="amount-multiselects" [options]="amountMultiSelects" defaultLabel="All Amounts" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)"
+                                       styleClass="ui-column-filter"></p-multiSelect>
+                    </ng-template>
+
+                    <ng-template pTemplate="body" let-item="rowData">
+                        {{item.Amount | currency:'USD':true | currencyformat}}
+                    </ng-template>
+
+                </p-column>
+
+                <p-column field="CompanyName" header="Company Name" [filter]="true" filterMatchMode="in" [style]="{'overflow':'visible'}" [sortable]="true">
+                    <ng-template pTemplate="filter" let-col>
+                        <p-multiSelect data-auto-id="company-name-multi-selects" [options]="companyNameMultiSelects" defaultLabel="All Companies" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)"
+                                       styleClass="ui-column-filter"></p-multiSelect>
+                    </ng-template>
+                </p-column>
+
+
+                <p-column field="TransactionDate" header="Transaction Date" [filter]="true" filterMatchMode="in" [style]="{'overflow':'visible'}" [sortable]="true">
+                    <ng-template pTemplate="filter" let-col>
+                        <p-multiSelect data-auto-id="transactionDate-multiselects" [options]="transactionDateMultiSelects" defaultLabel="All Transaction Dates" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)"
+                                       styleClass="ui-column-filter"></p-multiSelect>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-item="rowData">
+                        {{item.TransactionDate | dateformat:'MM/DD/YYYY'}}
+                    </ng-template>
+                </p-column>
+
+                <p-column [style]="{'overflow':'visible'}">
+                    <ng-template pTemplate="body" let-item="rowData">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-danger btn-sm" (click)="openConfirmDelete(item)" [attr.data-auto-id]="getDynamicAutoId('ach-confirm-delete-', item.AchId)">
+                                <span>Reject</span>
+                            </button>
+                        </div>
+                    </ng-template>
+                </p-column>
+
+            </p-dataTable>
+
+        </div>
+    </div>
+</div>

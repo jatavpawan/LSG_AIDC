@@ -1,0 +1,4 @@
+﻿<form role="search" class="customer-search hidden-sm-down">
+    <input data-auto-id="search-input" type="text" [(ngModel)] ="customerMediatorService.searchQry" placeholder="Search..." class="form-control" name="searchInput" #searchInput="ngModel" (keyup)="broadcast(searchInput.value)">
+    <a href="javascript:void(0);"><i class="fa fa-search" (click)="broadcast(searchInput.value)"></i></a>
+</form>

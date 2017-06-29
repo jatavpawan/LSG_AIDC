@@ -1,0 +1,35 @@
+﻿<div class="large-modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 class="modal-title">Customer Search</h2>
+            <button type="button" class="close">&times;</button>
+        </div>
+
+        <div class="modal-body ModalContentText">
+
+            <div class="row section-padding">
+                <div class="col-md-6">
+                    <input data-auto-id="search-input-customer" type="text" [(ngModel)]="searchQry" placeholder="Search..." class="form-control" name="searchInputCustomer" #searchInput="ngModel" (keyup)="doSearch(searchQry)" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div *ngIf="searching === false" class="customer-search">
+                        <customer-results [customers]="customers" [(gridSelectedCustomer)]="selectedCustomer" [maxHeight]="'25vh'" ></customer-results>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <div class="pull-right">
+                            <button data-auto-id="wire_customer_select_button_cancel" type="button" class="btn pull-right" (click)="close()">Close</button>&nbsp;&nbsp;
+                            <button data-auto-id="wire_customer_select_button_confirm" type="button" class="ta-primary-button" (click)="confirm()" >Choose Selected Customer</button>&nbsp;&nbsp;
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

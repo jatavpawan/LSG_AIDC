@@ -1,0 +1,19 @@
+﻿@import "../../variables";
+
+.search-list {
+    .search-input-bar {
+        margin-bottom: 50px;
+    }
+
+    .nav {
+        margin: 30px 0 10px 0;
+    }
+
+    .nav-pills .nav-link.active {
+        background-color: $ta-blue;
+    }
+
+    .btn-link {
+        color: $ta-blue;
+    }
+}

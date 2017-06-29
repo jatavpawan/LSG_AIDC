@@ -1,0 +1,190 @@
+﻿<div class="ta-container">
+
+    <div class="row no-gutters">
+        <div class="col-md-12">
+            <h2 *ngIf="!customerService.selectedCustomer">Finance Admin Draft Search</h2>
+            <h2 *ngIf="customerService.selectedCustomer">Customer Draft Search</h2>
+
+        </div>
+    </div>
+
+    <hr class="ta-draft-hr" />
+
+    <form (ngSubmit)="getDrafts($event)" class="form-horizontal" #globalDraftsForm="ngForm">
+        <div class="row no-gutters">
+            <div class="col-md-12">
+                <div class="row ta-draft-form-row">
+                    <div class="col-md-4" *ngIf="!customerService.selectedCustomer">
+                        <div class="form-group">
+                            <span>CIF</span>
+                            <input data-auto-id="global_draft_search_cif" type="number" class="form-control draft-form-control form-control-sm" name="cif" [(ngModel)]="searchObject.Cif" #cif="ngModel" (change)="clearErrorMessage()" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <span>Account Number</span>
+                            <input data-auto-id="global_draft_search_account_number" type="number" class="form-control draft-form-control form-control-sm" name="accountNumber" [(ngModel)]="searchObject.AccountNumber" #accountNumber="ngModel" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row ta-draft-form-row">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <span>Draft Number</span>
+                            <input data-auto-id="global_draft_search_from_draft" type="number" class="form-control draft-form-control form-control-sm" name="fromDraft" [(ngModel)]="searchObject.FromDraftNumber" #fromDraft="ngModel" (change)="clearErrorMessage()" placeholder="From" title="From" />
+                        </div>
+                    </div>
+                    <br />
+                    <span class="ta-draft-dash">-</span>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <br />
+                            <input data-auto-id="global_draft_search_to_draft" type="number" class="form-control draft-form-control form-control-sm" name="toDraft" [(ngModel)]="searchObject.ToDraftNumber" #toDraft="ngModel" (change)="clearErrorMessage()" placeholder="To" title="To" />
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <span>From Date</span>
+                        <datepicker-component data-auto-id="global_draft_search_from_date" [parentDate]="searchObject.FromDate" [datePickerOptions]="datePickerOptions" (onDateSelected)="fromDateSelected($event)" (change)="clearErrorMessage()"></datepicker-component>
+                    </div>
+                    <span class="ta-draft-dash">-</span>
+                    <div class="col-md-2">
+                        <span>To Date</span>
+                        <datepicker-component data-auto-id="global_draft_search_to_date" [parentDate]="searchObject.ToDate" [datePickerOptions]="datePickerOptions" [selectedDate]="searchObject.FromDate" (onDateSelected)="toDateSelected($event)" (change)="clearErrorMessage()"></datepicker-component>
+                    </div>
+
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <span>Amount</span>
+                            <input currencyMask [options]="{ align: 'left', prefix: '$ ', thousands: ',', decimal: '.', precision: '2' }" type="text" class="form-control draft-form-control form-control-sm" data-auto-id="global_draft_search_from_amount" name="fromAmount" [(ngModel)]="searchObject.FromAmount" #fromAmount="ngModel" (keyup)="formatAmount()" placeholder="From" title="From" />
+                        </div>
+                    </div>
+                    <span class="ta-draft-dash">-</span>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <br />
+                            <input currencyMask [options]="{ align: 'left', prefix: '$ ', thousands: ',', decimal: '.', precision: '2' }" type="text" class="form-control draft-form-control form-control-sm" data-auto-id="global_draft_search_to_amount" name="toAmount" [(ngModel)]="searchObject.ToAmount" #toAmount="ngModel" (keyup)="formatAmount()" placeholder="To" title="To" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row ta-draft-form-row">
+
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <span>Draft List</span><i class="fa fa-fw fa-info-circle ta-info-icon" title="Press enter to add draft number."></i>
+                            <p-chips data-auto-id="global_draft_search_draft_list" [(ngModel)]="searchObject.DraftNumberList" #draftList="ngModel" name="draftList" (onAdd)="draftListAdd($event)"></p-chips>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <br />
+                            <div class="btn-group ta-draft-btn-group pull-right" role="group">
+                                <button type="submit" class="btn draft-btn btn-success" data-auto-id='global-draft-search'>
+                                    SEARCH
+                                </button>&nbsp;&nbsp;&nbsp;
+
+                                <button type="button" (click)="clear()" class="ta-primary-button draft-btn btn" data-auto-id='global-draft-clear'>
+                                    CLEAR
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <br />
+
+    <div class="col-md-12">
+        <div class="form-group" [ngClass]="(!errorMessage)?'form-group':'has-danger'">
+
+            <div class="form-control-feedback" [hidden]="!errorMessage">{{errorMessage}}</div>
+        </div>
+    </div>
+
+    <hr class="ta-draft-middle-hr" />
+
+    <div class="row no-gutters">
+        <div class="col-md-12">
+            <div class="alert alert-info" *ngIf="searching === true">
+                <strong>Please wait...</strong>
+                <img src="../../../../../Content/ajax-loader.gif" alt="Processing" />
+            </div>
+
+            <div>
+
+                <p-dataTable data-auto-id='draft-table' sortField="{{sortField}}" sortOrder="{{sortOrder}}" [(selection)] ="selectedDraft" selectionMode="single" dataKey="DraftId" [value]="drafts" [rows]="8" [paginator]="true" (onPage)="paginate($event)" (onSort)="sort($event)" [globalFilter]="gb" [selectionMode]="multiple" #dt *ngIf="searching !== true">
+
+                    <p-column field="Cif" header="CIF" [filter]="false" filterMatchMode="equals" data-auto-id='draft-cif' [sortable]="isFieldSortable()" [style]="{'width':'8%'}">
+
+                    </p-column>
+
+                    <p-column field="Account.AccountNumber" header="Account Number" [filter]="false" filterMatchMode="in" [sortable]="isFieldSortable()" sortOrder="1" data-auto-id='draft-note-number'>
+
+                    </p-column>
+                    <p-column field="Account.Purpose" header="Type" [filter]="false" [sortable]="isFieldSortable()" sortOrder="1" filterMatchMode="in" [style]="{'overflow':'visible'}"
+                              data-auto-id='account-type'>
+                    </p-column>
+
+                    <p-column field="DraftNumber" header="Draft Number" [filter]="false" filterMatchMode="in" [sortable]="isFieldSortable()" data-auto-id='draft-draft-number'>
+
+                    </p-column>
+
+                    <p-column field="Amount" header="Amount" [filter]="false" filterMatchMode="in" [sortable]="isFieldSortable()" data-auto-id='draft-amount'>
+                        <ng-template pTemplate="body" let-item="rowData">
+                            {{item.Amount | currency:'USD':true}}
+                        </ng-template>
+                    </p-column>
+
+                    <p-column field="Date" header="Date" [filter]="false" filterMatchMode="in" [sortable]="isFieldSortable()" data-auto-id='draft-date'>
+                        <ng-template pTemplate="body" let-item="rowData">
+                            {{item.Date | dateformat:'MM/DD/YYYY'}}
+                        </ng-template>
+                    </p-column>
+
+                    <p-column field="Bank.BankName" header="Bank" [filter]="false" filterMatchMode="in" [sortable]="isFieldSortable()" sortOrder="-1" [style]="{'width':'8%'}" data-auto-id='draft-bank'>
+
+                    </p-column>
+
+                    <p-column [style]="{'overflow':'visible', 'width':'7%'}">
+                        <template pTemplate="header">
+                            <i data-auto-id="global-draft-email-multiple" class="fa fa-envelope-o ta-draft-email-icon ta-draft-pointer" (click)="emailMultiple()"></i>
+                            <i data-auto-id="global-draft-print-multiple" class="fa fa-print ta-draft-pointer" (click)="printMultiple()"></i>
+                        </template>
+                        <ng-template pTemplate="body" let-item="rowData">
+                            <div class="align-center">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-outline-primary dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false">
+                                        <i class="fa fa-bars" aria-hidden="true"></i>
+                                    </button>
+                                    <div class="ta-draft-dropdown">
+
+                                        <a class="dropdown-item" href="javascript:void(0);" (click)="openEditor(item)" [attr.data-auto-id]="getDynamicAutoId('draft-edit-', item.DraftId)">{{viewOrEdit}} Draft</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" (click)="emailDraft(item)" [attr.data-auto-id]="getDynamicAutoId('draft-email-', item.DraftId)">Email Draft</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" (click)="printDraft(item)" [attr.data-auto-id]="getDynamicAutoId('draft-print-ach-', item.DraftId)">Print Draft</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </p-column>
+                    <p-column [style]="{'width':'4%'}">
+                        <template pTemplate="header">
+                            <input data-auto-id="global-draft-select-all" type="checkbox" [checked]="allSelected" (change)="selectAll()" />
+                        </template>
+                        <ng-template pTemplate="body" let-item="rowData">
+                            <div class="align-center">
+                                <input [attr.data-auto-id]="getDynamicAutoId('draft-select-', item.DraftId)" type="checkbox" [checked]="item.IsSelectedForAction" (change)="selectedToggle(item)" />
+                            </div>
+                        </ng-template>
+                    </p-column>
+                </p-dataTable>
+            </div>
+
+
+        </div>
+    </div>
+
+</div>

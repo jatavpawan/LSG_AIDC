@@ -1,0 +1,54 @@
+﻿<div>
+    <div class="modal-dialog">
+        <div class="modal-content ach-reject-delete-confirm-modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Confirm Reject</h3>
+                <button type="button" class="close" (click)="close()">&times;</button>
+            </div>
+            <div class="modal-body ModalContentText">
+
+                <form (ngSubmit)="submit()" class="form-horizontal" #achTemplateRejectionConfirmation="ngForm">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <select data-auto-id="reason_codes_dropdown" class="form-control form-control-label-sm" required name="reasonCodes" id="reasonCodes"  [(ngModel)]="achRejection.RejectionReasonId" (change)="setIsNoteVisible()"
+                                        #reasonCodes="ngModel" placeholder>
+                                    <option disabled selected value="0">{{getAchRejectionDropDownPlaceHolder()}}</option>
+                                    <option *ngFor="let code of achRejectionReasonCodes" [ngValue]="code.Id">{{code.Description}}</option>
+                                </select>
+                              
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group" *ngIf="otherNoteVisible">
+                                <label for="achRejectionOther" class="form-control-label form-control-label-sm">Other</label>
+                                <input data-auto-id="achRejectionOther" required class="form-control form-control-sm" type="text" name="achRejectionOther" id="achRejectionOther" [(ngModel)]="achRejection.OtherNote" #achRejectionOther="ngModel" />
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group" *ngIf="isAchOlderThan24Hours()">
+                                <input data-auto-id="ach-rejection-form-2269" required type="checkbox" [(ngModel)]="achRejection.Form2269" name="achRejectionForm2269" id="achRejectionForm2269" #achRejectionForm2269="ngModel"/> Form 2269 has been completed by customer and sent to Cash Management. 
+                               
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="pull-right">
+                                    <button data-auto-id="achRejection_button_cancel" type="button" class="btn pull-right" (click)="close()">Cancel</button>&nbsp;&nbsp;
+                                    <button data-auto-id="achRejection_button_confirm" type="submit" class="ta-primary-button" [disabled]="achTemplateRejectionConfirmation.pristine || !achTemplateRejectionConfirmation.valid">Save</button>&nbsp;&nbsp;
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

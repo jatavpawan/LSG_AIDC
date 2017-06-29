@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x64</Platform>
+    <ProjectGuid>{A2A7CD11-BBF3-4B04-B577-B9CB4C80A8BF}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FCSAmerica.Transact.ServiceModels</RootNamespace>
+    <AssemblyName>FCSAmerica.Transact.ServiceModels</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ECS.Contracts, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\EnterpriseConfigurationStore.Contracts.2.0.0.1\lib\net45\ECS.Contracts.dll</HintPath>
+    </Reference>
+    <Reference Include="EnterpriseCompare, Version=1.7.1.0, Culture=neutral, PublicKeyToken=b89525f52afc118b, processorArchitecture=MSIL">
+      <HintPath>..\packages\EnterpriseConfigurationStore.2.0.0.6\lib\net45\EnterpriseCompare.dll</HintPath>
+    </Reference>
+    <Reference Include="EnterpriseConfigurationStore, Version=2.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\EnterpriseConfigurationStore.2.0.0.6\lib\net45\EnterpriseConfigurationStore.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="FCSAmerica.CentralCodes, Version=1.0.17150.4714, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FCSAmerica.CentralCodes.1.0.17150.4714\lib\net451\FCSAmerica.CentralCodes.dll</HintPath>
+    </Reference>
+    <Reference Include="FCSAmerica.Common.WebAPI.ClientProxy.Core, Version=1.2.15091.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FCSAmerica.Common.WebAPI.ClientProxy.Core.1.2.15091.1\lib\net45\FCSAmerica.Common.WebAPI.ClientProxy.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="FCSAmerica.McGruff.Core, Version=2.1.16229.22434, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FCSAmerica.McGruff.Core.2.1.16229.22434\lib\net45\FCSAmerica.McGruff.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="FCSAmerica.Transact.Common, Version=2.0.17173.8355, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FCSAmerica.Transact.Common.2.0.17173.8355\lib\net461\FCSAmerica.Transact.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.4.9.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.4.9\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.105.2.3\lib\net46\RestSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.IdentityModel" />
+    <Reference Include="System.IdentityModel.Services" />
+    <Reference Include="System.IdentityModel.Tokens.Jwt, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.3.0.2\lib\net45\System.IdentityModel.Tokens.Jwt.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AbaBankInfoServiceModel.cs" />
+    <Compile Include="AccountServiceModel.cs" />
+    <Compile Include="AchApproverServiceModel.cs" />
+    <Compile Include="AssignIncomingWireRequestServiceModel.cs" />
+    <Compile Include="CoreGLAccountServiceModel.cs" />
+    <Compile Include="CounterDraftServiceModel.cs" />
+    <Compile Include="DraftFileRowServiceModel.cs" />
+    <Compile Include="DraftSearchServiceModel.cs" />
+    <Compile Include="DraftTransactionServiceModel.cs" />
+    <Compile Include="DraftRejectionServiceModel.cs" />
+    <Compile Include="DraftTemplateServiceModel.cs" />
+    <Compile Include="EditDraftServiceModel.cs" />
+    <Compile Include="IncomingWireTransactionServiceModel.cs" />
+    <Compile Include="InternalTransferTransactionTemplateServiceModel.cs" />
+    <Compile Include="EmbeddedHolidayServiceModel.cs" />
+    <Compile Include="HolidayServiceModel.cs" />
+    <Compile Include="HolidayRootObjectServiceModel.cs" />
+    <Compile Include="DraftImageServiceModel.cs" />
+    <Compile Include="ServiceScheduleModel.cs" />
+    <Compile Include="TransactionTemplateServiceModel.cs" />
+    <Compile Include="AchRejectionServiceModel.cs" />
+    <Compile Include="AchRejectReasonCodeServiceModel.cs" />
+    <Compile Include="BankAccountTypeServiceModel.cs" />
+    <Compile Include="BankTemplateServiceModel.cs" />
+    <Compile Include="DraftStopPaymentServiceModel.cs" />
+    <Compile Include="FeeTypeServiceModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="AchStopPaymentServiceModel.cs" />
+    <Compile Include="IncomingWireTransactionDetailServiceModel.cs" />
+    <Compile Include="WiresInAssignmentServiceModel.cs" />
+    <Compile Include="IncomingWireDetailServiceModel.cs" />
+    <Compile Include="WiresInServiceModel.cs" />
+    <Compile Include="WiresInUnassignmentServiceModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

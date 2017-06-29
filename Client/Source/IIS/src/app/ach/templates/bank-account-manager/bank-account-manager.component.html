@@ -1,0 +1,65 @@
+﻿<div class="ta-container">
+    <div class="row no-gutters">
+
+        <div class="col-md-12">
+            <h2>Bank Account Manager</h2>
+            <br />
+            <div class="btn-group pull-right separator-bottom" role="group">
+                <button type="button" class="ta-primary-button btn-sm" (click)="addNew()" data-auto-id="bank-account-manager-add-new">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                    New Bank Template
+                </button>
+            </div>
+            <p-dataTable id="test" [value]="templates" sortField="AbaRoutingNumber" [(selection)] ="selectedTemplate" selectionMode="single" dataKey="BankTemplateId" sortOrder="1" [rows]="10" [paginator]="true" [globalFilter]="gb" #dt>
+                <p-column field="AbaRoutingNumber" header="ABA Number" [style]="{'overflow':'visible'}"
+                          [sortable]="true">
+                </p-column>
+                <p-column field="BankName" header="Bank Name" [style]="{'overflow':'visible'}" [sortable]="true">
+                </p-column>
+                <p-column field="City" header="City" [style]="{'overflow':'visible'}" [sortable]="true">
+                </p-column>
+                <p-column field="State" header="State" [style]="{'overflow':'visible'}" [sortable]="true">
+                </p-column>
+                <p-column field="AccountNumberDisplay" header="Account Number" [style]="{'overflow':'visible'}"
+                          [sortable]="true">
+
+                    <ng-template pTemplate="body" let-item="rowData">
+                        {{item.ExternalAccountNumber | accountnumberformat}}
+                    </ng-template>
+                </p-column>
+                <p-column field="Purpose" header="Type" [filter]="false" [sortable]="true" sortOrder="1" filterMatchMode="in" [style]="{'overflow':'visible'}"
+                          data-auto-id='account-type'>
+                </p-column>
+                <p-column field="BankAccountType.Description" header="Account Type" [style]="{'overflow':'visible'}"
+                          [sortable]="true">
+                </p-column>
+                <p-column field="StatusDisplay" header="StatusDisplay" [style]="{'overflow':'visible'}"
+                          [sortable]="true">
+                    <ng-template pTemplate="body" let-item="rowData">
+                        {{item.IsActive | statustypeformat}}
+                    </ng-template>
+                </p-column>
+
+                <p-column [style]="{'overflow':'visible'}">
+                    <ng-template pTemplate="body" let-item="rowData">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-outline-primary dropdown-toggle btn-sm " data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
+                                <i class="fa fa-bars" aria-hidden="true"></i>
+                            </button>
+                            <div class="ta-primary-dropdown-menu">
+
+                                <a class="dropdown-item" href="javascript:void(0);" (click)="viewDetails(item)" [attr.data-auto-id]="getDynamicAutoId('bank-account-mgr-view-details-', item.Achng-templateId)">View Details</a>
+                                <div *ngIf="getIsDeleted(item) === false">
+                                    <a class="dropdown-item" href="javascript:void(0);" (click)="newAch(item)" [attr.data-auto-id]="getDynamicAutoId('bank-account-mgr-new-ach-', item.Achng-templateId)">New ACH</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="javascript:void(0);" (click)="delete(item)" [attr.data-auto-id]="getDynamicAutoId('bank-account-mgr-delete-ach-', item.Achng-templateId)">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </p-column>
+            </p-dataTable>
+        </div>
+    </div>
+</div>

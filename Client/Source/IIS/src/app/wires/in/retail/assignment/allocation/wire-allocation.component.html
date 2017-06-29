@@ -1,0 +1,80 @@
+﻿<div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="searchmode" class="form-control-label form-control-label-sm textbold">Search</label>
+                    <br />
+                    <input type="radio" name="searchmode" [(ngModel)]="searchMode" [value]="'customer'" (change)="searchModeChanged($event)"> Customer &nbsp;&nbsp;
+                    <input type="radio" name="searchmode" [(ngModel)]="searchMode" [value]="'glaccount'" (change)="searchModeChanged($event)"> GL Account
+                </div>
+                <div class="col-md-6">
+                    <div class="pull-right">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <span class="bold">Wire Total: </span> {{wireIn?.Amount | currency:'USD':true}}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <span class="bold">Remaining: </span> {{totalWireAmountRemaining | currency:'USD':true}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="searchMode === 'customer'">
+                <div class="section-padding">
+                    <button data-auto-id="detail_view_button_confirm" type="button" class="ta-primary-button" (click)="openCustomerSearch()">Open Customer Search</button>
+                </div>
+            </div>
+            <hr />
+            <wire-allocation-input-details [searchMode]="searchMode" [wireAmount]="wireIn?.Amount" [wireCustomerAllocation]="wireCustomerAllocation" [wireCustomerAllocations]="wireCustomerAllocations" [selectedCustomer]="selectedCustomer" (totalAmountRemaining)="updateRemainingAmount($event)" (wireCustomerAllocationChange)="addAssignment($event)" (wireCustomerAllocationEdit)="editAssignment($event)"></wire-allocation-input-details>
+            <hr />
+
+            <div class="row">
+                <div class="col-md-12">
+                    <p-dataTable id="customerWireAllocations" data-auto-id='customer-wire-allocations-table' sortOrder="1" [value]="wireCustomerAllocations" [rows]="5" [paginator]="true" #dt>
+                        <p-column field="customer.DisplayNameReverse" data-auto-id='customer-wire-allocations-customer' header="Customer" [sortable]="true"></p-column>
+                        <p-column field="incomingWireTransactionDetail.DisplayAccountId" data-auto-id='customer-wire-allocations-account' header="Account" [sortable]="true"></p-column>
+                        <p-column field="incomingWireTransactionDetail.Amount" data-auto-id='wire-in-amount' header="Amount" [sortable]="true">
+                            <ng-template pTemplate="body" let-item="rowData">
+                                {{item.incomingWireTransactionDetail.Amount | currency:'USD':true}}
+                            </ng-template>
+                        </p-column>
+                        <p-column field="incomingWireTransactionDetail.TransactionType.Description" data-auto-id='customer-wire-allocations-amount' header="How to Apply" [sortable]="true"></p-column>
+                        <p-column field="incomingWireTransactionDetail.FeeCode.Description" data-auto-id='customer-wire-allocations-amount' header="Fee Code" [sortable]="true"></p-column>
+                        <p-column field="incomingWireTransactionDetail.Description" data-auto-id='customer-wire-allocations-amount' header="Description" [sortable]="true"></p-column>
+                        <p-column field="incomingWireTransactionDetail.GLSubledger" data-auto-id='customer-wire-allocations-amount' header="GL Sub Ledger" [sortable]="true"></p-column>
+
+                        <p-column [style]="{'overflow':'visible', 'width':'7%'}">
+                            <ng-template pTemplate="body" let-item="rowData">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-outline-primary dropdown-toggle btn-sm " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-bars" aria-hidden="true"></i>
+                                    </button>
+                                    <div class="ta-primary-dropdown-menu">
+                                        <a class="dropdown-item" href="javascript:void(0);" (click)="openEditAssignment(item)" [attr.data-auto-id]="getDynamicAutoId('wires-in-edit-assign-', item.customer.CustomerId)">Edit</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" (click)="unAssign(item)" [attr.data-auto-id]="getDynamicAutoId('wires-in-remove-assign-', item.customer.CustomerId)">Delete</a>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </p-column>
+
+                    </p-dataTable>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row buttongroup">
+        <div class="col-md-12">
+            <div class="form-group">
+                <div class="pull-right">
+                    <button data-auto-id="detail_view_button_confirm" type="button" class="ta-primary-button" (click)="save()">Save</button>&nbsp;&nbsp;
+                    <button data-auto-id="detail_view_button_confirm" type="button" class="ta-primary-button" (click)="saveprint()">Save & Print</button>&nbsp;&nbsp;
+                    <button data-auto-id="detail_view_button_cancel" type="button" class="btn pull-right" (click)="cancel()">Cancel</button>&nbsp;&nbsp;
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,7 @@
+﻿.account-list.grid-results {
+    tr:nth-child(2n):not(.ui-state-highlight) {
+        &:hover {
+            background-color: initial !important;
+        }
+    }
+}

@@ -1,0 +1,112 @@
+﻿
+<div>
+    <div class="modal-dialog">
+        <div class="modal-content counter-draft-modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Issue Counter Drafts</h3>
+                <button type="button" class="close" (click)="close()">&times;</button>
+            </div>
+            <div class="modal-body ModalContentText">
+
+                <form (ngSubmit)="submit()" class="form-horizontal" #counterDraftForm="ngForm">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div [ngClass]="(accountNumber.pristine || accountNumber.valid)?'form-group':'has-danger'">
+
+                                <div class="RequiredLabel">
+                                    <label for="accountNumber" class="form-control-label form-control-label-sm">Account Number</label>
+                                </div>
+
+                                <select data-auto-id="counterDraft_input_AccountNumber" class="form-control form-control-sm select-adjusted" name="accountNumber" id="accountNumber"
+                                        [(ngModel)]="counterDraft.LASAccountNumber" #accountNumber="ngModel" required (change)="controlValueChanged()">
+                                    <option disabled selected [value]="0">Please select an Account</option>
+                                    <option *ngFor="let account of eligibleAccounts" [ngValue]="account.AccountNumber">{{account.AccountNumber}}</option>
+                                </select>
+
+                                <div class="form-control-feedback" [hidden]="accountNumber.pristine || accountNumber.valid">Account Number is required</div>
+
+                            </div>
+                            
+                            <!--<ta-form-group-validation [isRequired]="true">
+
+                                <label for="office" class="form-control-label form-control-label-sm">Office</label>
+
+                                <p-autoComplete name="office" #office [(ngModel)]="counterDraft.Office" [minLength]="0" styleClass="auto-complete-form-control form-control-sm select-adjusted" [autoHighlight]="true" required [suggestions]="filteredOfficeList" (completeMethod)="officeSearch($event)" (onBlur)="validateSelectedOffice($event)" (onDropdownClick)="handleDropdownClick($event)"
+                                                (onSelect)="officeSelected($event)" [dropdown]="true" field="OfficeName" placeholder="Please select an office">
+                                </p-autoComplete>
+
+                            </ta-form-group-validation>-->
+
+                            <div [ngClass]="(!officeHasBeenEdited || isOfficeValid)?'form-group':'has-danger'">
+
+                                <div class="RequiredLabel">
+                                    <label for="office" class="form-control-label form-control-label-sm">Office</label>
+                                </div>
+                                
+                                <p-autoComplete name="office" #office [(ngModel)]="counterDraft.Office" [minLength]="0" styleClass="auto-complete-form-control form-control-sm select-adjusted" [autoHighlight]="true" required [suggestions]="filteredOfficeList" (completeMethod)="officeSearch($event)" (onBlur)="validateSelectedOffice($event)" (onDropdownClick)="handleDropdownClick($event)"
+                                                (onSelect)="officeSelected($event)"[dropdown]="true" field="OfficeName" placeholder="Please select an office">
+                                </p-autoComplete>
+                                <div class="form-control-feedback" [hidden]="!officeHasBeenEdited || isOfficeValid">Office Name is required</div>
+
+                            </div>
+
+                            <div [ngClass]="(BeginningDraftNumber.pristine || BeginningDraftNumber.valid)?'form-group':'has-danger'">
+                                <div class="RequiredLabel">
+                                    <label for="BeginningDraftNumber" class="form-control-label form-control-label-sm">Beginning Draft Number</label>
+                                </div>
+
+                                <input data-auto-id="counterDraft_input_BeginningDraftNumber" class="form-control form-control-sm" type="number" name="BeginningDraftNumber" id="BeginningDraftNumber" [(ngModel)]="counterDraft.BeginningDraftNumber"
+                                       #BeginningDraftNumber="ngModel" required (change)="controlValueChanged()"/>
+                                <div class="form-control-feedback" [hidden]="BeginningDraftNumber.pristine || BeginningDraftNumber.valid">Beginning Draft Number is required</div>
+
+                            </div>
+                            <div [ngClass]="(EndingDraftNumber.pristine || EndingDraftNumber.valid)?'form-group':'has-danger'">
+                                <div class="RequiredLabel">
+                                    <label for="EndingDraftNumber" class="form-control-label form-control-label-sm">Ending Draft Number</label>
+                                </div>
+
+                                <input data-auto-id="counterDraft_input_EndingDraftNumber" class="form-control form-control-sm" type="number" name="EndingDraftNumber" id="EndingDraftNumber" [(ngModel)]="counterDraft.EndingDraftNumber"
+                                       #EndingDraftNumber="ngModel" required (change)="controlValueChanged()"/>
+                                <div class="form-control-feedback" [hidden]="EndingDraftNumber.pristine || EndingDraftNumber.valid">Ending Draft Number is required</div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group" [ngClass]="(!errorMessage)?'form-group':'has-danger'">
+
+                                <div class="form-control-feedback" [hidden]="!errorMessage">{{errorMessage}}</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="pull-right">
+                                    <button data-auto-id="counterDraft_button_cancel" type="button" class="btn pull-right" (click)="close()">Cancel</button>&nbsp;&nbsp;
+                                    <button data-auto-id="counterDraft_button_clear" type="button" class="ta-primary-button" (click)="counterDraftForm.reset()">Clear</button>&nbsp;&nbsp;
+                                    <button data-auto-id="counterDraft_button_submit" type="submit" class="btn btn-success" [disabled]="counterDraftForm.pristine || !counterDraftForm.valid || !isOfficeValid">Save</button>&nbsp;&nbsp;
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

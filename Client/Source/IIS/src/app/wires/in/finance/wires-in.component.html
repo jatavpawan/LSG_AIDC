@@ -1,0 +1,44 @@
+﻿<div class="ta-container">
+    <div class="row no-gutters">
+        <h2>Incoming Wires</h2>
+        <br />
+
+        <div class="col-md-12">
+
+            <p-dataTable id="wiresintable" data-auto-id='wires-in-table' sortField="ReceivedDate" sortOrder="1" [(selection)] ="selectedIncomingWire" selectionMode="single" dataKey="WireInId" [resizableColumns]="true" [value]="wiresInList" [rows]="10" [paginator]="true" #dt>
+
+                <p-column field="ReceivedDate" data-auto-id='wire-in-receive-date' header="Received" [sortable]="true" [style]="{'width':'12%'}">
+                    <ng-template pTemplate="body" let-item="rowData">
+                        {{item.ReceivedDate | dateformat:'MM/DD/YYYY'}}
+                    </ng-template>
+                </p-column>
+
+                <p-column field="BeneficiaryName" data-auto-id='wire-in-beneficiary-name' header="Beneficiary Name" [style]="{'width':'18%'}" [sortable]="true"></p-column>
+
+                <p-column field="BeneficiaryAccountNumber" data-auto-id='wire-in-beneficiary-accountNumber' header="Beneficiary Account Number" [style]="{'width':'25%'}" [sortable]="true"></p-column>
+
+                <p-column field="OriginatorToBeneficiary" data-auto-id='wire-in-originator-to-beneficiary' header="Originator To Beneficiary" [style]="{'width':'28%'}" [sortable]="true">
+                    <ng-template pTemplate="body" let-item="rowData">
+                        <div class="truncate" title="{{ item.OriginatorToBeneficiary }}"> {{ item.OriginatorToBeneficiary }} </div>
+                    </ng-template>
+                </p-column>
+
+                <p-column field="Amount" data-auto-id='wire-in-amount' header="Amount" [sortable]="true" [style]="{'width':'10%'}">
+                    <ng-template pTemplate="body" let-item="rowData">
+                        {{item.Amount | currency:'USD':true}}
+                    </ng-template>
+                </p-column>
+
+                <p-column [style]="{'overflow':'visible'}" [style]="{'width':'7%'}">
+                    <ng-template pTemplate="body" let-item="rowData">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-success btn-sm" (click)="openAssign(item)" [attr.data-auto-id]="getDynamicAutoId('wires-in-assign-', item.WireInId)">
+                                <span>Assign</span>
+                            </button>
+                        </div>
+                    </ng-template>
+                </p-column>
+            </p-dataTable>
+        </div>
+    </div>
+</div>

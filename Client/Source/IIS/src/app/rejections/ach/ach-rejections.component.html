@@ -1,0 +1,108 @@
+﻿<div class="ta-container">
+
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Review Receipts</h2>
+        </div>
+    </div>
+    
+    <div class="row no-gutters">
+        <div class="col-md-12">
+            <p-dataTable [value]="achRejections" [rows]="8" [paginator]="true" csvSeparator="|" exportFilename="ACH Rejects" sortField="Amount" sortOrder="1" #dt>
+                <p-column field="BankName" header="PO" [filter]="false" filterMatchMode="in" [sortable]="true" sortOrder="-1" [style]="{'width':'5%'}"></p-column>
+
+                <p-column field="TransactionDirectionDisplay" header="Vendor Material" [filter]="false" filterMatchMode="in" [sortable]="true" sortOrder="1"></p-column>
+
+                <p-column field="Office.OfficeCostCenter" header="Description" [style]="{'width':'12%'}" [filter]="false" filterMatchMode="in" [sortable]="true"></p-column>
+
+                <p-column field="CustomerName" header="Pack Qty" [filter]="false" [sortable]="true"></p-column>
+
+                <p-column field="Preparer" header="Pack UoM" [filter]="false" [sortable]="true"></p-column>
+
+                <p-column field="CompanyName" header="Req Qty" [filter]="false" [sortable]="true"></p-column>
+
+                <p-column field="Amount" header="Req UoM" [filter]="false" [sortable]="true">
+                    <ng-template pTemplate="body" let-item="rowData">
+                        {{ item.Amount | currency:'USD':true }}
+                    </ng-template>
+                </p-column>
+
+                <p-column field="RejectReasonDescription" header="Receipt Qty" [filter]="false" filterMatchMode="in" [sortable]="true" [style]="{'width':'12%'}">
+
+                    <ng-template pTemplate="body" let-item="rowData">
+                        <div class="truncate" title="{{ item.RejectReasonDescription }}"> {{ item.RejectReasonDescription }} </div>
+                    </ng-template>
+
+                </p-column>
+
+                <p-column field="StatusDisplay" header="Receipt UoM" [filter]="false" filterMatchMode="in" [sortable]="true" [style]="{'width':'8%'}"></p-column>
+                
+                <p-column field="StatusDisplay" header="Over/Under" [filter]="false" filterMatchMode="in" [sortable]="true" [style]="{'width':'8%'}"></p-column>
+                
+                <p-column field="StatusDisplay" header="Color/Status" [filter]="false" filterMatchMode="in" [sortable]="true" [style]="{'width':'8%'}"></p-column>                
+            </p-dataTable>
+
+        </div>
+    </div>    
+    
+
+    <!--<div class="row no-gutters">
+        <div class="col-md-12">
+            <p-dataTable data-auto-id='achRejections-table' [(selection)] ="selectedAchRejection" selectionMode="single" dataKey="AchId" [value]="achRejections" [rows]="8" [paginator]="true" csvSeparator="|" exportFilename="ACH Rejects" sortField="Amount" sortOrder="1" #dt>
+                <p-column field="BankName" header="Bank" [filter]="false" filterMatchMode="in" [sortable]="true" sortOrder="-1" [style]="{'width':'12%'}"
+                          data-auto-id='ach-rejections-bank'>
+                </p-column>
+
+                <p-column field="TransactionDirectionDisplay" header="Reject Type" [filter]="false" filterMatchMode="in" [sortable]="true" sortOrder="1"
+                          data-auto-id='ach-rejections-note-number'>
+                </p-column>
+
+                <p-column field="Office.OfficeCostCenter" header="Cost Center" [filter]="false" filterMatchMode="in" [sortable]="true" data-auto-id='ach-rejections-cost-center'>
+                </p-column>
+
+                <p-column field="CustomerName" header="Customer Name" [style]="{'width':'12%'}" [filter]="false" [sortable]="true" data-auto-id='ach-rejections-customer-name'>
+                </p-column>
+
+                <p-column field="Preparer" header="Prepared By" [filter]="false" [sortable]="true" data-auto-id='ach-rejections-status'>
+                </p-column>
+
+                <p-column field="CompanyName" header="Company" [filter]="false" [sortable]="true" data-auto-id='ach-rejections-company'>
+                </p-column>
+
+                <p-column field="Amount" header="Amount" [filter]="false" [sortable]="true" data-auto-id='ach-rejections-amount'>
+                    <ng-template pTemplate="body" let-item="rowData">
+                        {{ item.Amount | currency:'USD':true }}
+                    </ng-template>
+                </p-column>
+
+                <p-column field="RejectReasonDescription" header="Reject Reason" [filter]="false" filterMatchMode="in" [sortable]="true"
+                          data-auto-id='ach-rejections-status' [style]="{'width':'12%'}">
+
+                    <ng-template pTemplate="body" let-item="rowData">
+                        <div class="truncate" title="{{ item.RejectReasonDescription }}"> {{ item.RejectReasonDescription }} </div>
+                    </ng-template>
+
+                </p-column>
+
+                <p-column field="StatusDisplay" header="Status" [filter]="false" filterMatchMode="in" [sortable]="true" data-auto-id='ach-rejections-status' [style]="{'width':'8%'}">
+                </p-column>
+
+                <p-column [style]="{'overflow':'visible'}">
+                    <template pTemplate type="header">
+                        <i data-auto-id="ach-rejection-export-csv" class="fa fa-file-excel-o ta-alight-left" (click)="achRejectionsExport(dt)" title="Export CSV"></i>
+                    </template>
+
+                    <ng-template pTemplate="body" let-item="rowData">
+                        <div class="btn-group" [style]="{'width':'10%'}">
+                            <button type="button" class="btn btn-default btn-sm " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" [disabled]="item.Status == 1" (click)="deleteRejected(item)">
+                                Delete
+                            </button>
+                        </div>
+                    </ng-template>
+                </p-column>
+            </p-dataTable>
+
+        </div>
+    </div>-->
+
+</div>

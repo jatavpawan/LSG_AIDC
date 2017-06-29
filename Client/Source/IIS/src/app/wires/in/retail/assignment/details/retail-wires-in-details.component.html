@@ -1,0 +1,111 @@
+﻿<div class="row">
+    <div class="col-md-12">
+        <h5>Sender</h5>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="ReceivedDate" class="form-control-label form-control-label-sm textbold">Date Received: </label> {{wiresIn.DateReceived | dateformat:'MM/DD/YYYY'}}
+            </div>
+            <div class="col-md-6">
+                <label for="BeneficiaryName" class="form-control-label form-control-label-sm textbold">Name: </label> {{wiresIn.WireInBeneficiary.Name}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="BeneficiaryAccountNumber" class="form-control-label form-control-label-sm textbold">Received From: </label> {{wiresIn.WireInBeneficiary.AccountNumber}}
+            </div>
+            <div class="col-md-6">
+                <label for="ABARoutingNumber" class="form-control-label form-control-label-sm textbold">By Order Of: </label> {{wiresIn.WireInSender.ByOrderOf}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="Amount" class="form-control-label form-control-label-sm textbold">Amount: </label> {{wiresIn.Amount | currency:'USD':true}}
+            </div>
+            <div class="col-md-6">
+                <label for="ABARoutingNumber" class="form-control-label form-control-label-sm textbold">ABA#: </label> {{wiresIn.WireInSender.ABANumber}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="Amount" class="form-control-label form-control-label-sm textbold">Reference #: </label> {{wiresIn.WireInSender.ReferenceNumber}}
+            </div>
+        </div>
+        <hr />
+        <h5>Beneficiary</h5>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="BeneficiaryName" class="form-control-label form-control-label-sm textbold">Beneficiary Name: </label> {{wiresIn.WireInBeneficiary.Name}}
+            </div>
+            <div class="col-md-6">
+                <label for="BeneficiaryAccountNumber" class="form-control-label form-control-label-sm textbold">Beneficiary Account Number: </label> {{wiresIn.WireInBeneficiary.AccountNumber}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="BeneficiaryReference" class="form-control-label form-control-label-sm textbold">Reference For Beneficiary: </label> {{wiresIn.WireInBeneficiary.ReferenceForBeneficiary}}
+            </div>
+            <div class="col-md-6">
+                <label for="BeneficiaryBank" class="form-control-label form-control-label-sm textbold">Beneficiary Bank: </label> {{wiresIn.WireInBeneficiary.BeneficiaryBank}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="Address" class="form-control-label form-control-label-sm textbold">Address: </label> <br /> {{wiresIn.WireInBeneficiary.Address1}}
+                <div *ngIf="wiresIn.WireInBeneficiary.Address2">
+                    {{wiresIn.WireInBeneficiary.Address2}}
+                </div>
+                <div *ngIf="wiresIn.WireInBeneficiary.Address3">
+                    {{wiresIn.WireInBeneficiary.Address3}}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label for="OriginatorToBeneficiary" class="form-control-label form-control-label-sm textbold">Originator To Beneficiary: </label><br /> {{wiresIn.WireInBeneficiary.OriginatorToBeneficiaryLine1}}
+                <div *ngIf="wiresIn.WireInBeneficiary.OriginatorToBeneficiaryLine2">
+                    {{wiresIn.WireInBeneficiary.OriginatorToBeneficiaryLine2}}
+                </div>
+                <div *ngIf="wiresIn.WireInBeneficiary.OriginatorToBeneficiaryLine3">
+                    {{wiresIn.WireInBeneficiary.OriginatorToBeneficiaryLine3}}
+                </div>
+                <div *ngIf="wiresIn.WireInBeneficiary.OriginatorToBeneficiaryLine4">
+                    {{wiresIn.WireInBeneficiary.OriginatorToBeneficiaryLine4}}
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <label for="BeneficiaryBankOtherInfo" class="form-control-label form-control-label-sm textbold">Beneficiary Bank Other Info: </label> {{wiresIn.WireInBeneficiary.BeneficiaryBankOtherLine1}}
+                <div *ngIf="wiresIn.WireInBeneficiary.BeneficiaryBankOtherLine2">
+                    {{wiresIn.WireInBeneficiary.BeneficiaryBankOtherLine2}}
+                </div>
+            </div>
+        </div>
+        <hr />
+        <h5>Other Incoming Wire Information</h5>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="IntermediaryBank" class="form-control-label form-control-label-sm textbold">Intermediary Bank: </label> {{wiresIn.WireInOther.IntermediaryBank}}
+            </div>
+            <div class="col-md-6">
+                <label for="bankTobank" class="form-control-label form-control-label-sm textbold">Bank To Bank Info: </label> {{wiresIn.WireInOther.BankToBankInfo}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="InstructingBank" class="form-control-label form-control-label-sm textbold">Instructing Bank: </label> {{wiresIn.WireInOther.InstructingBank}}
+            </div>
+            <div class="col-md-6">
+                <label for="confirmationNumber" class="form-control-label form-control-label-sm textbold">Confirmation Number: </label> {{wiresIn.WireInOther.ConfirmationNumber}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <label for="OtherInfo" class="form-control-label form-control-label-sm textbold">Other Info: </label> {{wiresIn.WireInOther.OtherInfoLine1}}
+                <div *ngIf="wiresIn.WireInOther.OtherInfoLine2">
+                    {{wiresIn.WireInOther.OtherInfoLine2}}
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,18 @@
+﻿<p-dataTable data-auto-id="search-list-table" [value]="customers" [paginator]="true" [rows]="10" [scrollable]="true" [scrollHeight]="maxHeight" #dt
+             selectionMode="single" [(selection)]="gridSelectedCustomer" (onRowSelect)="onRowSelect($event)" sortField="DisplayNameReverse" sortOrder="1" tableStyleClass="grid-results">
+
+    <p-column field="DisplayNameReverse" header="Customer Name" [filter]="false"
+              [style]="{overflow:'visible'}" data-auto-id="customer-name" [sortable]="true" sortOrder="1">
+    </p-column>
+
+    <p-column field="Cif" header="CIF" [filter]="false" [style]="{overflow:'visible', width:'10%'}" [sortable]="true"
+              sortOrder="1" data-auto-id="customer-cif">
+    </p-column>
+
+    <p-column field="DisplayAddress" header="Address" [filter]="false" filterMatchMode="in" [style]="{overflow:'visible'}" data-auto-id="customer-address">
+    </p-column>
+
+    <p-column field="OfficeName" header="Office" [filter]="false" [style]="{'overflow':'visible'}" [sortable]="true"
+              sortOrder="1" data-auto-id="customer-office">
+    </p-column>
+</p-dataTable>

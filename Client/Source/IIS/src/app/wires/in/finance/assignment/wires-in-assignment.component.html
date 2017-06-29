@@ -1,0 +1,98 @@
+﻿<div class="large-modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title">Assign Wire In</h3>
+            <button type="button" class="close">&times;</button>
+        </div>
+        <div class="modal-body ModalContentText">
+
+            <form (ngSubmit)="submit()" class="form-horizontal" #wiresInAssignmentForm="ngForm">                
+                <ta-invalid-form-message [isSubmitted]="submitted"></ta-invalid-form-message>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="ReceivedDate" class="form-control-label form-control-label-sm">Date Received</label>
+                            <input [disabled]="true" class="form-control form-control-sm" name="ReceivedDate" id="ReceivedDate" value="{{wiresIn.ReceivedDate | dateformat:'MM/DD/YYYY'}}" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="BeneficiaryName" class="form-control-label form-control-label-sm">Beneficiary Name</label>
+                            <input class="form-control form-control-sm" disabled="true" type="text" name="BeneficiaryName" id="BeneficiaryName" value="{{wiresIn.BeneficiaryName}}" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="BeneficiaryAccountNumber" class="form-control-label form-control-label-sm">Beneficiary Account Number</label>
+                            <input [disabled]="true" class="form-control form-control-sm" name="BeneficiaryAccountNumber" id="BeneficiaryAccountNumber" value="{{wiresIn.BeneficiaryAccountNumber}}" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="OriginatorToBeneficiary" class="form-control-label form-control-label-sm">Originator To Beneficiary</label>
+                            <input class="form-control form-control-sm" disabled="true" type="text" name="OriginatorToBeneficiary" id="OriginatorToBeneficiary" value="{{wiresIn.OriginatorToBeneficiary}}" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="Amount" class="form-control-label form-control-label-sm">Amount</label>
+                            <input [disabled]="true" class="form-control form-control-sm" name="Amount" id="Amount" value="{{wiresIn.Amount | currency:'USD':true}}" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="searchmode" class="form-control-label form-control-label-sm">Assign To</label>
+                            <div>
+                                <input type="radio" name="searchmode" [(ngModel)]="searchMode" [value]="'costcenter'" (change)="searchModeChanged($event)"> Cost Center &nbsp;&nbsp;
+                                <input type="radio" name="searchmode" [(ngModel)]="searchMode" [value]="'glaccount'" (change)="searchModeChanged($event)"> GL Account
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+
+                        <div class="form-group">
+                            <div *ngIf="searchMode === 'costcenter'">
+                                <label for="SearchInput" class="form-control-label form-control-label-sm">Search by Cost Center</label>
+                            </div>
+                            <div *ngIf="searchMode === 'glaccount'">
+                                <label for="SearchInput" class="form-control-label form-control-label-sm">Search by GL Account</label>
+                            </div>
+                            <ta-form-group-validation [isInvalid]="!searchSelection || searchSelection.length === 0" [isRequired]="true">
+                                <p-autoComplete [placeholder]="searchPlaceholder" [dropdown]="true" [(ngModel)]="searchSelection" autoHighlight="true" [suggestions]="results" field="Description"
+                                                (completeMethod)="getTypeAheadData($event)" (onDropdownClick)="getTypeAheadData($event)" emptyMessage="No Results Found" name="SearchInput" #SearchInput="ngModel" styleClass="auto-complete-form-control form-control-label-sm"></p-autoComplete>
+                                <ta-invalid-control-message [isInvalid]="!searchSelection || searchSelection.length === 0" [message]="'Assignment is required!.'"></ta-invalid-control-message>                              
+                            </ta-form-group-validation>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="Comment" class="form-control-label form-control-label-sm">Comment</label>
+                            <input data-auto-id="wires_in_assgnment_comment" type="text" class="form-control form-control-sm" name="Comment" id="Comment" [(ngModel)]="wiresIn.Comments" #Comment="ngModel" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="pull-right">
+                                <button data-auto-id="rejectDraft_button_cancel" type="button" class="btn pull-right" (click)="close()">Cancel</button>&nbsp;&nbsp;
+                                <button data-auto-id="rejectDraft_button_confirm" type="button" class="ta-primary-button" (click)="submit()">Save</button>&nbsp;&nbsp;
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

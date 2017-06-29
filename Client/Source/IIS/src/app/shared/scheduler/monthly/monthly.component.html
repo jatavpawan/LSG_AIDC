@@ -1,0 +1,75 @@
+﻿<div class="ta-container">
+    <div class="row">
+        <div class="col-md-6">
+            <span>Recur By</span>
+            <select data-auto-id="scheduler-frequency-dropdown" [disabled]="isReadOnly" class="form-control form-control-label-sm" #recurrenceSelected (change)="recurChanged(recurrenceSelected.value)">
+                <option selected disabled>Select Recurrence...</option>
+                <option [selected]="monthlySchedule.RecurBy === 'calendarDay' || prepaymentRestriction === '1'" value='calendarDay'>Calendar Days</option>
+                <option [selected]="monthlySchedule.RecurBy === 'daysOfWeek'" value='daysOfWeek'>Days of the Week</option>
+            </select>
+            <div class="alert alert-danger" [hidden]="!recurRequired">Recurrence Required</div>
+        </div>
+    </div>
+
+    <div *ngIf="monthlySchedule.RecurBy === 'calendarDay'">
+        <hr />
+        <span>Select Day of the Month</span>
+        <br/>
+        <numbers-picker data-auto-id="monthly_calendar_days" [prepaymentRestriction]="prepaymentRestriction" [isReadOnly]="isReadOnly" [selectedArrayOfNumbers]="monthlySchedule.CalendarDays" (onNumberSelected)="numberSelected($event)"></numbers-picker>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="alert alert-danger" [hidden]="!numberPickerRequired">Recurrence Required</div>
+            </div>
+        </div>        
+        <hr/>
+    </div>
+    <div *ngIf="monthlySchedule.RecurBy === 'daysOfWeek'">
+        <hr />
+        <days-of-the-week-component [daysOfTheWeek]="monthlySchedule.DaysOfTheWeek" [isReadOnly]="isReadOnly" (onPayOnIndexChange)="onPayOnIndexChange($event)" (onPayOnWeekdayChange)="onPayOnWeekdayChange($event)"></days-of-the-week-component>
+        <hr />
+    </div>
+    <div *ngIf="monthlySchedule.RecurBy">
+        <div class="row">
+            <div class="col-md-6">
+                <input data-auto-id="pay_every_month_radio_button" [disabled]="isReadOnly" [checked]="monthlySchedule.PayEveryMonth" type="radio" value="monthly" name="paymentInitiation" #paymentInitiationSelected (click)="setMonthlyRecurrence(paymentInitiationSelected.value)"> Initiate the payment every month
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <input data-auto-id="pay_every_n_months_radio_button" [disabled]="isReadOnly" [checked]="monthlySchedule.PayEveryMonth === false" type="radio" value="variableMonth" name="paymentInitiation" #paymentInitiationMonthlySelected (click)="setMonthlyRecurrence(paymentInitiationMonthlySelected.value)"> Initiate the payment every <input data-auto-id="pay_every_n_months_input" type="number" class="small-input-textbox" (change)="setEndPaymentsFieldDirty()" [disabled]="monthlySchedule.PayEveryMonth === true || isReadOnly" [(ngModel)]="monthlySchedule.PayEveryNMonths" /> months
+                <div class="alert alert-danger" [hidden]="!paymentInitiationRequired">Payment Initiation Required</div>
+                <div class="alert alert-danger" [hidden]="!paymentInitiationMonthFieldRequired">Payment Initiation Months Field Required</div>
+            </div>
+        </div>
+        <hr/>
+        <div class="row">
+            <div class="col-md-6">
+                <span>Start Date</span>
+                <datepicker-component data-auto-id="monthly_start_date" [isReadOnly]="isReadOnly" [parentDate]="monthlySchedule.StartDate" [datePickerOptions]="datePickerOptions" (onDateSelected)="startDateSelected($event)"></datepicker-component>
+                <div class="alert alert-danger" [hidden]="!startDateRequired">Start Date Required</div>
+                <div class="alert alert-danger" [hidden]="!startDateSelectionError">{{startDateSelectionError}}</div>
+            </div>
+
+            <div class="col-md-6">
+                <span>End Date</span>
+                <select data-auto-id="monthly_end_payment_selector" data-auto-id="scheduler-frequency-dropdown" class="form-control form-control-label-sm" [disabled]="isReadOnly" #endSelected (change)="scheduleEndChanged(endSelected.value)">
+                    <option selected disabled>Select End...</option>
+                    <option [selected]="monthlySchedule.HasEndDate === false" value='none'>No End Date</option>
+                    <option [selected]="monthlySchedule.EndPaymentsAfterNMonths" value='endAfter'>End After</option>
+                    <option [selected]="monthlySchedule.EndDate" value='endOn'>End On</option>
+                </select>
+                <div class="alert alert-danger" [hidden]="!endFrequencyRequired">End Date Required</div>
+                <br />
+                <div *ngIf="endDateOption && endDateOption === 'endAfter'">
+                    <input data-auto-id="end_after_n_payments_monthly" type="number" [disabled]="isReadOnly" class="small-input-textbox" [(ngModel)]="monthlySchedule.EndPaymentsAfterNMonths" (change)="setEndPaymentsAfterNMonthsDirty()"/> Payment(s)
+                </div>
+                <div class="alert alert-danger" [hidden]="!endAfterNPaymentsRequired">Payments Field Required</div>
+                <div *ngIf="endDateOption && endDateOption === 'endOn'">
+                    <datepicker-component data-auto-id="monthly_end_date" [isReadOnly]="isReadOnly" [parentDate]="monthlySchedule.EndDate" [datePickerOptions]="datePickerOptions" (onDateSelected)="endDateSelected($event)"></datepicker-component>
+                </div>
+                <div class="alert alert-danger" [hidden]="!endOnDateRequired">End Date Required</div>
+                <div class="alert alert-danger" [hidden]="!endDateSelectionError">{{endDateSelectionError}}</div>
+            </div>
+        </div>
+    </div>
+</div>

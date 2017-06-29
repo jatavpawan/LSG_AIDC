@@ -1,0 +1,62 @@
+﻿<div class="ta-container">
+    <div class="row no-gutters">
+        <h2>Internal Transfers</h2>
+        <br />
+
+        <div class="col-md-12">
+
+            <div class="btn-group pull-right separator-bottom" role="group">
+                <button type="button" class="ta-primary-button btn-sm" (click)="addNew()" data-auto-id="new-transfer">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                    Create New Transfer
+                </button>
+            </div>
+
+            <p-dataTable id="transfer-list" data-auto-id="transfer-list" sortField="StartDate" [(selection)] ="selectedTemplate" selectionMode="single" dataKey="TransactionId" sortOrder="-1" [value]="transfers" [rows]="10" [paginator]="true">
+
+
+                <p-column field="FromDisplay" data-auto-id="internal-transfer-from" header="From" [sortable]="true"></p-column>
+
+                <p-column field="ToDisplay" data-auto-id="internal-transfer-to" header="To" [sortable]="true"></p-column>
+
+                <p-column field="Amount" header="Amount" data-auto-id="internal-transfer-amount" [sortable]="true" [style]="{'width':'12%'}">
+                    <ng-template pTemplate="body" let-item="rowData">
+                        {{item.Amount | currency:'USD':true}}
+                    </ng-template>
+                </p-column>
+
+                <p-column field="ScheduleType" header="Type" data-auto-id="internal-transfer-type" [sortable]="true" [style]="{'width':'10%'}"></p-column>
+
+                <p-column field="StartDate" header="Start Date" data-auto-id="internal-transfer-start-date" [sortable]="true" [style]="{'width':'12%'}">
+                    <ng-template pTemplate="body" let-item="rowData">
+                        {{item.StartDate | dateformat:'MM/DD/YYYY'}}
+                    </ng-template>
+                </p-column>
+
+                <p-column field="Nickname" header="Nickname" data-auto-id="internal-transfer-nickname" [sortable]="true"></p-column>
+
+                <p-column field="IsActive" header="Status" data-auto-id="internal-transfer-created-by" [sortable]="true" [style]="{'width':'10%'}">
+                    <ng-template pTemplate="body" let-item="rowData">
+                        {{item.IsActive ? 'Active' : 'Completed'}}
+                    </ng-template>
+                </p-column>
+
+                <p-column [style]="{'overflow':'visible', 'width':'10%'}">
+                    <ng-template pTemplate="body" let-item="rowData">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-outline-primary dropdown-toggle btn-sm " data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
+                                <i class="fa fa-bars" aria-hidden="true"></i>
+                            </button>
+                            <div class="ta-primary-dropdown-menu">
+                                <a class="dropdown-item" href="javascript:void(0);" (click)="viewTransfer(item)">View Transfer</a>
+                                <a class="dropdown-item" href="javascript:void(0);" (click)="editTransfer(item)">Edit Transfer</a>
+                                <a class="dropdown-item" href="javascript:void(0);" (click)="confirmDelete(item)">Delete Transfer</a>
+                            </div>
+                        </div>
+                    </ng-template>
+                </p-column>
+            </p-dataTable>
+        </div>
+    </div>
+</div>

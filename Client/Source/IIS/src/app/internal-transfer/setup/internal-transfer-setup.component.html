@@ -1,0 +1,158 @@
+﻿<h2>Internal Transfer Setup</h2>
+<form (ngSubmit)="submit()" #internalTransferForm="ngForm">
+    <div class="ta-container internal-transfer">
+        <ta-invalid-form-message [isSubmitted]="internalTransferForm.submitted" [isValid]="isValid"></ta-invalid-form-message>
+        <p *ngIf="editingRecurring" class="text-danger">Any changes made to this transfer will not affect payments processed on or before today.</p>
+        <hr />
+        <div class="row">
+            <div class="col-md-4">
+                <ta-form-group-validation [isRequired]="true">
+                    <label>From Customer</label>
+                    <div class="input-group">
+                        <input data-auto-id="internal_transfer_from_customer" class="form-control form-control-sm" disabled value="{{transferObject.FromCustomer ? transferObject.FromCustomer.DisplayName + ' | ' + transferObject.FromCustomer.Cif : ''}}" />
+                        <span class="input-group-btn">
+                            <button data-auto-id="internal_transfer_from_customer_button" class="btn btn-default" type="button" (click)="chooseFromCustomer()">
+                                <i class="fa fa-fw fa-ellipsis-h"></i>
+                            </button>
+                        </span>
+                    </div>
+                </ta-form-group-validation>
+            </div>
+            <div class="col-md-4">
+                <ta-form-group-validation [isRequired]="true">
+                    <label>From Account</label>
+                    <select data-auto-id="internal_transfer_from_account" name="fromAccount" id="fromAccount" #fromAccount="ngModel" class="form-control form-control-label-sm" required [(ngModel)]="transferObject.FromAccount">
+                        <option [value]="utilities.defaultDropDownValue" disabled>Select an Account...</option>
+                        <option *ngFor="let account of transferObject.FromCustomer?.AccountNumbers" [ngValue]="account">{{account.AccountNumber}}</option>
+                    </select>
+                </ta-form-group-validation>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <ta-form-group-validation [isRequired]="true">
+                    <label>To Customer</label>
+                    <span class="pull-right same-customer-toggle">
+                        <input data-auto-id="same_as_from_customer" type="checkbox" name="sameAsFromCustomer" id="sameAsFromCustomer" (change)="toggleSameCustomer($event)">
+                        <span for="sameAsFromCustomer" class="form-control-label form-control-label-sm">Same customer</span>
+                    </span>
+                    <div class="input-group">
+                        <input data-auto-id="internal_transfer_to_customer" class="form-control form-control-sm" name="tocustomer" id="tocustomer" disabled value="{{transferObject.ToCustomer ? transferObject.ToCustomer.DisplayName + ' | ' + transferObject.ToCustomer.Cif : ''}}" />
+                        <label class="input-group-btn">
+                            <button data-auto-id="internal_transfer_to_customer_button" class="btn btn-default" type="button" (click)="chooseToCustomer()" [disabled]="sameCustomer">
+                                <i class="fa fa-fw fa-ellipsis-h"></i>
+                            </button>
+                        </label>
+                    </div>
+                </ta-form-group-validation>
+            </div>
+            <div class="col-md-4">
+                <ta-form-group-validation [isRequired]="true">
+                    <label>To Account</label>
+                    <select data-auto-id="internal_transfer_to_account" name="toAccount" id="toAccount" #toAccount="ngModel" class="form-control form-control-label-sm" required [(ngModel)]="transferObject.ToAccount">
+                        <option [value]="utilities.defaultDropDownValue" disabled>Select an Account...</option>
+                        <option *ngFor="let account of transferObject.ToCustomer?.AccountNumbers" [ngValue]="account">{{account.AccountNumber}}</option>
+                    </select>
+                </ta-form-group-validation>
+            </div>
+        </div>
+
+        <div *ngIf="transferObject.FromCustomer && transferObject.ToCustomer && transferObject.FromAccount && transferObject.ToAccount">
+            <hr />
+            <div class="row">
+                <div class="col-md-4">
+                    <ta-form-group-validation [isRequired]="true">
+                        <label>How To Apply</label>
+                        <select data-auto-id="internal_transfer_how_to_apply" name="howToApply" id="howToApply" #howToApply="ngModel" class="form-control form-control-label-sm" required [(ngModel)]="transferObject.HowToApply" (change)="howToApplyChanged()">
+                            <option [value]="utilities.defaultDropDownValue" disabled>Select How to Apply</option>
+                            <option *ngFor="let howToApply of howToApplyList" [ngValue]="howToApply">{{howToApply.Description}}</option>
+                        </select>
+                        <div class="alert alert-danger" [hidden]="howToApply.pristine || howToApply.valid || howToApply.model?.Id > 0">How to Apply required</div>
+                    </ta-form-group-validation>
+                </div>
+                <div class="col-md-4" *ngIf="transferObject.HowToApply?.Id === 10">
+                    <ta-form-group-validation [isRequired]="true" [isInvalid]="!isFeeCodeValid">
+                        <label>Other Fee Code</label>
+                        <p-autoComplete name="otherFeeCode" #otherFeeCode [(ngModel)]="transferObject.OtherFeeCode" [minLength]="0" styleClass="auto-complete-form-control form-control-label-sm" [autoHighlight]="true" required [suggestions]="filteredFeeCodeList" (completeMethod)="feeCodeSearch($event)" (onBlur)="validateSelectedFeeCode($event)" (onDropdownClick)="handleDropdownClick($event)"
+                                        (onSelect)="otherFeeSelected($event)" [dropdown]="true" field="Description" placeholder="Select Other Fee Code">
+                        </p-autoComplete>
+                        <ta-invalid-control-message [isInvalid]="!isFeeCodeValid" [message]="'Please select a valid fee code.'"></ta-invalid-control-message>
+                    </ta-form-group-validation>
+                </div>
+            </div>
+
+            <div *ngIf="excessRequired" class="row">
+                <div class="col-md-4">
+                    <ta-form-group-validation [isRequired]="true">
+                        <span>How To Apply Excess</span>
+                        <input data-auto-id="internal_transfer_how_to_apply_excess" name="howToApplyExcess" id="howToApplyExcess" disabled class="form-control form-control-label-sm" value="Principal Only" />
+                    </ta-form-group-validation>
+                </div>
+                <div class="col-md-4">
+                    <ta-form-group-validation [isRequired]="true">
+                        <span>Excess Amount</span>
+                        <input data-auto-id="internal_transfer_excess_amount" type="text" class="form-control" name="excessAmount" id="excessAmount" #excessAmount="ngModel" currencyMask [options]="{ align: 'left', prefix: '$ ', thousands: ',', decimal: '.', precision: '2' }" [(ngModel)]="transferObject.ExcessAmount" (keyup)="checkExcessAmount(excessAmount.model)" />
+                        <div class="alert alert-danger" *ngIf="!excessAmount.pristine && excessAmount.model <= 0">Excess amount required</div>
+                        <div class="alert alert-danger" *ngIf="excessAmountExceedsLimit">Excess Amount should be $250.00 or less</div>
+                    </ta-form-group-validation>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <ta-form-group-validation [isRequired]="true">
+                        <span>Amount</span>
+                        <input data-auto-id="internal_transfer_amount" type="text" class="form-control" name="amount" id="amount" #amount="ngModel" currencyMask [options]="{ align: 'left', prefix: '$ ', thousands: ',', decimal: '.', precision: '2' }" required [(ngModel)]="transferObject.Amount" />
+                        <div class="alert alert-danger" [hidden]="amount.pristine || amount.valid || amount.model > 0">Amount required</div>
+                    </ta-form-group-validation>
+                </div>
+
+                <div class="col-md-4">
+                    <ta-form-group-validation [isRequired]="true">
+                        <span>Nickname</span>
+                        <input data-auto-id="internal_transfer_nickname" type="text" maxlength="20" class="form-control form-control-sm" name="nickname" id="nickname" #nickname="ngModel" [(ngModel)]="transferObject.Nickname" />
+                    </ta-form-group-validation>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group form-checkbox" *ngIf="formRequired">
+                        <input data-auto-id="internal_transfer_form2279_received" type="checkbox" name="IsForm2279Complete" id="IsForm2279Complete" #IsForm2279Complete="ngModel" required [(ngModel)]="transferObject.IsForm2279Complete">&nbsp;
+                        <label for="IsForm2279Complete" class="form-control-label form-control-label-sm">Form 2279 Received</label>
+                        <div class="alert alert-danger" [hidden]="IsForm2279Complete.pristine || IsForm2279Complete.valid || formRequired.model">Form 2279 is required</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div *ngIf="transferObject.Schedule && transferObject.Schedule.FirstPaymentDate" class="col-md-4">
+                    <div class="form-group">
+                        <span>First Payment Date</span>
+                        <input data-auto-id="internal_transfer_first_payment_date" name="firstDate" id="firstDate" class="form-control form-control-sm" value="{{transferObject.Schedule.FirstPaymentDate | dateformat: 'MM/DD/YYYY'}}" readonly />
+                    </div>
+                </div>
+
+                <div *ngIf="transferObject.Schedule && transferObject.Schedule.EndPaymentDate" class="col-md-4">
+                    <div class="form-group">
+                        <span>Payment End Date</span>
+                        <input data-auto-id="internal_transfer_end_payment_date" name="endDate" id="endDate" class="form-control form-control-sm" value="{{transferObject.Schedule.EndPaymentDate | dateformat: 'MM/DD/YYYY'}}" readonly />
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 ta-schedule-button">
+                    <button data-auto-id="internal_transfer_schedule_payments" type="button" class="btn btn-default btn-block" (click)="openScheduler()">Schedule Transfer</button>
+                </div>
+                <div class="col-md-4 ta-schedule-button" *ngIf="transferObject.Schedule && transferObject.Schedule.NextPaymentDates && transferObject.Schedule.NextPaymentDates.length > 0">
+                    <button data-auto-id="internal_transfer_view_payments" type="button" class="btn btn-default btn-block" (click)="viewPayments()">View Upcoming Transfers</button>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row justify-content-end">
+            <div class="col-md-4">
+                <div class="form-group pull-right">
+                    <button data-auto-id="internal_transfer_submit_transfer" type="submit" class="ta-primary-button spaced">Save</button>
+                    <button data-auto-id="internal_transfer_cancel_transfer" (click)="cancel()" type="button" class="btn">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,35 @@
+﻿@import "../../variables";
+
+.app-search-accounts{
+    margin-top: 13px;
+    position: relative;
+    margin-left: 20px;
+    a {        
+        position: absolute;
+        top: 3px;
+        right: 8%;
+        font-size: 16px;
+        color: rgba($ta-black, 0.3);
+    }
+    .form-control {
+        border: 2px solid rgba($ta-black,0.1);
+        font-size: 13px;
+        letter-spacing: 0.03em;
+        height: 30px;
+        color: $ta-black;
+        padding: 7px 40px 7px 20px;
+        background: rgba($ta-white,0.05);
+        box-shadow: none;
+        border-radius: 30px;
+        width: 100%;
+    }
+}
+
+.accounts-search-icon{
+    margin-left:60%;
+}
+
+.accounts-search-bar{
+    margin-bottom: 10%;
+}
+

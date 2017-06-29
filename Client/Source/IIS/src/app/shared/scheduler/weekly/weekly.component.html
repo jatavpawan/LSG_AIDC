@@ -1,0 +1,72 @@
+﻿<div class="row">
+    <div class="col-md-12">
+        <span>Recur By</span>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <input data-auto-id="monday_checkbox" type="checkbox" [disabled]="isReadOnly" [checked]="containsWeekday(recurDays, 2)" value="2" #mondaySelected (change)="daySelectedToggle(mondaySelected.value)" /> Monday
+    </div>
+    <div class="col-md-4">
+        <input data-auto-id="tuesday_checkbox" type="checkbox" [disabled]="isReadOnly" [checked]="containsWeekday(recurDays, 3)" value="3" #tuesdaySelected (change)="daySelectedToggle(tuesdaySelected.value)" /> Tuesday
+    </div>
+    <div class="col-md-4">
+        <input data-auto-id="wednesday_checkbox" type="checkbox" [disabled]="isReadOnly" [checked]="containsWeekday(recurDays, 4)" value="4" #wednesdaySelected (change)="daySelectedToggle(wednesdaySelected.value)" /> Wednesday
+    </div>
+</div>
+<div class="row">
+
+    <div class="col-md-4">
+        <input data-auto-id="thursdday_checkbox" type="checkbox" [disabled]="isReadOnly" [checked]="containsWeekday(recurDays, 5)" value="5" #thursdaySelected (change)="daySelectedToggle(thursdaySelected.value)" /> Thursday
+    </div>
+    <div class="col-md-4">
+        <input data-auto-id="friday_checkbox" type="checkbox" [disabled]="isReadOnly" [checked]="containsWeekday(recurDays, 6)" value="6" #fridaySelected (change)="daySelectedToggle(fridaySelected.value)" /> Friday
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="alert alert-danger" [hidden]="!daySelectedRequired">Pay On Week Required</div>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <input data-auto-id="pay_every_week_radio_button" type="radio" value="weekly" name="paymentInitiation" [disabled]="isReadOnly" [checked]="weeklySchedule.PayEveryWeek" #paymentInitiationWeeklySelected (change)="setPayEveryWeek(paymentInitiationWeeklySelected.value)"> Initiate the payment every week <br />
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <input data-auto-id="pay_every_n_weeks_radio_button" type="radio" value="variableWeek" name="paymentInitiation" [disabled]="isReadOnly" [checked]="weeklySchedule.PayEveryWeek === false" #payEveryWeekSelected (change)="setPayEveryWeek(payEveryWeekSelected.value)"> Initiate the payment every <input data-auto-id="pay_every_n_weeks_input" type="number" class="small-input-textbox" (change)="setEndPaymentsFieldDirty()" [disabled]="weeklySchedule.PayEveryWeek === true || isReadOnly" [(ngModel)]="weeklySchedule.PayEveryNWeeks" /> weeks <br />
+        <div class="alert alert-danger" [hidden]="!paymentInitiationRequired">Payment Initiation Required</div>
+        <div class="alert alert-danger" [hidden]="!paymentInitiationWeekFieldRequired">Payment Initiation Week Field Required</div>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <span>Start Date</span>
+        <datepicker-component data-auto-id="weekly_start_date" [datePickerOptions]="datePickerOptions" [parentDate]="weeklySchedule.StartDate" (onDateSelected)="startDateSelected($event)"></datepicker-component>
+        <div class="alert alert-danger" [hidden]="!startDateRequired">Start Date Required</div>
+        <div class="alert alert-danger" [hidden]="!startDateSelectionError">{{startDateSelectionError}}</div>
+    </div>
+    <div class="col-md-6">
+        <span>End Date</span>
+        <select data-auto-id="scheduler-frequency-dropdown" [disabled]="isReadOnly" class="form-control form-control-label-sm" #endSelected (change)="scheduleEndChanged(endSelected.value)">
+            <option selected disabled>Select End...</option>
+            <option [selected]="weeklySchedule.HasEndDate === false" value='none'>No End Date</option>
+            <option [selected]="weeklySchedule.EndPaymentsAfterNWeeks" value='endAfter'>End After</option>
+            <option [selected]="weeklySchedule.EndDate" value='endOn'>End On</option>
+        </select>
+        <div class="alert alert-danger" [hidden]="!endFrequencyRequired">End Date Required</div>
+        <br />
+        <div *ngIf="endDateOption && endDateOption === 'endAfter'">
+            <input data-auto-id="end_after_n_weeks" type="number" [disabled]="isReadOnly" class="small-input-textbox" [(ngModel)]="weeklySchedule.EndPaymentsAfterNWeeks" (change)="setEndPaymentsAfterNWeeksDirty()" /> Payment(s)
+        </div>
+        <div class="alert alert-danger" [hidden]="!endAfterNPaymentsRequired">Payments Field Required</div>
+        <div *ngIf="endDateOption && endDateOption === 'endOn'">
+            <datepicker-component data-auto-id="weekly_end_date" [datePickerOptions]="datePickerOptions" [parentDate]="weeklySchedule.EndDate" (onDateSelected)="endDateSelected($event)"></datepicker-component>
+        </div>
+        <div class="alert alert-danger" [hidden]="!endOnDateRequired">End Date Required</div>
+        <div class="alert alert-danger" [hidden]="!endDateSelectionError">{{endDateSelectionError}}</div>
+    </div>
+</div>

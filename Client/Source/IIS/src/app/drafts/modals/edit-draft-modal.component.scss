@@ -1,0 +1,60 @@
+﻿.draft-image {
+    width: 76%;
+    height: 70%;
+    border: 1px groove #fefefe;
+    cursor: pointer;
+}
+
+.draft-image-customer {
+    width: 90%;
+    height: 70%;
+    border: 1px groove #fefefe;
+    cursor: pointer;
+}
+
+.draft-image-row {
+    padding-left: 20%;
+}
+
+.draft-image-row-customer-front {
+    padding-left: 10%;
+}
+
+.draft-image-row-customer-back {
+    padding-left: 6%;
+}
+
+.ta-draft-modal-content {
+    background-color: #fefefe;
+    padding: 5px;
+    width: 95%;
+    margin-bottom: 2.5%;
+    margin-left: 2.5%;
+    margin-right: 2.5%;
+}
+
+.full-draft-image {
+    width: 100%;
+    height: 100%;
+    border: 1px groove #fefefe;
+}
+
+.ta-btn-group{
+    padding-top: 12%;
+}
+
+.ta-draft-alert-span{
+    padding-bottom: 3%;
+}
+
+.ta-draft-close-image{
+    padding-right: 3.2%;
+}
+
+.ta-draft-edit-modal-content{
+    max-height: 32vh;
+}
+
+.ta-draft-image-view{
+    max-height: 45vh;
+}

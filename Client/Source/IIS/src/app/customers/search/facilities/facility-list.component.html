@@ -1,0 +1,42 @@
+﻿<p-dataTable data-auto-id='facility-display-table' sortField="Status" sortOrder="1" [value]="filteredFacilities" [globalFilter]="gb" [paginator]="true" [rows]="10"
+             #dt selectionMode="single" (onRowSelect)="rowSelect($event)" tableStyleClass="grid-results">
+
+    <p-column field="FacilityName" header="Facility Name" [filter]="false" filterMatchMode="in" [style]="{'width': '180px'}"
+              data-auto-id='facility-name'>
+    </p-column>
+
+    <p-column field="Fcn" header="Facility Number" [filter]="false" filterMatchMode="in" [style]="{'width': '180px'}"
+              data-auto-id='facility-number'>
+    </p-column>
+	
+    <p-column field="RelationshipTypeDesc" header="Liability Type" [filter]="false" filterMatchMode="in" [style]="{'width': '100px'}"
+              data-auto-id='facility-relationship-type-desc'>
+    </p-column>
+
+    <p-column field="PrimaryCustomerName" header="Primary Customer" [filter]="false" filterMatchMode="in" [style]="{'width': '100px'}"
+              data-auto-id='facility-customer-name'>
+    </p-column>
+
+    <p-column field="CommitmentTypeDesc" header="Type" [filter]="false" filterMatchMode="in" [style]="{'width': '100px'}"
+              data-auto-id='facility-committment-type-description'>
+    </p-column>
+	
+    <p-column field="AvailableToDraw" header="Available to Draw" [filter]="false" filterMatchMode="in" [style]="{'width': '90px'}"
+              data-auto-id='facility-available-to-draw'>
+        <ng-template pTemplate="body" let-item="rowData">
+            {{item.AvailableToDraw | currency:'USD':true | currencyformat}}
+        </ng-template>
+    </p-column>
+	
+    <p-column field="OutstandingPrincipalBalance" header="Outstanding Principal Balance" [filter]="false" filterMatchMode="in" [style]="{'width': '90px'}"
+              data-auto-id='facility-outstanding-principal-balance'>
+        <ng-template pTemplate="body" let-item="rowData">
+            {{item.OutstandingPrincipalBalance | currency:'USD':true | currencyformat}}
+        </ng-template>
+    </p-column>
+	
+    <p-column field="Association" header="Association" [filter]="false" filterMatchMode="in" [style]="{'width': '100px'}"
+              data-auto-id='facility-association'>
+    </p-column>
+
+</p-dataTable>
