@@ -1,0 +1,56 @@
+<div class="ta-container">
+    <h2>Outgoing Wire</h2>
+    <hr />
+    
+    <div class="row">
+        <div class="col-md-4">
+            <ta-form-group-validation [isRequired]="false">
+            <label>Template Type</label>
+            <select data-auto-id="outgoing_wire_template_type" class="form-control form-control-label-sm" [(ngModel)]="outgoingWire.TemplateType" name="templateType" #templateType>
+                <option [value]="utilities.defaultDropDownValue" disabled>Select a Template Type</option>
+                <option *ngFor="let type of templateTypeList" [ngValue]="type">{{type.Description}}</option>
+            </select>
+            </ta-form-group-validation>
+        </div>
+        <div class="col-md-4">
+            <ta-form-group-validation [isRequired]="true">
+                <label>Requested By</label>
+                <input required class="form-control form-control-sm" [(ngModel)]="outgoingWire.RequestedBy" name="requestedBy" #requestedBy="ngModel" type="text" />
+            </ta-form-group-validation>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-4">
+            <ta-form-group-validation [isRequired]="false">
+                <label class="form-control-label">Amount</label>
+                <input currencyMask [options]="{ align: 'left', prefix: '$ ', thousands: ',', decimal: '.', precision: '2' }" class="form-control form-control-sm" [(ngModel)]="outgoingWire.Amount" name="amount" #amount="ngModel" />
+            </ta-form-group-validation>
+        </div>
+        <div class="col-md-4">
+            <ta-form-group-validation [isRequired]="false">
+                <label>By Order Of</label>
+                <input class="form-control form-control-sm" [(ngModel)]="outgoingWire.ByOrderOf" name="byOrderOf" #byOrderOf="ngModel" type="text"/>
+            </ta-form-group-validation>
+        </div>
+        <div class="col-md-4">
+            <ta-form-group-validation [isRequired]="false">
+                <label>Description</label>
+                <input class="form-control form-control-sm" [(ngModel)]="outgoingWire.Description" name="description" #description="ngModel" type="text"/>
+            </ta-form-group-validation>
+        </div>
+    </div>
+    <hr />
+    <div *ngIf="outgoingWire.TemplateType?.Id === 1">
+      <app-standard-template [outgoingWire]="outgoingWire" (onOutgoingWireChanged)="handleWireChangedEvent($event)"></app-standard-template>
+    </div>
+    <div *ngIf="outgoingWire.TemplateType?.Id === 3">
+      <app-new-loan></app-new-loan>
+    </div>
+    <div *ngIf="outgoingWire.TemplateType?.Id === 2">
+      <app-participation></app-participation>
+    </div>
+    <div *ngIf="outgoingWire.TemplateType?.Id === 5">
+      <app-recurring></app-recurring>
+    </div>
+</div>

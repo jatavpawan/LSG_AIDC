@@ -1,0 +1,40 @@
+<div>
+    <form #creditForm="ngForm">
+        <div class="row">
+            <div class="col-md-3">
+                <ta-form-group-validation [isRequired]="false">
+                    <label>Name</label>
+                    <input class="form-control form-control-sm" type="text" name="name"
+                           id="name" maxlength="16" [(ngModel)]="creditInfo.Name" #name="ngModel" />
+                </ta-form-group-validation>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <ta-form-group-validation [isRequired]="false">
+                    <label>Account Number</label>
+                    <input class="form-control form-control-sm" type="number" name="accountNumber"
+                           id="accountNumber" [(ngModel)]="creditInfo.AccountNumber" #accountNumber="ngModel" (change)="validateAccountNumber()" />
+                </ta-form-group-validation>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <ta-form-group-validation [isRequired]="false">
+                    <label>Other Bank Info</label>
+                    <input class="form-control form-control-sm" type="text" name="otherBankInfo"
+                           id="otherBankInfo" maxlength="35" [(ngModel)]="creditInfo.OtherBankInfo" #otherBankInfo="ngModel" />
+                </ta-form-group-validation>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="btn-group pull-right next-btn-btn-group" role="group">
+                    <button type="button" class="btn draft-btn btn-success" (click)="creditInfoCompleted()" [disabled]="!creditForm.valid">
+                        Next
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

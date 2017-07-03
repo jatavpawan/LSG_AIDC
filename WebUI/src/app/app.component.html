@@ -1,0 +1,12 @@
+<ta-top-nav></ta-top-nav>
+<br />
+<div class="container-fluid">
+    <div class="row">
+        <main class="menuOpenContentArea">
+            <div class="jumbotronMain">
+                <router-outlet></router-outlet>
+            </div>
+        </main>
+    </div>
+</div>
+<p-growl [value]="growlerMediatorService.growlerMessages" [life]="6000" styleClass="growler"></p-growl>

@@ -1,0 +1,53 @@
+<div>
+    <form #beneficiaryForm="ngForm">
+        <div class="row">
+            <div class="col-md-6">
+                <ta-form-group-validation [isRequired]="true">
+                    <label>Beneficiary Name </label>
+                    <input required="" class="form-control form-control-sm" [(ngModel)]="beneficiaryInfo.Name" name="name" #name="ngModel" type="text" />
+                </ta-form-group-validation>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <span>Address Line 1 </span>
+                    <input class="form-control form-control-sm" [(ngModel)]="beneficiaryInfo.AddressLine1" name="address1" #address1="ngModel" type="text" />
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <ta-form-group-validation [isRequired]="true">
+                    <label>Beneficiary Account Number </label>
+                    <input required="" class="form-control form-control-sm" [(ngModel)]="beneficiaryInfo.AccountNumber" name="accountNumber" #accountNumber="ngModel" type="number" (change)="checkAbaNumber($event)" />
+                </ta-form-group-validation>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <span>Address Line 2 </span>
+                    <input class="form-control form-control-sm" [(ngModel)]="beneficiaryInfo.AddressLine2" name="address2" #address2="ngModel" type="text" />
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <span>Address Line 3 </span>
+                    <input class="form-control form-control-sm" [(ngModel)]="beneficiaryInfo.AddressLine3" name="address3" #address3="ngModel" type="text" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="btn-group pull-right" role="group">
+                    <button type="button" class="btn draft-btn btn-success" (click)="beneficiaryCompleted()" [disabled]="!beneficiaryForm.valid">
+                        Next
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

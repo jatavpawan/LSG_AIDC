@@ -1,0 +1,107 @@
+<div>
+    <form #authorizationForm="ngForm">
+        <div class="row" *ngIf="authorization.FirstTimeWireAuthorization">
+            <div class="col-md-2">
+                <ta-form-group-validation [isRequired]="true">
+                    <label>Is Form 2270 on file?</label>
+                    <select [(ngModel)]="authorization.IsForm2270Signed" name="is2270Signed" id="is2270Signed" #is2270Signed="ngModel" class="form-control form-control-label-sm" required>
+                        <option [value]="utilities.defaultDropDownValue" disabled>Select an option</option>
+                        <option [ngValue]="true">Yes</option>
+                        <option [ngValue]="false">No</option>
+                    </select>
+                </ta-form-group-validation>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <ta-form-group-validation [isRequired]="true">
+                    <label>Is Sender a Note Signer?</label>
+                    <select [(ngModel)]="authorization.IsNoteSigner" name="isNoteSigner" id="isNoteSigner" #isNoteSigner="ngModel" class="form-control form-control-label-sm" required (change)="changeNoteSigner()">
+                        <option [value]="utilities.defaultDropDownValue" disabled>Select an option</option>
+                        <option [ngValue]="true">Yes</option>
+                        <option [ngValue]="false">No</option>
+                    </select>
+                </ta-form-group-validation>
+            </div>
+        </div>
+        <div class="row" *ngIf="authorization.IsNoteSigner === false">
+            <div class="col-md-2">
+                <ta-form-group-validation [isRequired]="true">
+                    <label>Is Form 6272 on file?</label>
+                    <select [(ngModel)]="authorization.IsForm6272Signed" name="isForm6272Signed" id="isForm6272Signed" #isForm6272Signed="ngModel" class="form-control form-control-label-sm" required>
+                        <option [value]="utilities.defaultDropDownValue" disabled>Select an option</option>
+                        <option [ngValue]="true">Yes</option>
+                        <option [ngValue]="false">No</option>
+                    </select>
+                </ta-form-group-validation>
+            </div>
+        </div>
+        <div class="row" *ngIf="(authorization.IsNoteSigner === false) && (authorization.IsForm6272Signed === false)">
+            <div class="col-md-3">
+                <div class="alert alert-danger">
+                    <div class="form-group">
+                        <label>Complete Form 6272 to proceed.</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="authorization.IsNoteSigner || (!authorization.IsNoteSigner && authorization.IsForm6272Signed)">
+            <div class="row">
+                <div class="col-md-4">
+                    <ta-form-group-validation [isRequired]="true">
+                        <label>Request Method</label>
+                        <select data-auto-id="retail_wire_out_request_method" name="requestMethod" id="requestMethod" #requestMethod="ngModel" class="form-control form-control-label-sm" required [(ngModel)]="authorization.RequestMethod" (change)="requestMethodChanged(requestMethod.viewModel)">
+                            <option [value]="utilities.defaultDropDownValue" disabled>Select Request Method</option>
+                            <option *ngFor="let requestMethod of methodRequestList" [ngValue]="requestMethod">{{requestMethod.Description}}</option>
+                        </select>
+                    </ta-form-group-validation>
+                </div>
+                <div class="col-md-4" *ngIf="requestMethodSelected">
+                    <ta-form-group-validation [isRequired]="true">
+                        <label>Identity Verification</label>
+                        <select data-auto-id="retail_wire_out_identity_verification" name="identityVerification" id="identityVerification" #identityVerification="ngModel" class="form-control form-control-label-sm" required [(ngModel)]="authorization.IdentityVerification" (change)="identityVerificationChanged(identityVerification.viewModel)">
+                            <option [value]="utilities.defaultDropDownValue" disabled>Select IdentityVerification</option>
+                            <option *ngFor="let verification of identityVerificationList" [ngValue]="verification">{{verification.Description}}</option>
+                        </select>
+                    </ta-form-group-validation>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="alert alert-danger" [hidden]="!unableToConfirmIdentity">
+                        <div class="form-group">
+                            <label>Cannot proceed until identity has been verified.</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="requestMethodSelected && requestMethod.viewModel.Id === 2">
+                <div class="row">
+                    <div class="col-md-4">
+                        <ta-form-group-validation [isRequired]="true">
+                            <label>Customer Callback</label>
+                            <select data-auto-id="retail_wire_out_customer_callback" name="customerCallback" id="customerCallback" #customerCallback="ngModel" class="form-control form-control-label-sm" required [(ngModel)]="authorization.CustomerCallback">
+                                <option [value]="utilities.defaultDropDownValue" disabled>Select Callback Method</option>
+                                <option *ngFor="let phone of phoneNumbers" [ngValue]="phone">{{phone.AreaCode}}-{{phone.Prefix}}-{{phone.Suffix}}: {{phone.PhoneTypeDescription}}&nbsp;({{phone.Note}})</option>
+                            </select>
+                        </ta-form-group-validation>
+                    </div>
+                    <div class="col-md-4" *ngIf="authorization.CustomerCallback && authorization.CustomerCallback.Note">
+                        <label>{{'**Note: ' + authorization.CustomerCallback.Note}}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-12">
+                <div class="btn-group pull-right next-btn-btn-group" role="group">
+                    <button type="button" class="btn draft-btn btn-success" (click)="authorizationCompleted()" [disabled]="!authorizationForm.valid || unableToConfirmIdentity">
+                        Next
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

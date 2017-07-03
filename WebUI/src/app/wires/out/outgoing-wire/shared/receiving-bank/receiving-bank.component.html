@@ -1,0 +1,52 @@
+<div>
+    <form #receivingBankForm="ngForm">
+        <div id="targetScroll" class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <span>Receiving Bank ABA </span>
+                    <input required class="form-control form-control-sm" [(ngModel)]="abaModel.AbaRoutingNumber" name="AbaNumber" #AbaNumber="ngModel" type="number" (change)="lookupAba($event)" />
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="alert alert-danger" [hidden]="isAbaValid">
+                    <div class="form-group">
+                        <label>The number you entered is invalid. Please re-enter.</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <span>Bank Name </span>
+                    <input disabled class="form-control form-control-sm" [(ngModel)]="abaModel.Name" name="BankName" #BankName="ngModel" />
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <span>Bank City </span>
+                    <input disabled class="form-control form-control-sm" [(ngModel)]="abaModel.City" name="BankCity" #BankCity="ngModel" />
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <span>Bank State </span>
+                    <input disabled class="form-control form-control-sm" [(ngModel)]="abaModel.State" name="BankState" #BankState="ngModel" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="btn-group pull-right" role="group">
+                    <button type="button" class="btn draft-btn btn-success" (click)="receivingBankCompleted()" [disabled]="!receivingBankForm.valid || !abaFound">
+                        Next
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

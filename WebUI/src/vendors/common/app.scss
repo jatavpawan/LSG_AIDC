@@ -1,0 +1,492 @@
+@import "./../fcsamerica-template/bootstrap.scss";
+@import "../../app/variables";
+@import "../../app/types";
+
+/*
+ * Base structure
+ */
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+/* Move down content because we have a fixed navbar that is 50px tall */
+body {
+    font-family: $ta-font-stack;
+    background-color: $ta-white;
+}
+
+h1 {
+    font-family: 'thunder';
+    color: $ta-gray-dark;
+    margin-bottom: 0;
+}
+
+h2 {
+    color: $ta-blue;
+    font-weight: bold;
+    font-size: 1.6rem;
+}
+
+form {
+    font-family: Segoe UI,Arial,Helvetica,sans-serif;
+}
+
+.ta-table-header {
+    background-color: $ta-blue;
+    color: $ta-white;
+}
+
+.ta-table-responsive {
+    @extend .table-responsive;
+    display: table;
+}
+
+.jumbotronMain {
+    @extend .jumbotron;
+    font-size: 0.9rem;
+    color: black;
+    background-color: $ta-offwhite; //lighten($ta-gray-jumbotron,10%);
+    height: 79vh;
+    border-radius: 0px;
+    overflow-y: auto;
+    padding-top: 2%;
+    margin-bottom: 1rem;
+}
+
+.form-control {
+    @extend .form-control;
+    height: 34px;
+}
+
+ta-container {
+    @extend .container;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+/*
+ * Sidebar
+ */
+
+.sidebar {
+    position: fixed;
+    top: 51px;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    padding: 20px;
+    overflow-x: hidden;
+    overflow-y: hidden; /* Scrollable contents if viewport is shorter than content. */
+    border-right: 1px solid #eee;
+    background-color: $ta-blue !important;
+    font-size: .9rem;
+}
+
+/* Placeholders */
+.placeholders {
+    padding-bottom: 3rem;
+}
+
+.placeholder img {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+}
+
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+    border-bottom: 2px solid #4aa3b5;
+    color: $ta-gray-nav;
+    background: none;
+}
+
+.col-md-0 {
+    width: 0px;
+    float: left;
+    overflow: hidden;
+    margin: 0px;
+    padding: 0px;
+    min-height: 1px;
+}
+
+.nestedItem {
+    margin-left: 20px !important;
+}
+
+///navbar classes
+
+/*.menuOpen {
+    @extend .col-sm-3, .col-md-2, .hidden-xs-down, .bg-inverse, .sidebar;
+    font-size: 0.9rem;
+    font-weight: bold;
+    background-color: $ta-blue !important;
+}*/
+
+.menuOpenContentArea {
+    @extend .col-sm-12;
+}
+
+.customer-info-content-area {
+    @extend .menuOpenContentArea;
+    padding-top: .6rem !important;
+    font-size: .8rem;
+
+    span {
+        display: block;
+    }
+
+    .title {
+        font-weight: bold;
+    }
+
+    .info-item {
+        padding: 0px 5px;
+        border-right: 1px solid #e5e1dd;
+    }
+
+    .border-right-none {
+        border-right: none;
+    }
+}
+
+.navbar-arrow {
+    display: block !important;
+    margin-top: -10px;
+    background-color: $ta-white;
+    box-shadow: 0 1px 3px rgba(68,68,68,.2);
+}
+
+.topNav {
+    border-bottom-color: #CFCBC7;
+    border-bottom-style: solid;
+    border-bottom-width: thin;
+    background-color: $ta-white !important;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Forms stuff */
+.form-control {
+    @extend .form-control;
+    height: 34px;
+}
+
+.form-control, .form-control-sm {
+    border-radius: 0px;
+}
+
+.form-control-label-sm {
+    font-size: $font-size-sm;
+    margin-bottom: 0.3rem;
+}
+
+.form-control {
+    height: 38px;
+}
+
+.select-adjusted {
+    height: 34px !important;
+}
+
+input::-ms-clear {
+    display: none;
+}
+
+.ng-valid[required]:not(p-autocomplete), .ng-valid.required:not(p-autocomplete) {
+    border-left: 5px solid $form-green; /* green */
+}
+
+.ng-invalid:not(form) {
+    border-left: 5px solid $form-red; /* red */
+}
+
+.auto-complete-form-control {
+    @extend .form-control;
+    padding: 0px !important;
+}
+
+p-autocomplete {
+    /*We need this value to be zero or a weird border appears next to the label instead of the input*/
+    &.ng-invalid {
+        border-left: 0 none;
+    }
+
+    > .ui-autocomplete {
+        > .ui-inputtext {
+            padding: 6px 12px;
+
+            &:focus {
+                box-shadow: none;
+            }
+        }
+    }
+
+    .ui-autocomplete-dropdown {
+        margin-right: 3px !important;
+        transform: scale(.6,1);
+        font-size: 1rem;
+        color: #555555;
+    }
+}
+
+p-autocomplete.ng-dirty.ng-invalid > .ui-autocomplete > .ui-inputtext,
+p-autocomplete[required].ng-invalid > .ui-autocomplete > .ui-inputtext {
+    border-left: 5px solid $form-red;
+}
+
+p-autocomplete.ng-valid[required] > .ui-autocomplete > .ui-inputtext,
+p-autocomplete.ng-valid.required > .ui-autocomplete > .ui-inputtext,
+p-autocomplete.ng-valid > .ui-autocomplete > .ui-inputtext[required] {
+    border-left: 5px solid $form-green;
+}
+
+.btn {
+    border-radius: 0px;
+}
+
+.btn-default {
+    color: $ta-white;
+    background-color: $ta-blue;
+}
+
+.btn-primary {
+    @include button-variant($ta-white, $ta-blue, $ta-blue);
+}
+
+.ta-customer-info-btn-secondary {
+    @include button-variant($ta-white, $ta-gray-dark, $ta-white);
+}
+
+.ta-primary-dropdown-menu {
+    @extend .dropdown-menu;
+    background-color: lighten($ta-gray-jumbotron,10%);
+    color: $ta-white;
+    font-size: .9rem;
+
+    a:hover {
+        color: $ta-white !important;
+        background-color: lighten($ta-blue,20%);
+    }
+}
+
+.ta-draft-dropdown {
+    @extend .ta-primary-dropdown-menu;
+    max-width: 15px;
+}
+
+.ta-primary-button {
+    @extend .btn, .btn-primary;
+    background-color: $ta-blue;
+
+    &.spaced {
+        margin-right: 1rem;
+    }
+}
+
+.modal-header {
+    @extend .modal-header;
+    background-color: $ta-blue;
+    height: 45px;
+}
+
+.ta-modal-header {
+    @extend .modal-header;
+    display: block;
+    text-align: center;
+    padding: 5px;
+}
+
+.modal-title {
+    @extend .modal-title;
+    color: $ta-white;
+    font-size: 1.3rem;
+}
+
+.modal-footer {
+    @extend .modal-footer;
+    background-color: $ta-gray-light;
+    height: 50px;
+    color: $ta-black;
+}
+
+.modal-dialog {
+    box-shadow: 0 3px 7px $ta-gray-dark;
+}
+
+.modal-content {
+    border-radius: 0rem;
+}
+
+.close {
+    color: $ta-white;
+
+    &:hover {
+        color: $ta-white;
+    }
+}
+
+.ta-modal-content {
+    @extend .modal-content;
+    //box-shadow: 2px 2px 50px $ta-gray-dark;
+}
+
+.customer-info-accounts-search-icon {
+    color: $gray-dark !important;
+    padding-right: 1%;
+}
+
+.grid-sortable {
+    cursor: pointer;
+    user-select: none;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+.btn-outline-primary {
+    border-color: $ta-blue;
+    color: $ta-black;
+}
+
+.growler {
+    z-index: 10000 !important;
+    margin-top: 3%;
+}
+
+.small-input-textbox {
+    width: 40px;
+}
+
+.large-modal-dialog {
+    @extend .modal-dialog;
+    max-width: 800px;
+    box-shadow: 2px 2px 50px $ta-gray-dark;
+}
+
+.edit-draft-modal-dialog {
+    @extend .modal-dialog;
+    max-width: 800px;
+    box-shadow: 2px 2px 50px $ta-gray-dark;
+}
+
+.align-center {
+    text-align: center;
+}
+
+.separator-bottom {
+    margin-bottom: 2px;
+    z-index: 3;
+}
+
+.ta-draft-has-danger {
+    @extend .has-danger;
+    margin-bottom: -3.25%;
+}
+
+.ta-info-icon {
+    color: $ta-blue;
+}
+
+.mydp {
+    border-radius: 0px !important;
+}
+
+.btnclear {
+    display: none !important;
+}
+
+.ui-corner-all {
+    border-radius: 0px !important;
+}
+
+.truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.auto-complete-form-control {
+    @extend .form-control;
+    padding: 0px !important;
+}
+
+.grid-results {
+    .ui-widget-content {
+        border: 0 none;
+        border-bottom: .5rem solid $ta-offwhite;
+    }
+
+    thead {
+        &.ui-datatable-thead {
+            tr {
+                border-bottom: .4rem solid $ta-offwhite;
+            }
+
+            th {
+                border: none;
+                font-variant: small-caps;
+                padding: .5rem .5rem;
+                text-align: left;
+                font-weight: bold;
+            }
+        }
+    }
+
+    tbody {
+        color: #000000;
+
+        tr:hover {
+            background: $ta-blue-light !important;
+            cursor: default;
+        }
+
+        &.ui-datatable-data {
+            tr {
+                border-bottom: .5rem solid $ta-offwhite;
+            }
+
+            tr.ui-datatable-odd, tr.ui-datatable-even {
+                background-color: $ta-gray-topnav-separator;
+            }
+
+            tr.ui-state-highlight {
+                background-color: $ta-blue-light;
+                border-bottom: .5rem solid $ta-offwhite;
+            }
+
+            td {
+                padding: .5rem .5rem;
+                border: none;
+                color: #4b5257;
+            }
+        }
+    }
+}
+
+.keyvalue-list {
+    display: table;
+    background-color: white;
+}
+
+.keyvalue-item {
+    display: table-row;
+}
+
+.keyvalue-item .display-label, .keyvalue-item .display-field {
+    display: table-cell;
+    padding: 5px 10px;
+}
+
+.keyvalue-list .display-label {
+    font-weight: normal;
+}
+
+.next-btn-btn-group {
+    margin-top: -45px;
+}

@@ -1,0 +1,58 @@
+<div>
+    <form #finalBankForm="ngForm">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Final Bank Name </label>
+                    <input class="form-control form-control-sm" [(ngModel)]="finalBank.Name" id="bankName" name="bankName" #bankName="ngModel" type="text" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Address Line 1 </label>
+                    <input class="form-control form-control-sm" [(ngModel)]="finalBank.AddressLine1" id="address1" name="address1" #address1="ngModel" type="text" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Account Type </label>
+                    <select data-auto-id="wire_out_account_type" class="form-control form-control-label-sm" id="accountType" [(ngModel)]="finalBank.AccountType" name="accountType" #accountType="ngModel">
+                        <option [value]="utilities.defaultDropDownValue" disabled>Select an Account Type</option>
+                        <option *ngFor="let type of accountTypeList" [ngValue]="type">{{type.Description}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Address Line 2 </label>
+                    <input class="form-control form-control-sm" [(ngModel)]="finalBank.AddressLine2" id="address2" name="address2" #address2="ngModel" type="text" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Account Number </label>
+                    <input class="form-control form-control-sm" [(ngModel)]="finalBank.AccountNumber" id="accountNumber" name="accountNumber" #accountNumber="ngModel" type="number" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Address Line 3 </label>
+                    <input class="form-control form-control-sm" [(ngModel)]="finalBank.AddressLine3" id="address3" name="address3" #address3="ngModel" type="text" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="btn-group pull-right" role="group">
+                    <button type="button" class="btn draft-btn btn-success" (click)="finalBankCompleted()" [disabled]="!finalBankForm.valid">
+                        Next
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

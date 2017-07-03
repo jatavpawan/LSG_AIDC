@@ -1,0 +1,45 @@
+<form (ngSubmit)="submitStandardTemplate()" class="form-horizontal" #standardTemplateForm="ngForm">
+    <h5>Create Standard Template</h5>
+    <p-accordion [multiple]="true">
+    <p-accordionTab header="Receiving Bank" [selected]="receivingBankStep">
+            <app-receiving-bank [outgoingWire]="outgoingWire" (onAbaLookupEvent)="handleAbaEvent($event)" (onReceivingBankCompleted)="handleReceivingBankEvent($event)"></app-receiving-bank>
+        </p-accordionTab>
+        <p-accordionTab header="Final Bank" [selected]="finalBankStep">
+            <app-final-bank [outgoingWire]="outgoingWire" (onFinalBankCompleted)="handleFinalBankEvent($event)"></app-final-bank>
+        </p-accordionTab>
+        <p-accordionTab header="Beneficiary Info" [selected]="beneficiaryStep">
+            <app-beneficiary-info [outgoingWire]="outgoingWire" (onPreviousTemplateSelected)="handlePreviousTemplateSelected($event)"
+                (onBeneficiaryInfoCompleted)="handleBeneficiaryEvent($event)"></app-beneficiary-info>
+        </p-accordionTab>
+        <p-accordionTab header="Further Credit Info" [selected]="creditInfoStep">
+            <app-credit-info [outgoingWire]="outgoingWire" (onFurtherCreditInfoCompleted)="handleCreditInfoEvent($event)"></app-credit-info>
+        </p-accordionTab>
+        <p-accordionTab header="Authorization" [selected]="authorizationStep">
+            <app-authorization [outgoingWire]="outgoingWire" (onVerificationSelected)="handleAuthorizationEvent($event)"></app-authorization>
+        </p-accordionTab>
+        <p-accordionTab header="Audit Info" [selected]="auditInfoStep">
+            <app-audit-info [outgoingWire]="outgoingWire"></app-audit-info>
+        </p-accordionTab>
+    </p-accordion>
+
+    <div class="row wire_out_footer">
+        <div class="col-md-12">
+            <div class="form-group pull-right">
+                <div *ngIf="isExistingTemplate">
+                    <button type="button" class="btn btn-success" data-auto-id="standard_wire_out_button_create" (click)="useExistingTemplate()"
+                        >Use Existing Template</button> &nbsp;
+                    <button type="button" class="btn btn-success" data-auto-id="standard_wire_out_button_create" (click)="useOriginalTemplate()"
+                        >Return To Current Template</button> &nbsp;
+                </div>
+                <div *ngIf="!isExistingTemplate">
+                    <button type="button" class="btn btn-success" data-auto-id="standard_wire_out_button_create" (click)="create()" [disabled]="isSaveDisabled()">Create</button>                    &nbsp;
+                    <button type="button" class="btn btn-success" data-auto-id="standard_wire_out_button_create_and_send" (click)="createAndSend()"
+                        [disabled]="isSaveDisabled()">Create & Send</button> &nbsp;
+                         <button type="button" class="btn" data-auto-id="standard_wire_out_button_cancel" (click)="cancel()">Cancel</button>&nbsp;
+                <button type="button" class="btn btn-default" data-auto-id="standard_wire_out_button_save" (click)="saveAndFinishLater()">Save & Finish Later</button>
+                </div>
+               
+            </div>
+        </div>
+    </div>
+</form>

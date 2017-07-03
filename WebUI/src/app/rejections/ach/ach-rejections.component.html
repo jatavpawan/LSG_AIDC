@@ -1,0 +1,47 @@
+﻿<div class="ta-container">
+
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Review Receipts</h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group" *ngIf="searchMode === 'glaccount'">
+            <label class="form-control-label form-control-label-sm">Account</label>
+            <p-autoComplete required [placeholder]="searchPlaceholder" [dropdown]="true" [(ngModel)]="searchSelection" autoHighlight="true" [suggestions]="results" field="Description" (completeMethod)="getTypeAheadData($event)" (onDropdownClick)="getTypeAheadData($event)" (onBlur)="glAccountOnBlur($event)" (onSelect)="setSelectionId($event)" emptyMessage="No Results Found" name="SearchInput" #SearchInput="ngModel" styleClass="auto-complete-form-control form-control-label-sm"></p-autoComplete>
+        </div>
+    </div>
+
+    <hr />
+
+    <div class="row no-gutters">
+        <div class="col-md-12">
+            <p-dataTable [value]="vendorDeliveryMaterialReceive" [rows]="8" [paginator]="true" csvSeparator="|" exportFilename="VendorDelivery" sortField="Amount" sortOrder="1" #dt>
+
+                <p-column field="Sap_PoId" header="PO" [filter]="false" filterMatchMode="in" [sortable]="true" sortOrder="-1" [style]="{'width':'5%'}"></p-column>
+
+                <p-column field="Sap_MaterialId" header="Vendor Material" [filter]="false" filterMatchMode="in" [sortable]="true" sortOrder="1" [style]="{'width':'5%'}"></p-column>
+
+                <p-column field="Sap_Description" header="Description" [style]="{'width':'12%'}" [filter]="false" filterMatchMode="in" [sortable]="true" [style]="{'width':'15%'}"></p-column>
+
+                <p-column field="QuantityExpected" header="Pack Qty" [filter]="false" [sortable]="true" [style]="{'width':'5%'}"></p-column>
+
+                <p-column field="Sap_OrderUoM" header="Pack UoM" [filter]="false" [sortable]="true" [style]="{'width':'5%'}"></p-column>
+
+                <p-column field="QuantityExpected" header="Req Qty" [filter]="false" [sortable]="true" [style]="{'width':'5%'}"></p-column>
+
+                <p-column field="QuantityExpected" header="Req UoM" [filter]="false" [sortable]="true" [style]="{'width':'5%'}"></p-column>
+
+                <!--<p-column field="QuantityExpected" header="Receipt Qty" [filter]="false" filterMatchMode="in" [sortable]="true" [style]="{'width':'12%'}"></p-column>
+
+                <p-column field="StatusDisplay" header="Receipt UoM" [filter]="false" filterMatchMode="in" [sortable]="true" [style]="{'width':'8%'}"></p-column>
+
+                <p-column field="StatusDisplay" header="Over/Under" [filter]="false" filterMatchMode="in" [sortable]="true" [style]="{'width':'8%'}"></p-column>
+
+                <p-column field="StatusDisplay" header="Color/Status" [filter]="false" filterMatchMode="in" [sortable]="true" [style]="{'width':'8%'}"></p-column>-->
+            </p-dataTable>
+
+        </div>
+    </div>
+</div>
